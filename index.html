@@ -1,214 +1,781 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ऑनलाइन फोटो और सिग्नेचर रिसाइज़र - कन्वर्ट और कंप्रेस टूल</title>
-    <meta name="description" content="सरकारी फॉर्म के लिए अपनी फोटो और सिग्नेचर का साइज (KB/MB) कम करें, रिसाइज करें और JPG, PNG, WEBP या PDF में बदलें।">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f8f9fa; margin: 0; padding: 15px; color: #333; }
-        .main-container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #0d6efd; margin-bottom: 5px; font-size: 26px; }
-        p.subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 25px; }
-        
-        .section-box { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff; }
-        .section-title { font-weight: bold; color: #333; margin-bottom: 12px; font-size: 16px; border-bottom: 2px solid #0d6efd; padding-bottom: 5px; display: inline-block; }
-        
-        .form-group { margin-bottom: 15px; }
-        label { font-weight: 600; display: block; margin-bottom: 5px; font-size: 14px; }
-        input[type="file"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; }
-        
-        .grid-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
-        /* Buttons & Presets */
-        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 15px; }
-        .preset-btn { background-color: #e7f1ff; color: #084298; border: 1px solid #b6d4fe; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .preset-btn:hover { background-color: #cfe2ff; }
-        
-        .action-btn { width: 100%; padding: 14px; background-color: #0d6efd; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .action-btn:hover { background-color: #0b5ed7; }
-        
-        .slider-container { display: flex; align-items: center; gap: 15px; }
-        input[type="range"] { flex: 1; accent-color: #0d6efd; }
-        
-        /* Preview Section */
-        .preview-area { text-align: center; margin-top: 25px; padding: 20px; border: 2px dashed #0d6efd; border-radius: 8px; display: none; background-color: #f0f7ff; }
-        .preview-area img { max-width: 100%; max-height: 250px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .file-meta { font-size: 16px; font-weight: bold; color: #198754; margin-bottom: 15px; }
-        .download-btn { background-color: #198754; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block; }
-        .download-btn:hover { background-color: #157347; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart India Hub - One Website, Hundreds of Useful Tools</title>
+  <meta name="description" content="Smart India Hub: Photo Resizer, Signature & Passport Maker, PDF Tools, Calculators, Text Tools, Password & QR Generator and more in Hindi & English." />
+  <meta property="og:title" content="Smart India Hub - One Website, Hundreds of Useful Tools" />
+  <meta property="og:description" content="Fast, mobile-friendly online tools for image resizing, calculations, text utilities, and more." />
+  <meta property="og:type" content="website" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #0b5ed7;
+      --primary-dark: #084298;
+      --primary-light: #e7f1ff;
+      --bg: #f5f8fc;
+      --card: #ffffff;
+      --text: #14213d;
+      --muted: #5c6b8a;
+      --border: #dce5f2;
+      --success: #198754;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.5; }
+    a { color: var(--primary); text-decoration: none; }
+
+    /* Header */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 10px rgba(11, 94, 215, 0.06);
+    }
+    .nav-wrap {
+      max-width: 1160px;
+      margin: auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-badge {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #2b8cff);
+      color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 18px;
+    }
+    .brand-name { font-size: 18px; font-weight: 800; color: var(--primary-dark); }
+    .brand-tag { font-size: 11px; color: var(--muted); display: block; }
+
+    nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
+    nav a { color: var(--text); padding: 6px 8px; border-radius: 6px; }
+    nav a:hover { background: var(--primary-light); color: var(--primary); }
+    .lang-btn {
+      background: var(--primary); color: #fff; border: none;
+      padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;
+    }
+
+    /* Hero & Search */
+    .hero {
+      background: linear-gradient(135deg, #0b5ed7 0%, #1677ff 100%);
+      color: #fff;
+      padding: 36px 16px 44px;
+      text-align: center;
+    }
+    .hero h1 { font-size: clamp(24px, 4vw, 38px); font-weight: 800; margin-bottom: 8px; }
+    .hero p { font-size: 15px; opacity: 0.92; margin-bottom: 20px; }
+    .search-box {
+      max-width: 640px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 6px;
+      display: flex;
+      gap: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    .search-box input {
+      flex: 1; border: none; outline: none; padding: 12px 14px; font-size: 15px; color: var(--text);
+    }
+    .search-box button {
+      background: var(--primary); color: #fff; border: none; border-radius: 8px;
+      padding: 0 18px; font-weight: 700; cursor: pointer;
+    }
+
+    /* Main Container */
+    .container { max-width: 1160px; margin: auto; padding: 24px 16px; }
+
+    /* Ad Placeholder Slot (AdSense Ready) */
+    .ad-slot {
+      background: #eef3fa;
+      border: 1px dashed #b7c9e6;
+      color: var(--muted);
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin: 18px 0;
+    }
+
+    /* Categories & Tool Cards */
+    .cat-section { margin-bottom: 30px; }
+    .cat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px; border-bottom: 2px solid var(--border); padding-bottom: 8px;
+    }
+    .cat-title { font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+    }
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .tool-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(11, 94, 215, 0.08);
+      border-color: #9ec5fe;
+    }
+    .tool-top { display: flex; align-items: center; gap: 10px; }
+    .tool-icon {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: var(--primary-light); color: var(--primary);
+      display: grid; place-items: center; font-weight: 800; font-size: 15px; flex-shrink: 0;
+    }
+    .tool-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .tool-desc { font-size: 12.5px; color: var(--muted); }
+    .tool-tag {
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+    .tool-tag.config { background: #fff3cd; color: #664d03; }
+
+    /* Active Tool Workspace */
+    #workspace {
+      display: none;
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 28px rgba(11, 94, 215, 0.12);
+    }
+    .ws-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    .close-btn {
+      background: #eef2f7; color: var(--text); border: none;
+      padding: 7px 14px; border-radius: 8px; font-weight: 700; cursor: pointer;
+    }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-weight: 700; font-size: 13.5px; margin-bottom: 6px; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 14px; background: #fff;
+    }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn-primary {
+      background: var(--primary); color: #fff; border: none;
+      padding: 11px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary {
+      background: var(--primary-light); color: var(--primary-dark); border: 1px solid #b6d4fe;
+      padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12.5px; margin-right: 6px; margin-bottom: 6px;
+    }
+    .result-box {
+      margin-top: 14px; padding: 14px; border-radius: 10px;
+      background: #f8fbff; border: 1px solid var(--border);
+    }
+    .notice-box {
+      padding: 14px; border-radius: 10px; background: #fff8e6; border: 1px solid #ffe08a; color: #5c4400; font-size: 14px;
+    }
+
+    /* Info Sections (About, Contact, Privacy, Terms, Disclaimer, Blog) */
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 12px; }
+    .info-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .info-card h3 { font-size: 15px; color: var(--primary-dark); margin-bottom: 6px; }
+    .info-card p { font-size: 13px; color: var(--muted); }
+
+    /* Footer */
+    footer {
+      background: #0d2240; color: #d8e3f5; padding: 28px 16px; margin-top: 36px; font-size: 13.5px;
+    }
+    .footer-wrap {
+      max-width: 1160px; margin: auto;
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 14px; }
+    .footer-links a { color: #b6d4fe; }
+
+    @media (max-width: 600px) {
+      .row-2 { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="main-container">
-    <h1>ऑल-इन-वन फोटो & सिग्नेचर रिसाइज़र</h1>
-    <p class="subtitle">सरकारी फॉर्म के लिए साइज (KB/MB), डायमेंशन और फॉर्मेट तुरंत बदलें</p>
+<header>
+  <div class="nav-wrap">
+    <a class="brand" href="#top" onclick="resetSearch()">
+      <div class="brand-badge">SI</div>
+      <div>
+        <span class="brand-name">Smart India Hub</span>
+        <span class="brand-tag" id="tagline">One Website, Hundreds of Useful Tools.</span>
+      </div>
+    </a>
+    <nav>
+      <a href="#tools-area" id="navAllTools">All Tools</a>
+      <a href="#info-pages" id="navBlog">Blog</a>
+      <a href="#info-pages" id="navAbout">About</a>
+      <a href="#info-pages" id="navPrivacy">Privacy</a>
+      <button class="lang-btn" onclick="toggleLang()" id="langToggle">हिन्दी</button>
+    </nav>
+  </div>
+</header>
 
-    <!-- Step 1: Upload -->
-    <div class="section-box">
-        <label>1. अपनी फाइल चुनें:</label>
-        <input type="file" id="uploadInput" accept="image/*">
+<section class="hero" id="top">
+  <h1 id="heroTitle">Smart India Hub</h1>
+  <p id="heroSub">One Website, Hundreds of Useful Tools. — Fast, free & mobile-friendly utilities.</p>
+  <div class="search-box">
+    <input type="search" id="searchInput" placeholder="What do you want to do today?" oninput="filterTools()" />
+    <button onclick="filterTools()" id="searchBtn">Search</button>
+  </div>
+</section>
+
+<main class="container">
+  <!-- AdSense Banner Placement (Replace with approved AdSense script after approval) -->
+  <div class="ad-slot" id="adSlotTop">Advertisement Space (Google AdSense Ready)</div>
+
+  <!-- Interactive Working Tool Area -->
+  <section id="workspace">
+    <div class="ws-top">
+      <h2 id="wsTitle" style="font-size:18px; color:var(--primary-dark);">Tool</h2>
+      <button class="close-btn" onclick="closeWorkspace()" id="closeWsBtn">Close ✕</button>
     </div>
+    <div id="wsBody"></div>
+  </section>
 
-    <!-- Step 2: Quick Presets -->
-    <div class="section-box">
-        <span class="section-title">⚡ क्विक सरकारी फॉर्म प्रेसेट्स</span>
-        <div class="btn-grid">
-            <button class="preset-btn" onclick="setDimensions(350, 450)">पासपोर्ट साइज (350×450)</button>
-            <button class="preset-btn" onclick="setDimensions(400, 200)">सिग्नेचर (400×200)</button>
-            <button class="preset-btn" onclick="setDimensions(600, 600)">पोस्टकार्ड (600×600)</button>
-            <button class="preset-btn" onclick="setDimensions(200, 230)">थंब इंप्रेशन (200×230)</button>
-        </div>
+  <!-- Tools Directory -->
+  <div id="tools-area"></div>
 
-        <div class="grid-row">
-            <div class="form-group">
-                <label>चौड़ाई (Width in px):</label>
-                <input type="number" id="imgWidth" placeholder="उदा: 350">
-            </div>
-            <div class="form-group">
-                <label>ऊंचाई (Height in px):</label>
-                <input type="number" id="imgHeight" placeholder="उदा: 450">
-            </div>
-        </div>
+  <div class="ad-slot" id="adSlotMid">Advertisement Space (Google AdSense Ready)</div>
+
+  <!-- Essential Pages & Blog -->
+  <section id="info-pages" class="cat-section">
+    <div class="cat-header">
+      <h2 class="cat-title" id="infoHeading">Pages, Blog & Policies</h2>
     </div>
-
-    <!-- Step 3: Compression & Format -->
-    <div class="section-box">
-        <span class="section-title">🛠️ साइज और क्वालिटी कंट्रोल</span>
-        <div class="form-group">
-            <label>फाइल क्वालिटी (KB/MB कम करने के लिए):</label>
-            <div class="slider-container">
-                <input type="range" id="qualitySlider" min="0.1" max="1" step="0.05" value="0.8">
-                <span id="qualityVal" style="font-weight:bold; min-width: 45px;">80%</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>आउटपुट फॉर्मेट (Convert Format):</label>
-            <select id="formatSelect">
-                <option value="jpeg">JPG / JPEG</option>
-                <option value="png">PNG</option>
-                <option value="webp">WEBP</option>
-                <option value="pdf">PDF Document</option>
-            </select>
-        </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>About Us</h3>
+        <p>Smart India Hub helps students, job applicants, and everyday users resize documents, calculate numbers, and format text quickly in the browser.</p>
+      </div>
+      <div class="info-card">
+        <h3>Blog & Guides</h3>
+        <p>Guides on setting photo dimensions & KB sizes for forms, understanding EMI & percentage calculations, and writing strong passwords.</p>
+      </div>
+      <div class="info-card">
+        <h3>Privacy Policy & Disclaimer</h3>
+        <p>Images processed in local browser tools are not uploaded to external servers without your action. Government exam details and rankings are never guaranteed—always verify official notices.</p>
+      </div>
+      <div class="info-card">
+        <h3>Contact & Terms</h3>
+        <p>Add your official support email and terms before publishing publicly. Tools requiring external APIs or live feeds clearly show configuration status.</p>
+      </div>
     </div>
+  </section>
+</main>
 
-    <button class="action-btn" onclick="processImage()">प्रोसेस और कन्वर्ट करें</button>
-
-    <!-- Output Preview -->
-    <div class="preview-area" id="previewArea">
-        <h3>प्रोसेस की गई फाइल</h3>
-        <img id="outputImage" src="" alt="Output">
-        <div class="file-meta" id="fileMeta"></div>
-        <br>
-        <button class="download-btn" onclick="downloadFile()">फाइल डाउनलोड करें</button>
+<footer>
+  <div class="footer-wrap">
+    <div>
+      <strong>Smart India Hub</strong> — One Website, Hundreds of Useful Tools.
     </div>
-</div>
+    <div class="footer-links">
+      <a href="#top">Home</a>
+      <a href="#tools-area">All Tools</a>
+      <a href="#info-pages">About Us</a>
+      <a href="#info-pages">Contact Us</a>
+      <a href="#info-pages">Privacy Policy</a>
+      <a href="#info-pages">Terms</a>
+      <a href="#info-pages">Disclaimer</a>
+      <a href="#info-pages">Sitemap</a>
+    </div>
+  </div>
+</footer>
 
 <script>
-    const uploadInput = document.getElementById('uploadInput');
-    const qualitySlider = document.getElementById('qualitySlider');
-    const qualityVal = document.getElementById('qualityVal');
-    let originalImage = new Image();
-    let processedDataUrl = '';
-    let processedBlob = null;
-    let selectedFormat = 'jpeg';
+  let lang = 'en';
 
-    qualitySlider.addEventListener('input', () => {
-        qualityVal.innerText = Math.round(qualitySlider.value * 100) + '%';
+  const i18n = {
+    en: {
+      tagline: 'One Website, Hundreds of Useful Tools.',
+      heroTitle: 'Smart India Hub',
+      heroSub: 'One Website, Hundreds of Useful Tools. — Fast, mobile-friendly utilities.',
+      searchPh: 'What do you want to do today?',
+      searchBtn: 'Search',
+      langBtn: 'हिन्दी',
+      allTools: 'All Tools',
+      blog: 'Blog',
+      about: 'About',
+      privacy: 'Privacy',
+      close: 'Close ✕',
+      readyTag: 'Working Tool',
+      configTag: 'API / Feed Setup Needed',
+      infoHeading: 'Pages, Blog & Policies',
+      adTop: 'Advertisement Space (Google AdSense Ready)',
+      adMid: 'Advertisement Space (Google AdSense Ready)'
+    },
+    hi: {
+      tagline: 'एक वेबसाइट, सैकड़ों उपयोगी टूल्स।',
+      heroTitle: 'स्मार्ट इंडिया हब (Smart India Hub)',
+      heroSub: 'एक वेबसाइट, सैकड़ों उपयोगी टूल्स। — तेज़, मोबाइल-फ्रेंडली ऑनलाइन टूल्स।',
+      searchPh: 'आज आप क्या करना चाहते हैं? (What do you want to do today?)',
+      searchBtn: 'खोजें',
+      langBtn: 'English',
+      allTools: 'सभी टूल्स',
+      blog: 'ब्लॉग',
+      about: 'हमारे बारे में',
+      privacy: 'प्राइवेसी',
+      close: 'बंद करें ✕',
+      readyTag: 'तैयार टूल',
+      configTag: 'API / डेटा सेटअप ज़रूरी',
+      infoHeading: 'पेज, ब्लॉग और नीतियां',
+      adTop: 'विज्ञापन स्थान (Google AdSense के लिए तैयार)',
+      adMid: 'विज्ञापन स्थान (Google AdSense के लिए तैयार)'
+    }
+  };
+
+  const categories = [
+    {
+      id: 'popular',
+      title: { en: 'Most Popular Tools', hi: 'सबसे लोकप्रिय टूल्स' },
+      tools: [
+        { id: 'img-resizer', icon: '🖼️', name: { en: 'Image Resizer & KB Compressor', hi: 'इमेज रिसाइज़र और KB कंप्रेसर' }, desc: { en: 'Resize width, height, format & KB quality locally', hi: 'चौड़ाई, ऊंचाई, फॉर्मेट और KB क्वालिटी बदलें' }, ready: true },
+        { id: 'passport-sig', icon: '🪪', name: { en: 'Passport & Signature Maker', hi: 'पासपोर्ट और सिग्नेचर मेकर' }, desc: { en: 'One-click presets for photo & signature', hi: 'फोटो और सिग्नेचर के लिए तैयार प्रेसेट्स' }, ready: true },
+        { id: 'img-to-pdf', icon: '📄', name: { en: 'Image to PDF', hi: 'इमेज से PDF' }, desc: { en: 'Convert image to a downloadable PDF', hi: 'फोटो को PDF में बदलें' }, ready: true },
+        { id: 'age-calc', icon: '🎂', name: { en: 'Age Calculator', hi: 'आयु कैलकुलेटर' }, desc: { en: 'Exact age in years, months & days', hi: 'साल, महीने और दिनों में सही उम्र निकालें' }, ready: true },
+        { id: 'pct-calc', icon: '📊', name: { en: 'Percentage & Marks Calculator', hi: 'प्रतिशत और अंक कैलकुलेटर' }, desc: { en: 'Calculate percentage from marks easily', hi: 'अंकों से प्रतिशत आसानी से निकालें' }, ready: true }
+      ]
+    },
+    {
+      id: 'photo',
+      title: { en: 'Photo & Image Tools', hi: 'फोटो और इमेज टूल्स' },
+      tools: [
+        { id: 'img-resizer', icon: '📐', name: { en: 'Image Resizer & Format Converter', hi: 'इमेज रिसाइज़र और फॉर्मेट कन्वर्टर' }, desc: { en: 'JPG, PNG, WEBP resize & quality control', hi: 'JPG, PNG, WEBP साइज व क्वालिटी बदलें' }, ready: true },
+        { id: 'passport-sig', icon: '✍️', name: { en: 'Signature & Passport Presets', hi: 'सिग्नेचर और पासपोर्ट प्रेसेट्स' }, desc: { en: 'Standard form dimension presets', hi: 'फॉर्म के लिए स्टैंडर्ड साइज प्रेसेट्स' }, ready: true },
+        { id: 'img-to-pdf', icon: '📑', name: { en: 'Image to PDF Converter', hi: 'इमेज से PDF कन्वर्टर' }, desc: { en: 'Export image as PDF document', hi: 'इमेज को PDF फाइल में सेव करें' }, ready: true },
+        { id: 'bg-changer', icon: '🎨', name: { en: 'Background Color Changer', hi: 'बैकग्राउंड कलर चेंजर' }, desc: { en: 'Full AI background removal requires API', hi: 'पूरे बैकग्राउंड रिमूवल के लिए API ज़रूरी' }, ready: false }
+      ]
+    },
+    {
+      id: 'pdf',
+      title: { en: 'PDF Tools', hi: 'PDF टूल्स' },
+      tools: [
+        { id: 'img-to-pdf', icon: '📄', name: { en: 'JPG / Image to PDF', hi: 'JPG / इमेज से PDF' }, desc: { en: 'Convert image to PDF in browser', hi: 'ब्राउज़र में इमेज से PDF बनाएं' }, ready: true },
+        { id: 'pdf-suite', icon: '📚', name: { en: 'Merge, Split & Compress PDF', hi: 'मर्ज, स्प्लिट और कंप्रेस PDF' }, desc: { en: 'Add pdf-lib / PDF.js worker for multi-page PDF ops', hi: 'मल्टी-पेज PDF के लिए pdf-lib / PDF.js जोड़ें' }, ready: false }
+      ]
+    },
+    {
+      id: 'govt',
+      title: { en: 'Government Job & Exam Tools', hi: 'सरकारी नौकरी और परीक्षा टूल्स' },
+      tools: [
+        { id: 'age-calc', icon: '🗓️', name: { en: 'Exam Age Calculator', hi: 'परीक्षा आयु कैलकुलेटर' }, desc: { en: 'Check age as of any cutoff date', hi: 'किसी भी तारीख के अनुसार आयु जानें' }, ready: true },
+        { id: 'pct-calc', icon: '🧮', name: { en: 'Percentage & Merit Helper', hi: 'प्रतिशत और मेरिट हेल्पर' }, desc: { en: 'Compute marks percentage quickly', hi: 'अंकों का प्रतिशत निकालें' }, ready: true },
+        { id: 'govt-feed', icon: '🏛️', name: { en: 'Jobs, Admit Card & Results', hi: 'भर्ती, एडमिट कार्ड और रिजल्ट' }, desc: { en: 'Connect verified official RSS/API source—never fake listings', hi: 'केवल सत्यापित स्रोत जोड़ें—फ़र्ज़ी अपडेट न दिखाएं' }, ready: false }
+      ]
+    },
+    {
+      id: 'calc',
+      title: { en: 'Online Calculators', hi: 'ऑनलाइन कैलकुलेटर' },
+      tools: [
+        { id: 'emi-calc', icon: '🏦', name: { en: 'EMI Calculator', hi: 'EMI कैलकुलेटर' }, desc: { en: 'Monthly EMI, total interest & payable', hi: 'मासिक EMI, कुल ब्याज और कुल राशि' }, ready: true },
+        { id: 'pct-calc', icon: { en: 'Percentage Calculator', hi: 'प्रतिशत कैलकुलेटर' }, desc: { en: 'Percentage calculation tool', hi: 'प्रतिशत गणना टूल' }, ready: true },
+        { id: 'age-calc', icon: '⏳', name: { en: 'Age Calculator', hi: 'आयु कैलकुलेटर' }, desc: { en: 'Age breakdown in Y/M/D', hi: 'साल, महीने और दिन में उम्र' }, ready: true },
+        { id: 'curr-calc', icon: '💱', name: { en: 'Live Currency Converter', hi: 'लाइव करेंसी कन्वर्टर' }, desc: { en: 'Requires live exchange rate API key', hi: 'लाइव एक्सचेंज रेट API की आवश्यकता' }, ready: false }
+      ]
+    },
+    {
+      id: 'text',
+      title: { en: 'Text Tools', hi: 'टेक्स्ट टूल्स' },
+      tools: [
+        { id: 'word-count', icon: '✍️', name: { en: 'Word, Char & Case Tool', hi: 'वर्ड, कैरेक्टर और केस टूल' }, desc: { en: 'Count words/chars, UPPER/lower & clean spaces', hi: 'शब्द/अक्षर गिनें, केस बदलें और एक्स्ट्रा स्पेस हटाएं' }, ready: true },
+        { id: 'translator-tool', icon: '🌐', name: { en: 'Hindi ↔ English Translator', hi: 'हिन्दी ↔ English ट्रांसलेटर' }, desc: { en: 'Requires translation API configuration', hi: 'ट्रांसलेशन API कॉन्फ़िगरेशन ज़रूरी' }, ready: false }
+      ]
+    },
+    {
+      id: 'student',
+      title: { en: 'Student Tools', hi: 'स्टूडेंट टूल्स' },
+      tools: [
+        { id: 'pct-calc', icon: '🎓', name: { en: 'Marks Percentage Calculator', hi: 'अंक प्रतिशत कैलकुलेटर' }, desc: { en: 'Quick exam percentage helper', hi: 'परीक्षा प्रतिशत कैलकुलेटर' }, ready: true },
+        { id: 'word-count', icon: '📝', name: { en: 'Notes & Draft Counter', hi: 'नोट्स और ड्राफ्ट काउंटर' }, desc: { en: 'Word counter & space cleaner for notes', hi: 'नोट्स के लिए वर्ड काउंटर और स्पेस क्लीनर' }, ready: true }
+      ]
+    },
+    {
+      id: 'ai',
+      title: { en: 'AI Tools', hi: 'AI टूल्स' },
+      tools: [
+        { id: 'ai-suite', icon: '✨', name: { en: 'AI Writer, Prompts & Image Tools', hi: 'AI राइटर, प्रॉम्प्ट और इमेज टूल्स' }, desc: { en: 'Connect your real AI API endpoint before enabling output', hi: 'रियल AI API जोड़ने के बाद ही आउटपुट दिखाएं' }, ready: false }
+      ]
+    },
+    {
+      id: 'utility',
+      title: { en: 'Internet & Utility Tools', hi: 'इंटरनेट और यूटिलिटी टूल्स' },
+      tools: [
+        { id: 'pass-gen', icon: '🔐', name: { en: 'Strong Password Generator', hi: 'मजबूत पासवर्ड जनरेटर' }, desc: { en: 'Generate secure random passwords locally', hi: 'सुरक्षित रैंडम पासवर्ड बनाएं' }, ready: true },
+        { id: 'qr-gen', icon: '📱', name: { en: 'QR Code Generator', hi: 'QR कोड जनरेटर' }, desc: { en: 'Generate QR code from text or URL', hi: 'टेक्स्ट या लिंक से QR कोड बनाएं' }, ready: true }
+      ]
+    }
+  ];
+
+  function renderTools(query = '') {
+    const q = query.trim().toLowerCase();
+    const wrap = document.getElementById('tools-area');
+    wrap.innerHTML = '';
+
+    categories.forEach(cat => {
+      const matched = cat.tools.filter(t =>
+        !q ||
+        t.name.en.toLowerCase().includes(q) ||
+        t.name.hi.toLowerCase().includes(q) ||
+        t.desc.en.toLowerCase().includes(q) ||
+        t.desc.hi.toLowerCase().includes(q)
+      );
+      if (!matched.length) return;
+
+      const sec = document.createElement('section');
+      sec.className = 'cat-section';
+      sec.innerHTML = `
+        <div class="cat-header">
+          <h2 class="cat-title">${cat.title[lang]}</h2>
+        </div>
+        <div class="grid">
+          ${matched.map(t => `
+            <div class="tool-card" onclick="openTool('${t.id}', '${escapeQuote(t.name[lang])}', ${t.ready}, '${escapeQuote(t.desc[lang])}')">
+              <div class="tool-top">
+                <div class="tool-icon">${t.icon}</div>
+                <div>
+                  <div class="tool-name">${t.name[lang]}</div>
+                  <div class="tool-desc">${t.desc[lang]}</div>
+                </div>
+              </div>
+              <span class="tool-tag ${t.ready ? '' : 'config'}">${t.ready ? i18n[lang].readyTag : i18n[lang].configTag}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      wrap.appendChild(sec);
     });
 
-    function setDimensions(w, h) {
-        document.getElementById('imgWidth').value = w;
-        document.getElementById('imgHeight').value = h;
+    if (!wrap.innerHTML) {
+      wrap.innerHTML = `<div class="info-card"><p>${lang === 'hi' ? 'कोई टूल नहीं मिला। कृपया दूसरा शब्द खोजें।' : 'No matching tools found. Try another keyword.'}</p></div>`;
+    }
+  }
+
+  function escapeQuote(str) {
+    return str.replace(/'/g, "\\'");
+  }
+
+  function filterTools() {
+    renderTools(document.getElementById('searchInput').value);
+  }
+
+  function resetSearch() {
+    document.getElementById('searchInput').value = '';
+    renderTools('');
+    closeWorkspace();
+  }
+
+  function toggleLang() {
+    lang = lang === 'en' ? 'hi' : 'en';
+    document.documentElement.lang = lang;
+    const t = i18n[lang];
+    document.getElementById('tagline').textContent = t.tagline;
+    document.getElementById('heroTitle').textContent = t.heroTitle;
+    document.getElementById('heroSub').textContent = t.heroSub;
+    document.getElementById('searchInput').placeholder = t.searchPh;
+    document.getElementById('searchBtn').textContent = t.searchBtn;
+    document.getElementById('langToggle').textContent = t.langBtn;
+    document.getElementById('navAllTools').textContent = t.allTools;
+    document.getElementById('navBlog').textContent = t.blog;
+    document.getElementById('navAbout').textContent = t.about;
+    document.getElementById('navPrivacy').textContent = t.privacy;
+    document.getElementById('closeWsBtn').textContent = t.close;
+    document.getElementById('infoHeading').textContent = t.infoHeading;
+    document.getElementById('adSlotTop').textContent = t.adTop;
+    document.getElementById('adSlotMid').textContent = t.adMid;
+    renderTools(document.getElementById('searchInput').value);
+  }
+
+  function closeWorkspace() {
+    document.getElementById('workspace').style.display = 'none';
+    document.getElementById('wsBody').innerHTML = '';
+  }
+
+  function openTool(id, title, ready, desc) {
+    const ws = document.getElementById('workspace');
+    const body = document.getElementById('wsBody');
+    document.getElementById('wsTitle').textContent = title;
+    ws.style.display = 'block';
+    ws.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    if (!ready) {
+      body.innerHTML = `
+        <div class="notice-box">
+          <strong>${title}</strong><br/>
+          ${desc}.<br/><br/>
+          ${lang === 'hi'
+            ? 'इस फीचर को लाइव चलाने के लिए अपना वेरिफ़ाइड डेटा सोर्स, API कुंजी या बैकएंड कनेक्ट करें। बिना असली डेटा/API के फ़र्ज़ी नतीजे नहीं दिखाए जाते।'
+            : 'Connect your verified data source, API key, or backend service to enable live results for this tool. No simulated or fabricated output is shown.'}
+        </div>
+      `;
+      return;
     }
 
-    uploadInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                originalImage.src = event.target.result;
-                originalImage.onload = function() {
-                    document.getElementById('imgWidth').value = originalImage.width;
-                    document.getElementById('imgHeight').value = originalImage.height;
-                }
-            }
-            reader.readAsDataURL(file);
-        }
-    });
+    if (id === 'img-resizer' || id === 'passport-sig' || id === 'img-to-pdf') {
+      const defaultFmt = id === 'img-to-pdf' ? 'pdf' : 'jpeg';
+      body.innerHTML = `
+        <div class="field">
+          <label>Select Image (JPG, PNG, WEBP — Max 15MB):</label>
+          <input type="file" id="tImgFile" accept="image/*" />
+        </div>
+        <div class="field">
+          <button type="button" class="btn-secondary" onclick="setImgDim(350,450)">Passport (350×450)</button>
+          <button type="button" class="btn-secondary" onclick="setImgDim(400,200)">Signature (400×200)</button>
+          <button type="button" class="btn-secondary" onclick="setImgDim(600,600)">Postcard (600×600)</button>
+        </div>
+        <div class="row-2">
+          <div class="field"><label>Width (px):</label><input type="number" id="tImgW" value="350" min="1" max="5000" /></div>
+          <div class="field"><label>Height (px):</label><input type="number" id="tImgH" value="450" min="1" max="5000" /></div>
+        </div>
+        <div class="row-2">
+          <div class="field"><label>Quality (10% - 100%):</label><input type="range" id="tImgQ" min="0.1" max="1" step="0.05" value="0.8" /></div>
+          <div class="field">
+            <label>Output Format:</label>
+            <select id="tImgFmt">
+              <option value="jpeg" ${defaultFmt==='jpeg'?'selected':''}>JPG / JPEG</option>
+              <option value="png" ${defaultFmt==='png'?'selected':''}>PNG</option>
+              <option value="webp" ${defaultFmt==='webp'?'selected':''}>WEBP</option>
+              <option value="pdf" ${defaultFmt==='pdf'?'selected':''}>PDF</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runImageTool()">Process & Download</button>
+        <div class="result-box" id="tImgOut" style="display:none;"></div>
+      `;
+    } else if (id === 'age-calc') {
+      body.innerHTML = `
+        <div class="row-2">
+          <div class="field"><label>Date of Birth:</label><input type="date" id="dobInput" /></div>
+          <div class="field"><label>As on Date:</label><input type="date" id="asOnInput" value="${new Date().toISOString().slice(0,10)}" /></div>
+        </div>
+        <button class="btn-primary" onclick="runAgeCalc()">Calculate Age</button>
+        <div class="result-box" id="ageOut" style="display:none;"></div>
+      `;
+    } else if (id === 'pct-calc') {
+      body.innerHTML = `
+        <div class="row-2">
+          <div class="field"><label>Obtained Marks:</label><input type="number" id="obtMarks" placeholder="e.g. 420" /></div>
+          <div class="field"><label>Total Marks:</label><input type="number" id="totMarks" placeholder="e.g. 500" /></div>
+        </div>
+        <button class="btn-primary" onclick="runPctCalc()">Calculate Percentage</button>
+        <div class="result-box" id="pctOut" style="display:none;"></div>
+      `;
+    } else if (id === 'emi-calc') {
+      body.innerHTML = `
+        <div class="row-2">
+          <div class="field"><label>Loan Amount (₹):</label><input type="number" id="emiP" value="500000" /></div>
+          <div class="field"><label>Annual Interest (%):</label><input type="number" id="emiR" step="0.1" value="8.5" /></div>
+        </div>
+        <div class="field"><label>Tenure (Months):</label><input type="number" id="emiN" value="60" /></div>
+        <button class="btn-primary" onclick="runEmiCalc()">Calculate EMI</button>
+        <div class="result-box" id="emiOut" style="display:none;"></div>
+      `;
+    } else if (id === 'word-count') {
+      body.innerHTML = `
+        <div class="field"><label>Enter or paste text:</label><textarea id="txtArea" rows="5" oninput="runTextStats()" placeholder="Type text here..."></textarea></div>
+        <div class="field">
+          <button type="button" class="btn-secondary" onclick="transformText('upper')">UPPERCASE</button>
+          <button type="button" class="btn-secondary" onclick="transformText('lower')">lowercase</button>
+          <button type="button" class="btn-secondary" onclick="transformText('clean')">Remove Extra Spaces</button>
+        </div>
+        <div class="result-box" id="txtStats">Words: 0 | Characters: 0</div>
+      `;
+    } else if (id === 'pass-gen') {
+      body.innerHTML = `
+        <div class="field"><label>Password Length (8–32):</label><input type="number" id="passLen" min="8" max="32" value="14" /></div>
+        <button class="btn-primary" onclick="runPassGen()">Generate Password</button>
+        <div class="result-box" id="passOut" style="display:none;"></div>
+      `;
+    } else if (id === 'qr-gen') {
+      body.innerHTML = `
+        <div class="field"><label>Enter Text or URL:</label><input type="text" id="qrText" placeholder="https://smartindiahub.example" /></div>
+        <button class="btn-primary" onclick="runQrGen()">Generate QR Code</button>
+        <div class="result-box" id="qrOut" style="display:none;"></div>
+      `;
+    }
+  }
 
-    function processImage() {
-        if (!uploadInput.files[0]) {
-            alert('कृपया पहले कोई फोटो या सिग्नेचर अपलोड करें!');
-            return;
-        }
+  function setImgDim(w, h) {
+    document.getElementById('tImgW').value = w;
+    document.getElementById('tImgH').value = h;
+  }
 
+  function runImageTool() {
+    const file = document.getElementById('tImgFile').files[0];
+    const out = document.getElementById('tImgOut');
+    if (!file) { alert('Please select an image first.'); return; }
+    if (!file.type.startsWith('image/')) { alert('Invalid file type. Please choose an image.'); return; }
+    if (file.size > 15 * 1024 * 1024) { alert('File exceeds 15MB limit.'); return; }
+
+    const w = Math.max(1, parseInt(document.getElementById('tImgW').value, 10) || 350);
+    const h = Math.max(1, parseInt(document.getElementById('tImgH').value, 10) || 450);
+    const q = parseFloat(document.getElementById('tImgQ').value) || 0.8;
+    const fmt = document.getElementById('tImgFmt').value;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
         const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
         const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
 
-        const targetWidth = parseInt(document.getElementById('imgWidth').value) || originalImage.width;
-        const targetHeight = parseInt(document.getElementById('imgHeight').value) || originalImage.height;
-        const quality = parseFloat(qualitySlider.value);
-        selectedFormat = document.getElementById('formatSelect').value;
+        let url = '';
+        let ext = fmt;
+        let kbText = '';
 
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
-
-        // White background for transparent images
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(originalImage, 0, 0, targetWidth, targetHeight);
-
-        const previewArea = document.getElementById('previewArea');
-        const outputImage = document.getElementById('outputImage');
-        const fileMeta = document.getElementById('fileMeta');
-
-        if (selectedFormat === 'pdf') {
-            const { jsPDF } = window.jspdf;
-            const imgData = canvas.toDataURL('image/jpeg', quality);
-            const pdf = new jsPDF({
-                orientation: targetWidth > targetHeight ? 'landscape' : 'portrait',
-                unit: 'px',
-                format: [targetWidth, targetHeight]
-            });
-            pdf.addImage(imgData, 'JPEG', 0, 0, targetWidth, targetHeight);
-            processedBlob = pdf.output('blob');
-            processedDataUrl = URL.createObjectURL(processedBlob);
-            outputImage.src = imgData;
-            fileMeta.innerText = `नया साइज: ${(processedBlob.size / 1024).toFixed(2)} KB`;
+        if (fmt === 'pdf' && window.jspdf) {
+          const { jsPDF } = window.jspdf;
+          const imgData = canvas.toDataURL('image/jpeg', q);
+          const pdf = new jsPDF({ orientation: w > h ? 'l' : 'p', unit: 'px', format: [w, h] });
+          pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
+          const blob = pdf.output('blob');
+          url = URL.createObjectURL(blob);
+          kbText = `${(blob.size / 1024).toFixed(1)} KB (PDF)`;
+          ext = 'pdf';
         } else {
-            const mimeType = `image/${selectedFormat}`;
-            processedDataUrl = canvas.toDataURL(mimeType, quality);
-            
-            fetch(processedDataUrl)
-                .then(res => res.blob())
-                .then(blob => {
-                    processedBlob = blob;
-                    const sizeInKB = (blob.size / 1024).toFixed(2);
-                    fileMeta.innerText = `नया साइज: ${sizeInKB} KB (${targetWidth}×${targetHeight} px) | फॉर्मेट: ${selectedFormat.toUpperCase()}`;
-                });
-            outputImage.src = processedDataUrl;
+          const mime = fmt === 'png' ? 'image/png' : (fmt === 'webp' ? 'image/webp' : 'image/jpeg');
+          url = canvas.toDataURL(mime, q);
+          const base64Len = url.split(',')[1]?.length || 0;
+          kbText = `~${((base64Len * 3) / 4 / 1024).toFixed(1)} KB (${w}×${h}px)`;
         }
 
-        previewArea.style.display = 'block';
-        previewArea.scrollIntoView({ behavior: 'smooth' });
-    }
+        out.style.display = 'block';
+        out.innerHTML = `
+          <p><strong>Size:</strong> ${kbText}</p>
+          <div style="margin-top:10px;"><a class="btn-primary" href="${url}" download="smart-india-hub.${ext}">Download File</a></div>
+        `;
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 
-    function downloadFile() {
-        if (!processedBlob) return;
-        const a = document.createElement('a');
-        a.href = processedDataUrl;
-        a.download = `converted_file_${Date.now()}.${selectedFormat === 'pdf' ? 'pdf' : selectedFormat}`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+  function runAgeCalc() {
+    const dob = new Date(document.getElementById('dobInput').value);
+    const ref = new Date(document.getElementById('asOnInput').value);
+    const out = document.getElementById('ageOut');
+    if (isNaN(dob) || isNaN(ref) || dob > ref) {
+      out.style.display = 'block';
+      out.textContent = 'Please select a valid Date of Birth before the target date.';
+      return;
     }
+    let years = ref.getFullYear() - dob.getFullYear();
+    let months = ref.getMonth() - dob.getMonth();
+    let days = ref.getDate() - dob.getDate();
+    if (days < 0) {
+      months--;
+      const prevMonthDays = new Date(ref.getFullYear(), ref.getMonth(), 0).getDate();
+      days += prevMonthDays;
+    }
+    if (months < 0) { years--; months += 12; }
+    out.style.display = 'block';
+    out.innerHTML = `<strong>Age:</strong> ${years} Years, ${months} Months, ${days} Days`;
+  }
+
+  function runPctCalc() {
+    const obt = parseFloat(document.getElementById('obtMarks').value);
+    const tot = parseFloat(document.getElementById('totMarks').value);
+    const out = document.getElementById('pctOut');
+    if (isNaN(obt) || isNaN(tot) || tot <= 0 || obt < 0) {
+      out.style.display = 'block';
+      out.textContent = 'Enter valid positive numbers (Total > 0).';
+      return;
+    }
+    const pct = ((obt / tot) * 100).toFixed(2);
+    out.style.display = 'block';
+    out.innerHTML = `<strong>Percentage:</strong> ${pct}%`;
+  }
+
+  function runEmiCalc() {
+    const P = parseFloat(document.getElementById('emiP').value);
+    const annualR = parseFloat(document.getElementById('emiR').value);
+    const n = parseInt(document.getElementById('emiN').value, 10);
+    const out = document.getElementById('emiOut');
+    if (!P || P <= 0 || isNaN(annualR) || annualR < 0 || !n || n <= 0) {
+      out.style.display = 'block';
+      out.textContent = 'Enter valid loan amount, interest rate, and months.';
+      return;
+    }
+    const r = annualR / 12 / 100;
+    const emi = r === 0 ? P / n : (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const totalPay = emi * n;
+    const totalInt = totalPay - P;
+    out.style.display = 'block';
+    out.innerHTML = `
+      <strong>Monthly EMI:</strong> ₹${Math.round(emi).toLocaleString('en-IN')}<br/>
+      <strong>Total Interest:</strong> ₹${Math.round(totalInt).toLocaleString('en-IN')}<br/>
+      <strong>Total Payment:</strong> ₹${Math.round(totalPay).toLocaleString('en-IN')}
+    `;
+  }
+
+  function runTextStats() {
+    const val = document.getElementById('txtArea').value;
+    const words = val.trim() ? val.trim().split(/\s+/).length : 0;
+    document.getElementById('txtStats').textContent = `Words: ${words} | Characters: ${val.length}`;
+  }
+
+  function transformText(mode) {
+    const el = document.getElementById('txtArea');
+    if (mode === 'upper') el.value = el.value.toUpperCase();
+    if (mode === 'lower') el.value = el.value.toLowerCase();
+    if (mode === 'clean') el.value = el.value.replace(/\s+/g, ' ').trim();
+    runTextStats();
+  }
+
+  function runPassGen() {
+    const len = Math.min(32, Math.max(8, parseInt(document.getElementById('passLen').value, 10) || 14));
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
+    const arr = new Uint32Array(len);
+    crypto.getRandomValues(arr);
+    let pass = '';
+    for (let i = 0; i < len; i++) pass += chars[arr[i] % chars.length];
+    const out = document.getElementById('passOut');
+    out.style.display = 'block';
+    out.innerHTML = `<strong>Generated Password:</strong> <code>${pass}</code>`;
+  }
+
+  function runQrGen() {
+    const txt = document.getElementById('qrText').value.trim();
+    const out = document.getElementById('qrOut');
+    if (!txt) {
+      out.style.display = 'block';
+      out.textContent = 'Please enter text or a URL first.';
+      return;
+    }
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(txt)}`;
+    out.style.display = 'block';
+    out.innerHTML = `<img src="${qrUrl}" alt="QR Code" width="200" height="200" />`;
+  }
+
+  renderTools();
 </script>
-
 </body>
 </html>
