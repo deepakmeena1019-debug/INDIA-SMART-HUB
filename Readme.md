@@ -19,3 +19,4 @@ Add separate pages for each category. Make all buttons and navigation links func
 Use simple language, attractive layouts and fast loading pages. Optimize the website for mobile phones, Google SEO and future Google AdSense monetization.
 
 Build a complete working website, not just a design. Start with free or low-cost tools and avoid fake information or fake job notifications.
+I should also make a box in which one can upload an image and to recharge it, there should be an option to generate it in BM and JF PDF and there should be an option to save it or download it.
