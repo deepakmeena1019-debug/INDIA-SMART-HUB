@@ -3,85 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>सरकारी फॉर्म फोटो और सिग्नेचर रिसाइज़र - ऑनलाइन टूल</title>
-    <meta name="description" content="सरकारी नौकरी के फॉर्म के लिए अपनी फोटो और सिग्नेचर का साइज़ (KB/MB), चौड़ाई और ऊँचाई तुरंत सेट करें। JPG और PDF में कन्वर्ट करें।">
-    <meta name="keywords" content="Photo Resizer, Signature Resizer, Government Form Photo Maker, Online Image Converter, सरकारी फॉर्म फोटो रिसाइज़र">
+    <title>ऑनलाइन फोटो और सिग्नेचर रिसाइज़र - कन्वर्ट और कंप्रेस टूल</title>
+    <meta name="description" content="सरकारी फॉर्म के लिए अपनी फोटो और सिग्नेचर का साइज (KB/MB) कम करें, रिसाइज करें और JPG, PNG, WEBP या PDF में बदलें।">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f0f2f5; margin: 0; padding: 15px; color: #333; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #1a73e8; margin-bottom: 5px; font-size: 24px; }
-        p.subtitle { text-align: center; color: #666; font-size: 13px; margin-bottom: 20px; }
+        body { background-color: #f8f9fa; margin: 0; padding: 15px; color: #333; }
+        .main-container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #0d6efd; margin-bottom: 5px; font-size: 26px; }
+        p.subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 25px; }
+        
+        .section-box { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: #fff; }
+        .section-title { font-weight: bold; color: #333; margin-bottom: 12px; font-size: 16px; border-bottom: 2px solid #0d6efd; padding-bottom: 5px; display: inline-block; }
+        
         .form-group { margin-bottom: 15px; }
-        label { font-weight: bold; display: block; margin-bottom: 5px; font-size: 14px; }
-        input[type="file"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-        .row { display: flex; gap: 10px; }
-        .row .form-group { flex: 1; }
-        .slider-container { display: flex; align-items: center; gap: 10px; }
-        input[type="range"] { flex: 1; }
-        button { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { background-color: #1557b0; }
-        .preview-box { text-align: center; margin-top: 20px; padding: 15px; border: 2px dashed #bbb; border-radius: 8px; display: none; }
-        .preview-box img { max-width: 100%; max-height: 200px; border: 1px solid #ddd; margin-bottom: 10px; }
-        .file-info { font-size: 14px; color: #d93025; font-weight: bold; margin-bottom: 15px; }
-        .btn-download { background-color: #34a853; text-decoration: none; display: inline-block; padding: 10px 25px; color: white; border-radius: 6px; font-weight: bold; }
-        .btn-download:hover { background-color: #2e7d32; }
-        .seo-section { margin-top: 30px; padding-top: 15px; border-top: 1px solid #eee; font-size: 14px; color: #555; line-height: 1.5; }
-        .seo-section h3 { color: #333; font-size: 16px; margin-bottom: 5px; }
+        label { font-weight: 600; display: block; margin-bottom: 5px; font-size: 14px; }
+        input[type="file"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; }
+        
+        .grid-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        /* Buttons & Presets */
+        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 15px; }
+        .preset-btn { background-color: #e7f1ff; color: #084298; border: 1px solid #b6d4fe; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .preset-btn:hover { background-color: #cfe2ff; }
+        
+        .action-btn { width: 100%; padding: 14px; background-color: #0d6efd; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .action-btn:hover { background-color: #0b5ed7; }
+        
+        .slider-container { display: flex; align-items: center; gap: 15px; }
+        input[type="range"] { flex: 1; accent-color: #0d6efd; }
+        
+        /* Preview Section */
+        .preview-area { text-align: center; margin-top: 25px; padding: 20px; border: 2px dashed #0d6efd; border-radius: 8px; display: none; background-color: #f0f7ff; }
+        .preview-area img { max-width: 100%; max-height: 250px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        .file-meta { font-size: 16px; font-weight: bold; color: #198754; margin-bottom: 15px; }
+        .download-btn { background-color: #198754; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block; }
+        .download-btn:hover { background-color: #157347; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>सरकारी फॉर्म फोटो & सिग्नेचर रिसाइज़र</h1>
-    <p class="subtitle">ऑनलाइन अपनी फोटो और सिग्नेचर को परफेक्ट साइज़ (KB/MB) में बदलें</p>
+<div class="main-container">
+    <h1>ऑल-इन-वन फोटो & सिग्नेचर रिसाइज़र</h1>
+    <p class="subtitle">सरकारी फॉर्म के लिए साइज (KB/MB), डायमेंशन और फॉर्मेट तुरंत बदलें</p>
 
-    <div class="form-group">
-        <label>1. फोटो या सिग्नेचर चुनें:</label>
+    <!-- Step 1: Upload -->
+    <div class="section-box">
+        <label>1. अपनी फाइल चुनें:</label>
         <input type="file" id="uploadInput" accept="image/*">
     </div>
 
-    <div class="row">
+    <!-- Step 2: Quick Presets -->
+    <div class="section-box">
+        <span class="section-title">⚡ क्विक सरकारी फॉर्म प्रेसेट्स</span>
+        <div class="btn-grid">
+            <button class="preset-btn" onclick="setDimensions(350, 450)">पासपोर्ट साइज (350×450)</button>
+            <button class="preset-btn" onclick="setDimensions(400, 200)">सिग्नेचर (400×200)</button>
+            <button class="preset-btn" onclick="setDimensions(600, 600)">पोस्टकार्ड (600×600)</button>
+            <button class="preset-btn" onclick="setDimensions(200, 230)">थंब इंप्रेशन (200×230)</button>
+        </div>
+
+        <div class="grid-row">
+            <div class="form-group">
+                <label>चौड़ाई (Width in px):</label>
+                <input type="number" id="imgWidth" placeholder="उदा: 350">
+            </div>
+            <div class="form-group">
+                <label>ऊंचाई (Height in px):</label>
+                <input type="number" id="imgHeight" placeholder="उदा: 450">
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Compression & Format -->
+    <div class="section-box">
+        <span class="section-title">🛠️ साइज और क्वालिटी कंट्रोल</span>
         <div class="form-group">
-            <label>चौड़ाई (Width in px):</label>
-            <input type="number" id="imgWidth" placeholder="उदा: 350">
+            <label>फाइल क्वालिटी (KB/MB कम करने के लिए):</label>
+            <div class="slider-container">
+                <input type="range" id="qualitySlider" min="0.1" max="1" step="0.05" value="0.8">
+                <span id="qualityVal" style="font-weight:bold; min-width: 45px;">80%</span>
+            </div>
         </div>
+
         <div class="form-group">
-            <label>ऊंचाई (Height in px):</label>
-            <input type="number" id="imgHeight" placeholder="उदा: 450">
+            <label>आउटपुट फॉर्मेट (Convert Format):</label>
+            <select id="formatSelect">
+                <option value="jpeg">JPG / JPEG</option>
+                <option value="png">PNG</option>
+                <option value="webp">WEBP</option>
+                <option value="pdf">PDF Document</option>
+            </select>
         </div>
     </div>
 
-    <div class="form-group">
-        <label>फाइल साइज़ कंट्रोल (Quality):</label>
-        <div class="slider-container">
-            <input type="range" id="qualitySlider" min="0.1" max="1" step="0.05" value="0.8">
-            <span id="qualityVal">80%</span>
-        </div>
-    </div>
+    <button class="action-btn" onclick="processImage()">प्रोसेस और कन्वर्ट करें</button>
 
-    <div class="form-group">
-        <label>फाइल फॉर्मेट (Format):</label>
-        <select id="formatSelect">
-            <option value="jpeg">JPG / JPEG</option>
-            <option value="png">PNG</option>
-            <option value="pdf">PDF Document</option>
-        </select>
-    </div>
-
-    <button onclick="processImage()">रिसाइज़ और कन्वर्ट करें</button>
-
-    <div class="preview-box" id="previewBox">
-        <h3>आउटपुट प्रीव्यू</h3>
-        <img id="outputImage" src="" alt="Processed Image">
-        <div class="file-info" id="fileInfo"></div>
-        <button id="downloadBtn" class="btn-download" onclick="downloadFile()">डाउनलोड फाइल</button>
-    </div>
-
-    <div class="seo-section">
-        <h3>यह टूल कैसे काम करता है?</h3>
-        <p>सरकारी भर्ती (SSC, UPSC, Railway, Bank) के फॉर्म भरते समय फोटो और सिग्नेचर का सही माप और साइज़ (KB) होना ज़रूरी है। यह टूल बिना किसी सॉफ्टवेयर के आपके ब्राउज़र में ही सेकंडों में फोटो को रीसाइज और कंप्रेस कर देता है।</p>
+    <!-- Output Preview -->
+    <div class="preview-area" id="previewArea">
+        <h3>प्रोसेस की गई फाइल</h3>
+        <img id="outputImage" src="" alt="Output">
+        <div class="file-meta" id="fileMeta"></div>
+        <br>
+        <button class="download-btn" onclick="downloadFile()">फाइल डाउनलोड करें</button>
     </div>
 </div>
 
@@ -92,10 +116,16 @@
     let originalImage = new Image();
     let processedDataUrl = '';
     let processedBlob = null;
+    let selectedFormat = 'jpeg';
 
     qualitySlider.addEventListener('input', () => {
         qualityVal.innerText = Math.round(qualitySlider.value * 100) + '%';
     });
+
+    function setDimensions(w, h) {
+        document.getElementById('imgWidth').value = w;
+        document.getElementById('imgHeight').value = h;
+    }
 
     uploadInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
@@ -114,7 +144,7 @@
 
     function processImage() {
         if (!uploadInput.files[0]) {
-            alert('कृपया पहले एक फोटो सेलेक्ट करें!');
+            alert('कृपया पहले कोई फोटो या सिग्नेचर अपलोड करें!');
             return;
         }
 
@@ -124,20 +154,21 @@
         const targetWidth = parseInt(document.getElementById('imgWidth').value) || originalImage.width;
         const targetHeight = parseInt(document.getElementById('imgHeight').value) || originalImage.height;
         const quality = parseFloat(qualitySlider.value);
-        const format = document.getElementById('formatSelect').value;
+        selectedFormat = document.getElementById('formatSelect').value;
 
         canvas.width = targetWidth;
         canvas.height = targetHeight;
 
+        // White background for transparent images
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(originalImage, 0, 0, targetWidth, targetHeight);
 
-        const previewBox = document.getElementById('previewBox');
+        const previewArea = document.getElementById('previewArea');
         const outputImage = document.getElementById('outputImage');
-        const fileInfo = document.getElementById('fileInfo');
+        const fileMeta = document.getElementById('fileMeta');
 
-        if (format === 'pdf') {
+        if (selectedFormat === 'pdf') {
             const { jsPDF } = window.jspdf;
             const imgData = canvas.toDataURL('image/jpeg', quality);
             const pdf = new jsPDF({
@@ -149,27 +180,30 @@
             processedBlob = pdf.output('blob');
             processedDataUrl = URL.createObjectURL(processedBlob);
             outputImage.src = imgData;
-            fileInfo.innerText = `नया साइज़: ${(processedBlob.size / 1024).toFixed(2)} KB`;
+            fileMeta.innerText = `नया साइज: ${(processedBlob.size / 1024).toFixed(2)} KB`;
         } else {
-            const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
+            const mimeType = `image/${selectedFormat}`;
             processedDataUrl = canvas.toDataURL(mimeType, quality);
+            
             fetch(processedDataUrl)
                 .then(res => res.blob())
                 .then(blob => {
                     processedBlob = blob;
                     const sizeInKB = (blob.size / 1024).toFixed(2);
-                    fileInfo.innerText = `नया साइज़: ${sizeInKB} KB (${targetWidth}x${targetHeight} px)`;
+                    fileMeta.innerText = `नया साइज: ${sizeInKB} KB (${targetWidth}×${targetHeight} px) | फॉर्मेट: ${selectedFormat.toUpperCase()}`;
                 });
             outputImage.src = processedDataUrl;
         }
-        previewBox.style.display = 'block';
+
+        previewArea.style.display = 'block';
+        previewArea.scrollIntoView({ behavior: 'smooth' });
     }
 
     function downloadFile() {
-        const format = document.getElementById('formatSelect').value;
+        if (!processedBlob) return;
         const a = document.createElement('a');
         a.href = processedDataUrl;
-        a.download = `govt_form_file.${format === 'pdf' ? 'pdf' : format}`;
+        a.download = `converted_file_${Date.now()}.${selectedFormat === 'pdf' ? 'pdf' : selectedFormat}`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
