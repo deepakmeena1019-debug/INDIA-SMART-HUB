@@ -1,75 +1,190 @@
-
-
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>India Smart Hub</title>
+    <title>सरकारी फॉर्म फोटो & सिग्नेचर रिसाइज़र (Resize & Convert Tool)</title>
+    <!-- jsPDF Library for PDF Conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
-        header { background: linear-gradient(135deg, #FF6600, #FFFFFF, #138808); color: #fff; padding: 2rem 1rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-        nav { background: #000080; color: #fff; text-align: center; padding: 0.5rem 0; position: sticky; top: 0; }
-        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        .container { padding: 20px; max-width: 1200px; margin: auto; }
-        .section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .section h2 { color: #FF6600; border-bottom: 2px solid #138808; padding-bottom: 10px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
-        .card { background: #f9f9f9; padding: 15px; border-left: 4px solid #000080; border-radius: 4px; }
-        footer { background: #333; color: #fff; text-align: center; padding: 10px; position: relative; bottom: 0; width: 100%; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 650px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #0056b3; margin-bottom: 5px; }
+        p.subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 18px; }
+        label { font-weight: bold; display: block; margin-bottom: 6px; }
+        input[type="file"], input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+        .row { display: flex; gap: 15px; }
+        .row .form-group { flex: 1; }
+        .slider-container { display: flex; align-items: center; gap: 10px; }
+        input[type="range"] { flex: 1; }
+        button { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background-color: #218838; }
+        .preview-box { text-align: center; margin-top: 25px; padding: 15px; border: 2px dashed #bbb; border-radius: 8px; display: none; }
+        .preview-box img { max-width: 100%; max-height: 250px; border: 1px solid #ddd; margin-bottom: 10px; }
+        .file-info { font-size: 14px; color: #28a745; font-weight: bold; margin-bottom: 15px; }
+        .btn-download { background-color: #007bff; text-decoration: none; display: inline-block; padding: 10px 20px; color: white; border-radius: 6px; font-weight: bold; }
+        .btn-download:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
 
-<header>
-  <h0> deepak funny 🤣 😅</h0>
-  <h1>India Smart Hub</h1>
-    <p>आपका डिजिटल सारथी</p>
-  <p>deepak meena shogan 
-  jaipur rajasthan india my dream big dream  i am learning web design show my first web site🤣 just fun 😅</p>
-</header>
+<div class="container">
+    <h2>सरकारी फॉर्म फोटो & सिग्नेचर रिसाइज़र</h2>
+    <p class="subtitle">फोटो का साइज (KB/MB), चौड़ाई, ऊंचाई बदलें और JPG / PDF में कन्वर्ट करें</p>
 
-<nav>
-
- <p>DEEPAKMEENA🤣🤣</p>   
-    <a href="#jobs">सरकारी नौकरियां</a>
-    <a href="#education">शिक्षा</a>
-</nav>
-</section>
-
-</div>
-
-    <div id="tools" class="section">
-        <h2>🛠️ ऑनलाइन टूल्स</h2>
-        <div class="grid">
-    <h2>ऑनलाइन टूल</h2>
-    <div class="card">
-        <h3>फोटो रिसाइज़र और कन्वर्टर</h3>
-      <input type="mb kb में बदलने का एक ऑप्शन बटन उसके अंदर संख्या होनी चाहिए 20 50 100 डेढ़ सौ 200 500 </p>
-      </p>एक डाउनलोड का भी ऑप्शन होना चाहिए text/*">
-        <p>अपनी फोटो का साइज़ केबी/एमबी में सेट करें और JPG या PDF में बदलें।</p>
-        <input type="file" accept="image/*">
-        <a>https://www.instagram.com/p/DgHT24FFHCQ/?bqrl=MXM1eGo0Mm85YzdkOQ=</a> 
+    <!-- 1. फाइल अपलोड -->
+    <div class="form-group">
+        <label>1. फोटो या सिग्नेचर चुनें:</label>
+        <input type="file" id="uploadInput" accept="image/*">
     </div>
-</section>
+
+    <!-- 2. डाइमेंशन (Width & Height) -->
+    <div class="row">
+        <div class="form-group">
+            <label>चौड़ाई (Width in px):</label>
+            <input type="number" id="imgWidth" placeholder="उदा: 200">
         </div>
-    <div id="jobs" class="section">
-        <h2>💼 सरकारी नौकरियां</h2>
-        <p>नवीनतम भर्तियां, एडमिट कार्ड और परिणाम.</p>
+        <div class="form-group">
+            <label>ऊंचाई (Height in px):</label>
+            <input type="number" id="imgHeight" placeholder="उदा: 230">
+        </div>
     </div>
 
-    <div id="education" class="section">
-        <h2>📚 शिक्षा और ज्ञान</h2>
-        <p>महत्वपूर्ण नोट्स और सामान्य अध्ययन सामग्री.</p>
+    <!-- 3. क्वालिटी / KB साइज कंट्रोल -->
+    <div class="form-group">
+        <label>क्वालिटी (KB/MB साइज कम करने के लिए):</label>
+        <div class="slider-container">
+            <input type="range" id="qualitySlider" min="0.1" max="1" step="0.05" value="0.8">
+            <span id="qualityVal">80%</span>
+        </div>
+    </div>
+
+    <!-- 4. फॉर्मेट सिलेक्शन -->
+    <div class="form-group">
+        <label>फाइल फॉर्मेट (Format):</label>
+        <select id="formatSelect">
+            <option value="jpeg">JPG / JPEG</option>
+            <option value="png">PNG</option>
+            <option value="pdf">PDF (Document)</option>
+        </select>
+    </div>
+
+    <button onclick="processImage()">रिसाइज़ और कन्वर्ट करें</button>
+
+    <!-- आउटपुट और डाउनलोड सेक्शन -->
+    <div class="preview-box" id="previewBox">
+        <h3>प्रीव्यू (Preview)</h3>
+        <img id="outputImage" src="" alt="Resized Image">
+        <div class="file-info" id="fileInfo"></div>
+        <button id="downloadBtn" class="btn-download" onclick="downloadFile()">डाउनलोड करें</button>
     </div>
 </div>
 
-<footer>
-    <p>&copy; 2026 India Smart Hub. सर्वाधिकार सुरक्षित.</p>
-</footer>
+<script>
+    const uploadInput = document.getElementById('uploadInput');
+    const qualitySlider = document.getElementById('qualitySlider');
+    const qualityVal = document.getElementById('qualityVal');
+    let originalImage = new Image();
+    let processedDataUrl = '';
+    let processedBlob = null;
+
+    // अपडेट क्वालिटी परसेंट
+    qualitySlider.addEventListener('input', () => {
+        qualityVal.innerText = Math.round(qualitySlider.value * 100) + '%';
+    });
+
+    // इमेज लोड होने पर ओरिजिनल साइज भरें
+    uploadInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                originalImage.src = event.target.result;
+                originalImage.onload = function() {
+                    document.getElementById('imgWidth').value = originalImage.width;
+                    document.getElementById('imgHeight').value = originalImage.height;
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // रिसाइज़ और प्रोसेस फंक्शन
+    function processImage() {
+        if (!uploadInput.files[0]) {
+            alert('कृपया पहले एक फोटो या सिग्नेचर सेलेक्ट करें!');
+            return;
+        }
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const targetWidth = parseInt(document.getElementById('imgWidth').value) || originalImage.width;
+        const targetHeight = parseInt(document.getElementById('imgHeight').value) || originalImage.height;
+        const quality = parseFloat(qualitySlider.value);
+        const format = document.getElementById('formatSelect').value;
+
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+
+        // श्वेत बैकग्राउंड (अगर पारदर्शी PNG को JPG में बदलें)
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(originalImage, 0, 0, targetWidth, targetHeight);
+
+        const previewBox = document.getElementById('previewBox');
+        const outputImage = document.getElementById('outputImage');
+        const fileInfo = document.getElementById('fileInfo');
+
+        if (format === 'pdf') {
+            const { jsPDF } = window.jspdf;
+            const imgData = canvas.toDataURL('image/jpeg', quality);
+            
+            // PDF पेज तैयार करें
+            const pdf = new jsPDF({
+                orientation: targetWidth > targetHeight ? 'landscape' : 'portrait',
+                unit: 'px',
+                format: [targetWidth, targetHeight]
+            });
+            pdf.addImage(imgData, 'JPEG', 0, 0, targetWidth, targetHeight);
+            
+            processedBlob = pdf.output('blob');
+            processedDataUrl = URL.createObjectURL(processedBlob);
+
+            outputImage.src = imgData; // प्रीव्यू के लिए JPG इमेज दिखाएं
+            fileInfo.innerText = `नया साइज (PDF): ${(processedBlob.size / 1024).toFixed(2)} KB`;
+        } else {
+            const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
+            processedDataUrl = canvas.toDataURL(mimeType, quality);
+            
+            // साइज (KB) कैलकुलेट करें
+            fetch(processedDataUrl)
+                .then(res => res.blob())
+                .then(blob => {
+                    processedBlob = blob;
+                    const sizeInKB = (blob.size / 1024).toFixed(2);
+                    fileInfo.innerText = `नया साइज: ${sizeInKB} KB (${targetWidth}x${targetHeight} px)`;
+                });
+
+            outputImage.src = processedDataUrl;
+        }
+
+        previewBox.style.display = 'block';
+    }
+
+    // डाउनलोड फंक्शन
+    function downloadFile() {
+        const format = document.getElementById('formatSelect').value;
+        const a = document.createElement('a');
+        a.href = processedDataUrl;
+        a.download = `resized_document.${format === 'pdf' ? 'pdf' : format}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
 
 </body>
 </html>
-
