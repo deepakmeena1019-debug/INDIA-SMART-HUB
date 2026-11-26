@@ -223,19 +223,31 @@ function renderInfoAndFooter() {
 function applyStaticLang() {
   const t = i18n[lang];
   document.documentElement.lang = lang;
-  document.getElementById('tagline').textContent = t.tagline;
-  document.getElementById('heroTitle').textContent = t.heroTitle;
-  document.getElementById('heroSub').textContent = t.heroSub;
-  document.getElementById('searchInput').placeholder = t.searchPh;
-  document.getElementById('searchBtn').textContent = t.searchBtn;
-  document.getElementById('langToggle').textContent = t.langBtn;
-  document.getElementById('navAllTools').textContent = t.allTools;
-  document.getElementById('navBlog').textContent = t.blog;
-  document.getElementById('navAbout').textContent = t.about;
-  document.getElementById('navPrivacy').textContent = t.privacy;
-  document.getElementById('closeWsBtn').textContent = t.close;
-  document.getElementById('adSlotTop').textContent = t.adTop;
-  document.getElementById('adSlotMid').textContent = t.adMid;
+
+  const setTxt = (id, txt) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = txt;
+  };
+
+  const setPh = (id, txt) => {
+    const el = document.getElementById(id);
+    if (el) el.placeholder = txt;
+  };
+
+  setTxt('tagline', t.tagline);
+  setTxt('heroTitle', t.heroTitle);
+  setTxt('heroSub', t.heroSub);
+  setPh('searchInput', t.searchPh);
+  setTxt('searchBtn', t.searchBtn);
+  setTxt('langToggle', t.langBtn);
+  setTxt('navAllTools', t.allTools);
+  setTxt('navBlog', t.blog);
+  setTxt('navAbout', t.about);
+  setTxt('navPrivacy', t.privacy);
+  setTxt('closeWsBtn', t.close);
+  setTxt('adSlotTop', t.adTop);
+  setTxt('adSlotMid', t.adMid);
+
   renderInfoAndFooter();
 }
 
