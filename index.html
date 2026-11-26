@@ -3,81 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ऑल-इन-वन स्मार्ट स्टूडियो</title>
+    <title>Smart इंडिया हब - स्मार्ट ऑनलाइन टूल्स</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
             --surface: rgba(255, 255, 255, 0.05);
+            --surface-hover: rgba(255, 255, 255, 0.1);
             --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.3);
         }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; padding: 0;
+            font-family: 'Inter', sans-serif;
             background: var(--bg-gradient);
             color: var(--text-main);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
         header {
-            text-align: center; padding: 2.5rem 1rem;
+            text-align: center;
+            padding: 3rem 1rem 2rem;
             background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        h1 { margin: 0; font-size: 2.5rem; background: linear-gradient(90deg, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #a78bfa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(167, 139, 250, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+        }
+
         .tool-nav {
-            display: flex; gap: 10px; justify-content: center;
-            margin-bottom: 2rem; flex-wrap: wrap;
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            backdrop-filter: blur(10px);
         }
+
+        .tool-nav h3 {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid var(--accent);
+            padding-left: 0.5rem;
+        }
+
         .nav-btn {
-            background: var(--surface); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-main); padding: 0.8rem 1.5rem; border-radius: 50px;
-            cursor: pointer; font-weight: 600; transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            font-weight: 500;
+            transition: all 0.3s cubicHex(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--accent); border-color: var(--accent);
-            transform: translateY(-2px); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+
+        .nav-btn:hover {
+            background: var(--surface-hover);
+            border-color: var(--accent);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+
+        .nav-btn.active {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         #workspace {
-            background: var(--surface); border-radius: 16px;
-            padding: 2rem; min-height: 400px;
-            backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            min-height: 700px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            .tool-nav {
+                height: auto;
+            }
         }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>Smart स्टूडियो</h1>
-        <p>आपकी अपनी एडवांस टूलकिट</p>
+        <h1>Smart इंडिया हब</h1>
+        <p>आपकी अपनी स्मार्ट टूलकिट</p>
     </header>
 
     <main>
-        <nav class="tool-nav">
-            <button class="nav-btn active" onclick="loadTool('resizer')">इमेज रिसाइज़र</button>
-            <button class="nav-btn" onclick="loadTool('pdf-maker')">PDF मेकर</button>
-            <button class="nav-btn" onclick="loadTool('converter')">कनवर्टर</button>
-        </nav>
+        <section class="tool-nav">
+            <!-- संपादन और डिज़ाइन -->
+            <h3>संपादन और डिज़ाइन</h3>
+            <button class="nav-btn" onclick="loadTool('add-border')"><span>फोटो बॉर्डर</span></button>
+            <button class="nav-btn" onclick="loadTool('add-frame')"><span>बैकग्राउंड फ्रेम</span></button>
+            <button class="nav-btn" onclick="loadTool('add-text')"><span>फोटो पर टेक्स्ट</span></button>
+            <button class="nav-btn" onclick="loadTool('image-cropper')"><span>इमेज क्रॉपर</span></button>
+            <button class="nav-btn" onclick="loadTool('image-flip')"><span>इमेज फ्लिप</span></button>
+            <button class="nav-btn" onclick="loadTool('image-rotator')"><span>इमेज रोटेटर</span></button>
+            <button class="nav-btn" onclick="loadTool('image-compressor')"><span>इमेज कंप्रेसर</span></button>
+            <button class="nav-btn" onclick="loadTool('resizer')"><span>इमेज रिसाइज़र</span></button>
+            <button class="nav-btn" onclick="loadTool('document-resizer')"><span>डॉक्यूमेंट रिसाइज़र</span></button>
+
+            <!-- डॉक्यूमेंट और PDF -->
+            <h3>डॉक्यूमेंट और PDF</h3>
+            <button class="nav-btn" onclick="loadTool('converter')"><span>इमेज कन्वर्टर</span></button>
+            <button class="nav-btn" onclick="loadTool('pdf-maker')"><span>PDF मेकर</span></button>
+            <button class="nav-btn" onclick="loadTool('pdf-merge')"><span>PDF मर्ज</span></button>
+            <button class="nav-btn" onclick="loadTool('pdf-scanner')"><span>PDF स्कैनर</span></button>
+            <button class="nav-btn" onclick="loadTool('text-to-pdf')"><span>टेक्स्ट टू PDF</span></button>
+
+            <!-- कैलकुलेटर और फाइनेंस -->
+            <h3>कैलकुलेटर और फाइनेंस</h3>
+            <button class="nav-btn" onclick="loadTool('age-calculator')"><span>आयु कैलकुलेटर</span></button>
+            <button class="nav-btn" onclick="loadTool('emi-calculator')"><span>EMI कैलकुलेटर</span></button>
+            <button class="nav-btn" onclick="loadTool('gst-calculator')"><span>GST कैलकुलेटर</span></button>
+            <button class="nav-btn" onclick="loadTool('discount-calculator')"><span>डिस्काउंट कैलकुलेटर</span></button>
+            <button class="nav-btn" onclick="loadTool('percentage-calculator')"><span>प्रतिशत कैलकुलेटर</span></button>
+
+            <!-- उपयोगिता और आधिकारिक -->
+            <h3>उपयोगिता और आधिकारिक</h3>
+            <button class="nav-btn" onclick="loadTool('passport-photo')"><span>पासपोर्ट फोटो मेकर</span></button>
+            <button class="nav-btn" onclick="loadTool('signature-resizer')"><span>सिग्नेचर रिसाइज़र</span></button>
+            <button class="nav-btn" onclick="loadTool('photo-signature-merger')"><span>फोटो-सिग्नेचर मरजर</span></button>
+            <button class="nav-btn" onclick="loadTool('self-declaration')"><span>स्व-घोषणा पत्र</span></button>
+            <button class="nav-btn" onclick="loadTool('word-counter')"><span>वर्ड काउंटर</span></button>
+            <button class="nav-btn" onclick="loadTool('password-generator')"><span>पासवर्ड जनरेटर</span></button>
+        </section>
 
         <section id="workspace">
-            <h2>स्वागत है!</h2>
-            <p>ऊपर दिए गए बटनों में से कोई एक टूल चुनें। टूल का इस्तेमाल यहीं लोड हो जाएगा。</p>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 500px; text-align: center;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-main);">स्मार्ट टूलकिट में आपका स्वागत है</h2>
+                <p style="color: var(--text-muted); font-size: 1.2rem;">कृपया बाईं ओर दिए गए नेविगेशन मेनू से कोई भी टूल चुनें。</p>
+            </div>
         </section>
     </main>
 
-    <script src="main.js"></script>
     <script>
         async function loadTool(toolName) {
             const workspace = document.getElementById('workspace');
-            workspace.innerHTML = '<p>लोड हो रहा है...</p>';
+            
+            // Active button state management
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Show loading spinner
+            workspace.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 500px; gap: 1.5rem;">
+                    <div style="width: 60px; height: 60px; border: 5px solid rgba(255,255,255,0.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <p style="color: var(--text-muted); font-size: 1.2rem; font-weight: 500;">मॉड्यूल लोड हो रहा है...</p>
+                </div>
+            `;
 
             try {
-                const module = await import(`./modules/${toolName}.js?cachebust=${Date.now()}`);
-                module.init(workspace);
+                // Dynamic import with cache busting
+                const module = await import(`./modules/${toolName}.js?t=${new Date().getTime()}`);
+                workspace.innerHTML = '';
+                if (typeof module.init === 'function') {
+                    module.init(workspace);
+                } else {
+                    throw new Error("Module does not export an init function.");
+                }
             } catch (err) {
                 console.error("टूल लोड करने में विफल:", err);
-                workspace.innerHTML = '<h2 style="color: #ef4444;">त्रुटि</h2><p>माफ़ कीजिए, यह टूल अभी उपलब्ध नहीं है। कृपया मॉड्यूल की जाँच करें。</p>';
+                workspace.innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; padding: 3rem; border-radius: 16px; text-align: center; max-width: 600px; margin: 4rem auto;">
+                        <h3 style="color: #f87171; font-size: 1.8rem; margin-bottom: 1rem;">लोडिंग में त्रुटि</h3>
+                        <p style="color: #d1d5db; margin-bottom: 2rem; line-height: 1.6;">क्षमा करें, यह टूल अभी लोड नहीं हो सका। कृपया सुनिश्चित करें कि 'modules/' फ़ोल्डर में '${toolName}.js' मौजूद है。</p>
+                        <button onclick="loadTool('${toolName}')" style="background: #ef4444; color: white; border: none; padding: 1rem 2.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s;">पुनः प्रयास करें</button>
+                    </div>
+                `;
             }
         }
     </script>
