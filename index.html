@@ -1,239 +1,528 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart इंडिया हब - स्मार्ट ऑनलाइन टूल्स</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --surface: rgba(255, 255, 255, 0.05);
-            --surface-hover: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #8b5cf6;
-            --accent-glow: rgba(139, 92, 246, 0.3);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart इंडिया हब — आपकी अपनी स्मार्ट टूलकिट</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --bg-soft: rgba(255, 255, 255, 0.05);
+      --border-soft: rgba(255, 255, 255, 0.12);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --success: #10b981;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans Devanagari', 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #1e1b4b 0%, var(--bg-dark) 55%, #090d16 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
 
-        header {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 14px 18px;
+    }
 
-        header h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, #a78bfa, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(167, 139, 250, 0.3);
-            margin-bottom: 0.5rem;
-        }
+    .header-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
 
-        main {
-            flex: 1;
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 2rem;
-        }
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.35);
+    }
 
-        .tool-nav {
-            background: var(--surface);
-            padding: 1.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            height: fit-content;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            backdrop-filter: blur(10px);
-        }
+    .brand-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
 
-        .tool-nav h3 {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-left: 3px solid var(--accent);
-            padding-left: 0.5rem;
-        }
+    .brand-sub {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
-            padding: 0.9rem 1.2rem;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: left;
-            font-weight: 500;
-            transition: all 0.3s cubicHex(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    .search-box {
+      flex: 1 1 280px;
+      max-width: 420px;
+      position: relative;
+    }
 
-        .nav-btn:hover {
-            background: var(--surface-hover);
-            border-color: var(--accent);
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+    }
 
-        .nav-btn.active {
-            background: var(--accent);
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
+    .search-box input:focus {
+      border-color: var(--accent-2);
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+    .app-shell {
+      max-width: 1240px;
+      margin: 20px auto;
+      padding: 0 16px 40px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
 
-        #workspace {
-            background: var(--surface);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            min-height: 700px;
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+    @media (max-width: 860px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            main {
-                grid-template-columns: 1fr;
-            }
-            .tool-nav {
-                height: auto;
-            }
-        }
-    </style>
+    .sidebar-panel {
+      background: var(--bg-soft);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 14px;
+      max-height: calc(100vh - 105px);
+      overflow-y: auto;
+      position: sticky;
+      top: 84px;
+    }
+
+    @media (max-width: 860px) {
+      .sidebar-panel {
+        position: static;
+        max-height: 290px;
+      }
+    }
+
+    .cat-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .cat-tab {
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .cat-tab.active,
+    .cat-tab:hover {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    .cat-group-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #a5b4fc;
+      margin: 12px 0 6px;
+      padding-left: 4px;
+    }
+
+    .tool-btn {
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .tool-btn:hover {
+      background: rgba(124, 58, 237, 0.22);
+      border-color: rgba(124, 58, 237, 0.45);
+    }
+
+    .tool-btn.active {
+      background: linear-gradient(90deg, rgba(124, 58, 237, 0.35), rgba(6, 182, 212, 0.22));
+      border-color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .main-stage {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 18px;
+      min-height: 520px;
+    }
+
+    .stage-topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .active-tool-badge {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .home-btn {
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .home-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    #workspace {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 14px;
+      padding: 16px;
+      min-height: 400px;
+    }
+
+    .welcome-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .quick-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      border-color: #7c3aed;
+    }
+
+    .quick-card strong {
+      display: block;
+      font-size: 14px;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .quick-card span {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .loader-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      gap: 12px;
+      color: #334155;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 4px solid #e2e8f0;
+      border-top-color: #7c3aed;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Smart इंडिया हब</h1>
-        <p>आपकी अपनी स्मार्ट टूलकिट</p>
-    </header>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand" id="brandHome">
+        <div class="brand-logo">SI</div>
+        <div>
+          <h1 class="brand-title">Smart इंडिया हब</h1>
+          <p class="brand-sub">आपकी अपनी स्मार्ट टूलकिट — तेज़, सुरक्षित और आसान</p>
+        </div>
+      </div>
 
-    <main>
-        <section class="tool-nav">
-            <!-- संपादन और डिज़ाइन -->
-            <h3>संपादन और डिज़ाइन</h3>
-            <button class="nav-btn" onclick="loadTool('add-border')"><span>फोटो बॉर्डर</span></button>
-            <button class="nav-btn" onclick="loadTool('add-frame')"><span>बैकग्राउंड फ्रेम</span></button>
-            <button class="nav-btn" onclick="loadTool('add-text')"><span>फोटो पर टेक्स्ट</span></button>
-            <button class="nav-btn" onclick="loadTool('image-cropper')"><span>इमेज क्रॉपर</span></button>
-            <button class="nav-btn" onclick="loadTool('image-flip')"><span>इमेज फ्लिप</span></button>
-            <button class="nav-btn" onclick="loadTool('image-rotator')"><span>इमेज रोटेटर</span></button>
-            <button class="nav-btn" onclick="loadTool('image-compressor')"><span>इमेज कंप्रेसर</span></button>
-            <button class="nav-btn" onclick="loadTool('resizer')"><span>इमेज रिसाइज़र</span></button>
-            <button class="nav-btn" onclick="loadTool('document-resizer')"><span>डॉक्यूमेंट रिसाइज़र</span></button>
+      <div class="search-box">
+        <input type="search" id="toolSearch" placeholder="टूल खोजें (जैसे: PDF, सिग्नेचर, क्रॉप, EMI)..." autocomplete="off" />
+      </div>
+    </div>
+  </header>
 
-            <!-- डॉक्यूमेंट और PDF -->
-            <h3>डॉक्यूमेंट और PDF</h3>
-            <button class="nav-btn" onclick="loadTool('converter')"><span>इमेज कन्वर्टर</span></button>
-            <button class="nav-btn" onclick="loadTool('pdf-maker')"><span>PDF मेकर</span></button>
-            <button class="nav-btn" onclick="loadTool('pdf-merge')"><span>PDF मर्ज</span></button>
-            <button class="nav-btn" onclick="loadTool('pdf-scanner')"><span>PDF स्कैनर</span></button>
-            <button class="nav-btn" onclick="loadTool('text-to-pdf')"><span>टेक्स्ट टू PDF</span></button>
+  <div class="app-shell">
+    <aside class="sidebar-panel" aria-label="टूल्स मेनू">
+      <div class="cat-tabs" id="catTabs">
+        <button type="button" class="cat-tab active" data-cat="all">सभी</button>
+        <button type="button" class="cat-tab" data-cat="edit">संपादन</button>
+        <button type="button" class="cat-tab" data-cat="pdf">PDF</button>
+        <button type="button" class="cat-tab" data-cat="calc">कैलकुलेटर</button>
+        <button type="button" class="cat-tab" data-cat="util">उपयोगिता</button>
+      </div>
+      <div id="toolMenu"></div>
+    </aside>
 
-            <!-- कैलकुलेटर और फाइनेंस -->
-            <h3>कैलकुलेटर और फाइनेंस</h3>
-            <button class="nav-btn" onclick="loadTool('age-calculator')"><span>आयु कैलकुलेटर</span></button>
-            <button class="nav-btn" onclick="loadTool('emi-calculator')"><span>EMI कैलकुलेटर</span></button>
-            <button class="nav-btn" onclick="loadTool('gst-calculator')"><span>GST कैलकुलेटर</span></button>
-            <button class="nav-btn" onclick="loadTool('discount-calculator')"><span>डिस्काउंट कैलकुलेटर</span></button>
-            <button class="nav-btn" onclick="loadTool('percentage-calculator')"><span>प्रतिशत कैलकुलेटर</span></button>
-
-            <!-- उपयोगिता और आधिकारिक -->
-            <h3>उपयोगिता और आधिकारिक</h3>
-            <button class="nav-btn" onclick="loadTool('passport-photo')"><span>पासपोर्ट फोटो मेकर</span></button>
-            <button class="nav-btn" onclick="loadTool('signature-resizer')"><span>सिग्नेचर रिसाइज़र</span></button>
-            <button class="nav-btn" onclick="loadTool('photo-signature-merger')"><span>फोटो-सिग्नेचर मरजर</span></button>
-            <button class="nav-btn" onclick="loadTool('self-declaration')"><span>स्व-घोषणा पत्र</span></button>
-            <button class="nav-btn" onclick="loadTool('word-counter')"><span>वर्ड काउंटर</span></button>
-            <button class="nav-btn" onclick="loadTool('password-generator')"><span>पासवर्ड जनरेटर</span></button>
-        </section>
-
-        <section id="workspace">
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 500px; text-align: center;">
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-main);">स्मार्ट टूलकिट में आपका स्वागत है</h2>
-                <p style="color: var(--text-muted); font-size: 1.2rem;">कृपया बाईं ओर दिए गए नेविगेशन मेनू से कोई भी टूल चुनें。</p>
-            </div>
-        </section>
+    <main class="main-stage">
+      <div class="stage-topbar">
+        <div class="active-tool-badge" id="activeToolTitle">डैशबोर्ड — कोई भी टूल चुनें</div>
+        <button type="button" class="home-btn" id="backToHomeBtn">🏠 सभी टूल्स देखें</button>
+      </div>
+      <div id="workspace"></div>
     </main>
+  </div>
 
-    <script>
-        async function loadTool(toolName) {
-            const workspace = document.getElementById('workspace');
-            
-            // Active button state management
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+  <script>
+    const TOOLS = [
+      // संपादन और डिज़ाइन
+      { id: 'add-border', name: 'फ़ोटो बॉर्डर', cat: 'edit', desc: 'इमेज पर कस्टम बॉर्डर लगाएँ' },
+      { id: 'add-frame', name: 'बैकग्राउंड फ़्रेम', cat: 'edit', desc: 'फ़ोटो में आकर्षक फ़्रेम जोड़ें' },
+      { id: 'add-text', name: 'फ़ोटो पर टेक्स्ट', cat: 'edit', desc: 'इमेज पर टेक्स्ट, रंग व आउटलाइन लगाएँ' },
+      { id: 'image-cropper', name: 'इमेज क्रॉपर', cat: 'edit', desc: 'इमेज को क्रॉप, ज़ूम और रोटेट करें' },
+      { id: 'image-flip', name: 'इमेज फ़्लिप और एडिटर', cat: 'edit', desc: 'फ़्लिप, रोटेशन, फ़िल्टर और KB कंप्रेशन' },
+      { id: 'image-rotator', name: 'इमेज घुमाएँ', cat: 'edit', desc: '90°/180° या कस्टम डिग्री में घुमाएँ' },
+      { id: 'image-compressor', name: 'इमेज कंप्रेसर', cat: 'edit', desc: 'KB/MB साइज़ व क्वालिटी नियंत्रित करें' },
+      { id: 'resizer', name: 'इमेज रिसाइज़र', cat: 'edit', desc: 'चौड़ाई-ऊँचाई व क्वालिटी बदलें' },
+      { id: 'document-resizer', name: 'डॉक्यूमेंट रिसाइज़र', cat: 'edit', desc: 'दस्तावेज़ इमेज का साइज़ सेट करें' },
 
-            // Show loading spinner
-            workspace.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 500px; gap: 1.5rem;">
-                    <div style="width: 60px; height: 60px; border: 5px solid rgba(255,255,255,0.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                    <p style="color: var(--text-muted); font-size: 1.2rem; font-weight: 500;">मॉड्यूल लोड हो रहा है...</p>
-                </div>
-            `;
+      // डॉक्यूमेंट और PDF
+      { id: 'converter', name: 'इमेज कन्वर्टर', cat: 'pdf', desc: 'JPG, PNG, WEBP फ़ॉर्मेट बदलें' },
+      { id: 'pdf-maker', name: 'PDF मेकर', cat: 'pdf', desc: 'इमेज से PDF फ़ाइल बनाएँ' },
+      { id: 'pdf-merge', name: 'PDF मर्ज', cat: 'pdf', desc: 'कई PDF या इमेज को एक PDF में जोड़ें' },
+      { id: 'pdf-scanner', name: 'दस्तावेज़ स्कैनर', cat: 'pdf', desc: 'कैमरा या फ़ाइल से स्कैन कर JPG/PDF बनाएँ' },
+      { id: 'text-to-pdf', name: 'टेक्स्ट टू PDF', cat: 'pdf', desc: 'टेक्स्ट लिखकर या पेस्ट कर PDF बनाएँ' },
 
-            try {
-                // Dynamic import with cache busting
-                const module = await import(`./modules/${toolName}.js?t=${new Date().getTime()}`);
-                workspace.innerHTML = '';
-                if (typeof module.init === 'function') {
-                    module.init(workspace);
-                } else {
-                    throw new Error("Module does not export an init function.");
-                }
-            } catch (err) {
-                console.error("टूल लोड करने में विफल:", err);
-                workspace.innerHTML = `
-                    <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; padding: 3rem; border-radius: 16px; text-align: center; max-width: 600px; margin: 4rem auto;">
-                        <h3 style="color: #f87171; font-size: 1.8rem; margin-bottom: 1rem;">लोडिंग में त्रुटि</h3>
-                        <p style="color: #d1d5db; margin-bottom: 2rem; line-height: 1.6;">क्षमा करें, यह टूल अभी लोड नहीं हो सका। कृपया सुनिश्चित करें कि 'modules/' फ़ोल्डर में '${toolName}.js' मौजूद है。</p>
-                        <button onclick="loadTool('${toolName}')" style="background: #ef4444; color: white; border: none; padding: 1rem 2.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s;">पुनः प्रयास करें</button>
-                    </div>
-                `;
-            }
+      // कैलकुलेटर और फ़ाइनेंस
+      { id: 'age-calculator', name: 'आयु कैलकुलेटर', cat: 'calc', desc: 'सही उम्र साल, महीने और दिन में निकालें' },
+      { id: 'emi-calculator', name: 'EMI कैलकुलेटर', cat: 'calc', desc: 'मासिक EMI, ब्याज और कुल राशि जानें' },
+      { id: 'gst-calculator', name: 'GST कैलकुलेटर', cat: 'calc', desc: 'GST जोड़ें या अलग करें' },
+      { id: 'discount-calculator', name: 'डिस्काउंट कैलकुलेटर', cat: 'calc', desc: 'छूट के बाद अंतिम कीमत निकालें' },
+      { id: 'percentage-calculator', name: 'प्रतिशत कैलकुलेटर', cat: 'calc', desc: 'प्रतिशत गणना आसानी से करें' },
+
+      // उपयोगिता और आधिकारिक
+      { id: 'passport-photo', name: 'पासपोर्ट फ़ोटो मेकर', cat: 'util', desc: 'पासपोर्ट साइज़ फ़ोटो तैयार करें' },
+      { id: 'signature-resizer', name: 'सिग्नेचर रिसाइज़र', cat: 'util', desc: 'सिग्नेचर को डाइमेंशन व KB में सेट करें' },
+      { id: 'photo-signature-merger', name: 'फ़ोटो सिग्नेचर मर्जर', cat: 'util', desc: 'फ़ोटो और सिग्नेचर एक साथ मर्ज करें' },
+      { id: 'self-declaration', name: 'स्व-घोषणा पत्र', cat: 'util', desc: 'स्व-घोषणा पत्र तैयार व प्रिंट/डाउनलोड करें' },
+      { id: 'word-counter', name: 'वर्ड काउंटर', cat: 'util', desc: 'शब्द, अक्षर और लाइन गिनें' },
+      { id: 'password-generator', name: 'पासवर्ड जनरेटर', cat: 'util', desc: 'मज़बूत पासवर्ड तुरंत बनाएँ' }
+    ];
+
+    const CAT_LABELS = {
+      edit: 'संपादन और डिज़ाइन',
+      pdf: 'डॉक्यूमेंट और PDF',
+      calc: 'कैलकुलेटर और फ़ाइनेंस',
+      util: 'उपयोगिता और आधिकारिक'
+    };
+
+    const toolMenuEl = document.getElementById('toolMenu');
+    const workspaceEl = document.getElementById('workspace');
+    const activeToolTitleEl = document.getElementById('activeToolTitle');
+    const searchInputEl = document.getElementById('toolSearch');
+    const catTabsEl = document.getElementById('catTabs');
+
+    let selectedCategory = 'all';
+    let currentToolId = null;
+
+    function getFilteredTools() {
+      const q = (searchInputEl.value || '').trim().toLowerCase();
+      return TOOLS.filter((t) => {
+        const matchCat = selectedCategory === 'all' || t.cat === selectedCategory;
+        const matchQuery =
+          !q ||
+          t.name.toLowerCase().includes(q) ||
+          t.desc.toLowerCase().includes(q) ||
+          t.id.toLowerCase().includes(q);
+        return matchCat && matchQuery;
+      });
+    }
+
+    function renderMenu() {
+      const items = getFilteredTools();
+      if (items.length === 0) {
+        toolMenuEl.innerHTML = '<div style="padding:12px;font-size:13px;color:#94a3b8;">कोई टूल नहीं मिला।</div>';
+        return;
+      }
+
+      const grouped = {};
+      for (const item of items) {
+        if (!grouped[item.cat]) grouped[item.cat] = [];
+        grouped[item.cat].push(item);
+      }
+
+      let html = '';
+      for (const catKey of Object.keys(grouped)) {
+        html += `<div class="cat-group-title">${CAT_LABELS[catKey] || catKey}</div>`;
+        for (const tool of grouped[catKey]) {
+          const activeClass = tool.id === currentToolId ? 'active' : '';
+          html += `<button type="button" class="tool-btn ${activeClass}" data-tool="${tool.id}">${tool.name}</button>`;
         }
-    </script>
+      }
+
+      toolMenuEl.innerHTML = html;
+      toolMenuEl.querySelectorAll('.tool-btn').forEach((btn) => {
+        btn.onclick = () => loadTool(btn.getAttribute('data-tool'));
+      });
+    }
+
+    function renderHomeDashboard() {
+      currentToolId = null;
+      activeToolTitleEl.textContent = 'डैशबोर्ड — किसी भी टूल पर क्लिक करें';
+      renderMenu();
+
+      const items = getFilteredTools();
+      const cardsHtml = items
+        .map(
+          (t) => `
+          <button type="button" class="quick-card" data-tool="${t.id}">
+            <strong>${t.name}</strong>
+            <span>${t.desc}</span>
+          </button>`
+        )
+        .join('');
+
+      workspaceEl.innerHTML = `
+        <div>
+          <h2 style="margin:0 0 6px;font-size:20px;color:#0f172a;">Smart इंडिया हब में आपका स्वागत है</h2>
+          <p style="margin:0;font-size:13.5px;color:#475569;">जिस टूल पर क्लिक करेंगे, वह यहीं तुरंत खुलेगा—बिना पेज रीलोड किए।</p>
+          <div class="welcome-grid">${cardsHtml || '<p>कोई टूल नहीं मिला।</p>'}</div>
+        </div>
+      `;
+
+      workspaceEl.querySelectorAll('.quick-card').forEach((card) => {
+        card.onclick = () => loadTool(card.getAttribute('data-tool'));
+      });
+    }
+
+    async function loadTool(toolId) {
+      const tool = TOOLS.find((t) => t.id === toolId);
+      if (!tool) return;
+
+      currentToolId = tool.id;
+      activeToolTitleEl.textContent = tool.name;
+      renderMenu();
+
+      workspaceEl.innerHTML = `
+        <div class="loader-box">
+          <div class="spinner"></div>
+          <div><strong>${tool.name}</strong> लोड हो रहा है...</div>
+        </div>
+      `;
+
+      try {
+        const mod = await import(`./modules/${tool.id}.js?v=${Date.now()}`);
+        if (typeof mod.init === 'function') {
+          workspaceEl.innerHTML = '';
+          await mod.init(workspaceEl);
+        } else {
+          workspaceEl.innerHTML = `<p style="color:#b91c1c;">"${tool.name}" मॉड्यूल में init() फ़ंक्शन नहीं मिला।</p>`;
+        }
+      } catch (err) {
+        workspaceEl.innerHTML = `
+          <p style="color:#b91c1c;font-weight:600;">मॉड्यूल लोड करने में समस्या आई: ./modules/${tool.id}.js</p>
+          <p style="font-size:13px;color:#475569;">कृपया जाँचें कि फ़ाइल मौजूद है और उसमें कोई सिंटैक्स त्रुटि नहीं है।</p>
+        `;
+      }
+
+      if (window.innerWidth <= 860) {
+        workspaceEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    searchInputEl.oninput = () => {
+      renderMenu();
+      if (!currentToolId) renderHomeDashboard();
+    };
+
+    catTabsEl.querySelectorAll('.cat-tab').forEach((tab) => {
+      tab.onclick = () => {
+        catTabsEl.querySelectorAll('.cat-tab').forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        selectedCategory = tab.getAttribute('data-cat');
+        renderMenu();
+        if (!currentToolId) renderHomeDashboard();
+      };
+    });
+
+    document.getElementById('brandHome').onclick = renderHomeDashboard;
+    document.getElementById('backToHomeBtn').onclick = renderHomeDashboard;
+
+    renderHomeDashboard();
+  </script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
