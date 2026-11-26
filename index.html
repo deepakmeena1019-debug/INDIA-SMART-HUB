@@ -384,28 +384,196 @@
       }
     };
 
-    const categories = [
-      {
-        id: 'popular',
-        title: { en: 'Most Popular Tools', hi: 'सबसे लोकप्रिय टूल्स' },
-        tools: [
-          { id: 'img-host', icon: '☁️', name: { en: 'Bulk Image Link Generator (Cloudinary)', hi: 'बल्क इमेज लिंक जनरेटर (Cloudinary)' }, desc: { en: 'Upload one or multiple photos & copy direct links', hi: 'एक या कई फ़ोटो डालें और डायरेक्ट लिंक कॉपी करें' } },
-          { id: 'img-resizer', icon: '🖼️', name: { en: 'Image Resizer & Compressor', hi: 'इमेज रिसाइज़र और कंप्रेसर' }, desc: { en: 'Change width, height & download JPG', hi: 'चौड़ाई, ऊंचाई बदलें और फ़ोटो डाउनलोड करें' } },
-          { id: 'text-case', icon: '🔤', name: { en: 'Text Case Converter', hi: 'टेक्स्ट केस कन्वर्टर' }, desc: { en: 'UPPERCASE, lowercase & clean extra spaces', hi: 'बड़े/छोटे अक्षर और अतिरिक्त स्पेस साफ करें' } },
-          { id: 'age-calc', icon: '🎂', name: { en: 'Age Calculator', hi: 'आयु कैलकुलेटर' }, desc: { en: 'Exact age in years, months & days', hi: 'साल, महीने और दिन में सटीक उम्र निकालें' } },
-          { id: 'pct-calc', icon: '📊', name: { en: 'Percentage Calculator', hi: 'प्रतिशत कैलकुलेटर' }, desc: { en: 'Calculate marks or value percentage', hi: 'अंकों या किसी भी संख्या का प्रतिशत निकालें' } }
-        ]
-      },
-      {
-        id: 'calc',
-        title: { en: 'Calculators & Generators', hi: 'कैलकुलेटर और जनरेटर' },
-        tools: [
-          { id: 'emi-calc', icon: '🏦', name: { en: 'EMI Calculator', hi: 'EMI कैलकुलेटर' }, desc: { en: 'Monthly EMI & total payable amount', hi: 'मासिक EMI और कुल भुगतान निकालें' } },
-          { id: 'pass-gen', icon: '🔐', name: { en: 'Password Generator', hi: 'पासवर्ड जनरेटर' }, desc: { en: 'Create strong passwords', hi: 'सुरक्षित पासवर्ड बनाएं' } },
-          { id: 'qr-gen', icon: '📱', name: { en: 'QR Code Generator', hi: 'QR कोड जनरेटर' }, desc: { en: 'Generate QR code from link or text', hi: 'लिंक या टेक्स्ट से QR कोड बनाएं' } }
-        ]
-      }
-    ];
+    // मौजूदा categories array को इससे बदल दें
+const categories = [
+  {
+    id: 'popular',
+    title: { en: 'Most Popular Tools', hi: 'सबसे लोकप्रिय टूल्स' },
+    tools: [
+      { id: 'img-host', icon: '☁️', name: { en: 'Bulk Image Link Generator (Cloudinary)', hi: 'बल्क इमेज लिंक जनरेटर (Cloudinary)' }, desc: { en: 'Upload one or multiple photos & copy direct links', hi: 'एक या कई फ़ोटो डालें और डायरेक्ट लिंक कॉपी करें' } },
+      { id: 'img-resizer', icon: '🖼️', name: { en: 'Image Resizer & Compressor', hi: 'इमेज रिसाइज़र और कंप्रेसर' }, desc: { en: 'Change width, height & download JPG', hi: 'चौड़ाई, ऊंचाई बदलें और फ़ोटो डाउनलोड करें' } },
+      { id: 'text-case', icon: '🔤', name: { en: 'Text Case Converter', hi: 'टेक्स्ट केस कन्वर्टर' }, desc: { en: 'UPPERCASE, lowercase & clean extra spaces', hi: 'बड़े/छोटे अक्षर और अतिरिक्त स्पेस साफ करें' } },
+      { id: 'pdf-convert', icon: '📄', name: { en: 'Image to PDF Converter', hi: 'इमेज से PDF कन्वर्टर' }, desc: { en: 'Convert images into a single PDF document', hi: 'तस्वीरों को एक PDF फाइल में बदलें' } }
+    ]
+  },
+  {
+    id: 'calc',
+    title: { en: 'Calculators & Utilities', hi: 'कैलकुलेटर और यूटिलिटीज' },
+    tools: [
+      { id: 'age-calc', icon: '🎂', name: { en: 'Age Calculator', hi: 'आयु कैलकुलेटर' }, desc: { en: 'Exact age in years, months & days', hi: 'साल, महीने और दिन में सटीक उम्र निकालें' } },
+      { id: 'pct-calc', icon: '📊', name: { en: 'Percentage Calculator', hi: 'प्रतिशत कैलकुलेटर' }, desc: { en: 'Calculate marks or value percentage', hi: 'अंकों या किसी भी संख्या का प्रतिशत निकालें' } },
+      { id: 'word-counter', icon: '📝', name: { en: 'Word & Character Counter', hi: 'वर्ड और कैरेक्टर काउंटर' }, desc: { en: 'Count words, characters and paragraphs', hi: 'शब्द, कैरेक्टर और पैराग्राफ गिनें' } },
+      { id: 'unit-convert', icon: '⚖️', name: { en: 'Unit Converter', hi: 'यूनिट कन्वर्टर' }, desc: { en: 'Convert length, weight and temperature', hi: 'लंबाई, वजन और तापमान बदलें' } },
+      { id: 'emi-calc', icon: '🏦', name: { en: 'EMI Calculator', hi: 'EMI कैलकुलेटर' }, desc: { en: 'Monthly EMI & total payable amount', hi: 'मासिक EMI और कुल भुगतान निकालें' } },
+      { id: 'pass-gen', icon: '🔐', name: { en: 'Password Generator', hi: 'पासवर्ड जनरेटर' }, desc: { en: 'Create strong passwords', hi: 'सुरक्षित पासवर्ड बनाएं' } },
+      { id: 'qr-gen', icon: '📱', name: { en: 'QR Code Generator', hi: 'QR कोड जनरेटर' }, desc: { en: 'Generate QR code from link or text', hi: 'लिंक या टेक्स्ट से QR कोड बनाएं' } }
+    ]
+  }
+];
+
+// i18n ऑब्जेक्ट में नए टूल्स के नाम और विवरण जोड़ें (इसे अपने मौजूदा i18n में मर्ज करें)
+const newI18nAdditions = {
+  en: {
+    pdfConvertName: 'Image to PDF Converter', pdfConvertDesc: 'Convert images into a single PDF document',
+    wordCounterName: 'Word & Character Counter', wordCounterDesc: 'Count words, characters and paragraphs',
+    unitConvertName: 'Unit Converter', unitConvertDesc: 'Convert length, weight and temperature'
+  },
+  hi: {
+    pdfConvertName: 'इमेज से PDF कन्वर्टर', pdfConvertDesc: 'तस्वीरों को एक PDF फाइल में बदलें',
+    wordCounterName: 'वर्ड और कैरेक्टर काउंटर', wordCounterDesc: 'शब्द, कैरेक्टर और पैराग्राफ गिनें',
+    unitConvertName: 'यूनिट कन्वर्टर', unitConvertDesc: 'लंबाई, वजन और तापमान बदलें'
+  }
+};
+// नए टूल्स के लिए फंक्शंस और अपडेटेड openTool
+function transformTextAdvanced(mode) {
+  const el = document.getElementById('caseTxt');
+  if (!el) return;
+  if (mode === 'upper') el.value = el.value.toUpperCase();
+  if (mode === 'lower') el.value = el.value.toLowerCase();
+  if (mode === 'clean') el.value = el.value.replace(/\s+/g, ' ').trim();
+}
+
+function runWordCounter() {
+  const text = document.getElementById('wcInput').value;
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const chars = text.length;
+  const lines = text.trim() ? text.trim().split('\n').length : 0;
+  document.getElementById('wcOut').style.display = 'block';
+  document.getElementById('wcOut').innerHTML = `<strong>शब्द:</strong> ${words} | <strong>कैरेक्टर:</strong> ${chars} | <strong>लाइन्स:</strong> ${lines}`;
+}
+
+function convertUnits() {
+  const val = parseFloat(document.getElementById('uVal').value);
+  const type = document.getElementById('uType').value;
+  const out = document.getElementById('uOut');
+  if (isNaN(val)) return;
+
+  let res = '';
+  if (type === 'm-to-ft') res = `${val} मीटर = ${(val * 3.28084).toFixed(2)} फीट`;
+  else if (type === 'ft-to-m') res = `${val} फीट = ${(val / 3.28084).toFixed(2)} मीटर`;
+  else if (type === 'kg-to-lbs') res = `${val} किलो = ${(val * 2.20462).toFixed(2)} पाउंड`;
+  else if (type === 'lbs-to-kg') res = `${val} पाउंड = ${(val / 2.20462).toFixed(2)} किलो`;
+  else if (type === 'c-to-f') res = `${val}°C = ${(val * 9/5 + 32).toFixed(1)}°F`;
+  else if (type === 'f-to-c') res = `${val}°F = ${((val - 32) * 5/9).toFixed(1)}°C`;
+
+  out.style.display = 'block';
+  out.innerHTML = `<strong>परिणाम:</strong> ${res}`;
+}
+
+// अपडेटेड openTool फंक्शन (इसमें नए टूल्स के केस जोड़ें)
+function openTool(id) {
+  const tool = toolsById[id];
+  if (!tool) return;
+
+  const ws = document.getElementById('workspace');
+  const body = document.getElementById('wsBody');
+  const wsTitle = document.getElementById('wsTitle');
+  if (!ws || !body || !wsTitle) return;
+
+  wsTitle.textContent = tool.name[lang];
+  ws.style.display = 'block';
+  ws.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  if (id === 'img-host') {
+    body.innerHTML = `
+      <div class="notice-box">अपना Cloudinary Cloud Name और Unsigned Upload Preset डालें, फिर एक या कई फ़ोटो चुनकर डायरेक्ट लिंक बनाएं।</div>
+      <div class="row-2">
+        <div class="field"><label>Cloud Name:</label><input type="text" id="cCloudName" value="demo" /></div>
+        <div class="field"><label>Upload Preset:</label><input type="text" id="cPreset" value="docs_upload_example_preset" /></div>
+      </div>
+      <div class="field"><label>Select Photos (Multiple allowed):</label><input type="file" id="cImgFiles" accept="image/*" multiple /></div>
+      <button class="btn-primary" type="button" onclick="runCloudinaryBulkUpload()">Upload & Generate Direct Links</button>
+      <div class="result-box" id="cOut" style="display:none;"></div>
+    `;
+  } else if (id === 'img-resizer') {
+    body.innerHTML = `
+      <div class="field"><label>Select Image:</label><input type="file" id="tImgFile" accept="image/*" /></div>
+      <div class="row-2">
+        <div class="field"><label>Width (px):</label><input type="number" id="tImgW" value="350" /></div>
+        <div class="field"><label>Height (px):</label><input type="number" id="tImgH" value="450" /></div>
+      </div>
+      <button class="btn-primary" type="button" onclick="runImageTool()">Resize & Download</button>
+      <div class="result-box" id="tImgOut" style="display:none;"></div>
+    `;
+  } else if (id === 'text-case') {
+    body.innerHTML = `
+      <div class="field"><textarea id="caseTxt" rows="5" placeholder="यहाँ टेक्स्ट लिखें या पेस्ट करें..."></textarea></div>
+      <button type="button" class="btn-secondary" onclick="transformTextAdvanced('upper')">UPPERCASE</button>
+      <button type="button" class="btn-secondary" onclick="transformTextAdvanced('lower')">lowercase</button>
+      <button type="button" class="btn-secondary" onclick="transformTextAdvanced('clean')">Clean Spaces</button>
+    `;
+  } else if (id === 'pdf-convert') {
+    body.innerHTML = `
+      <div class="notice-box">तस्वीरें चुनें (आसान JS कार्यान्वयन के लिए एक इमेज का उपयोग करें)।</div>
+      <div class="field"><label>Select Image:</label><input type="file" id="pdfImgFile" accept="image/*" /></div>
+      <button class="btn-primary" type="button" onclick="runSimplePdfConv()">Convert to PDF</button>
+      <div class="result-box" id="pdfOut" style="display:none;"></div>
+    `;
+  } else if (id === 'age-calc') {
+    body.innerHTML = `
+      <div class="row-2">
+        <div class="field"><label>जन्म तिथि (DOB):</label><input type="date" id="dobInput" /></div>
+        <div class="field"><label>किस तारीख तक:</label><input type="date" id="asOnInput" value="${new Date().toISOString().slice(0,10)}" /></div>
+      </div>
+      <button class="btn-primary" type="button" onclick="runAgeCalc()">उम्र निकालें</button>
+      <div class="result-box" id="ageOut" style="display:none;"></div>
+    `;
+  } else if (id === 'pct-calc') {
+    body.innerHTML = `
+      <div class="row-2">
+        <div class="field"><label>प्राप्तांक / मान:</label><input type="number" id="obtMarks" /></div>
+        <div class="field"><label>कुल अंक / कुल मान:</label><input type="number" id="totMarks" /></div>
+      </div>
+      <button class="btn-primary" type="button" onclick="runPctCalc()">प्रतिशत निकालें</button>
+      <div class="result-box" id="pctOut" style="display:none;"></div>
+    `;
+  } else if (id === 'word-counter') {
+    body.innerHTML = `
+      <div class="field"><textarea id="wcInput" rows="6" placeholder="यहाँ टाइप करें या पेस्ट करें..." oninput="runWordCounter()"></textarea></div>
+      <div class="result-box" id="wcOut"><strong>शब्द:</strong> 0 | <strong>कैरेक्टर:</strong> 0 | <strong>लाइन्स:</strong> 0</div>
+    `;
+  } else if (id === 'unit-convert') {
+    body.innerHTML = `
+      <div class="field"><label>मान:</label><input type="number" id="uVal" value="1" oninput="convertUnits()" /></div>
+      <div class="field"><label>कन्वर्ट करें:</label>
+        <select id="uType" onchange="convertUnits()">
+          <option value="m-to-ft">मीटर से फीट</option>
+          <option value="ft-to-m">फीट से मीटर</option>
+          <option value="kg-to-lbs">किलो से पाउंड</option>
+          <option value="lbs-to-kg">पाउंड से किलो</option>
+          <option value="c-to-f">सेल्सियस से फ़ारेनहाइट</option>
+          <option value="f-to-c">फ़ारेनहाइट से सेल्सियस</option>
+        </select>
+      </div>
+      <div class="result-box" id="uOut"><strong>परिणाम:</strong> 1 मीटर = 3.28 फीट</div>
+    `;
+  } else if (id === 'emi-calc') {
+    body.innerHTML = `
+      <div class="row-2">
+        <div class="field"><label>लोन राशि (₹):</label><input type="number" id="emiP" value="100000" /></div>
+        <div class="field"><label>ब्याज दर (% वार्षिक):</label><input type="number" id="emiR" value="8.5" step="0.1" /></div>
+      </div>
+      <div class="field"><label>अवधि (महीने):</label><input type="number" id="emiN" value="12" /></div>
+      <button class="btn-primary" type="button" onclick="runEmiCalc()">EMI निकालें</button>
+      <div class="result-box" id="emiOut" style="display:none;"></div>
+    `;
+  } else if (id === 'pass-gen') {
+    body.innerHTML = `
+      <div class="field"><label>लंबाई (6-32):</label><input type="number" id="passLen" value="12" min="6" max="32" /></div>
+      <button class="btn-primary" type="button" onclick="runPassGen()">पासवर्ड बनाएं</button>
+      <div class="result-box" id="passOut" style="display:none;"></div>
+    `;
+  } else if (id === 'qr-gen') {
+    body.innerHTML = `
+      <div class="field"><label>लिंक या टेक्स्ट डालें:</label><input type="text" id="qrText" placeholder="https://example.com" /></div>
+      <button class="btn-primary" type="button" onclick="runQrGen()">QR कोड बनाएं</button>
+      <div class="result-box" id="qrOut" style="display:none;"></div>
+    `;
+  }
+}
+
+// अन्य ज़रूरी फंक्शंस (अपलोड, रिसाइज, कैलकुलेटर आदि) जस के तस रहेंगे
+    
 
     const toolsById = {};
     categories.forEach(cat => cat.tools.forEach(t => toolsById[t.id] = t));
