@@ -1,68 +1,218 @@
 :root {
     --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
     --surface: rgba(255, 255, 255, 0.05);
+    --surface-hover: rgba(255, 255, 255, 0.1);
+    --border-subtle: rgba(255, 255, 255, 0.12);
     --text-main: #f8fafc;
+    --text-muted: #cbd5e1;
     --accent: #8b5cf6;
+    --accent-hover: #7c3aed;
+    --accent-pink: #ec4899;
+    --accent-cyan: #06b6d4;
+    --success: #10b981;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Noto Sans Devanagari', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background: var(--bg-gradient);
     color: var(--text-main);
     min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* Header */
 header {
     text-align: center;
-    padding: 2.5rem 1rem;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.2rem 1.25rem;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+header p {
+    margin: 0.5rem auto 0;
+    max-width: 640px;
+    color: var(--text-muted);
+    font-size: 0.98rem;
 }
 
 h1 {
     margin: 0;
-    font-size: 2.5rem;
-    background: linear-gradient(90deg, #8b5cf6, #ec4899);
+    font-size: clamp(1.85rem, 4vw, 2.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent), var(--accent-pink));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+/* Main Layout Wrapper */
+.site-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 2.5rem;
+}
+
+/* Search & Filter Bar (Friendly & Fast) */
+.controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.75rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    background: rgba(15, 23, 42, 0.55);
+    color: var(--text-main);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.search-input::placeholder {
+    color: #94a3b8;
+}
+
+.search-input:focus {
+    border-color: var(--accent);
+    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+}
+
+/* Tool Navigation Pills */
 .tool-nav {
     display: flex;
     gap: 10px;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
     flex-wrap: wrap;
 }
 
 .nav-btn {
     background: var(--surface);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-subtle);
     color: var(--text-main);
-    padding: 0.8rem 1.5rem;
+    padding: 0.75rem 1.4rem;
     border-radius: 50px;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s ease;
+    font-size: 0.92rem;
+    transition: all 0.25s ease;
 }
 
-.nav-btn:hover, .nav-btn.active {
+.nav-btn:hover,
+.nav-btn.active {
     background: var(--accent);
     border-color: var(--accent);
+    color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 6px 18px rgba(139, 92, 246, 0.35);
 }
 
+/* Workspace Stage */
 #workspace {
     background: var(--surface);
     border-radius: 16px;
-    padding: 2rem;
+    padding: 1.75rem;
     min-height: 400px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-subtle);
     max-width: 1200px;
     margin: 0 auto;
+    overflow-x: auto;
+}
+
+/* Ensure light-themed tool cards inside #workspace stay crisp and readable */
+#workspace > div:not(.loader-box) {
+    color: #1e293b;
+}
+
+/* Ad / Monetization Safe Slot (Optional & Non-Intrusive) */
+.ad-slot-wrapper {
+    max-width: 1200px;
+    margin: 1.5rem auto 0;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.14);
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.82rem;
+}
+
+/* Footer for Trust, Policy & Support Links */
+.site-footer {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 1.5rem 1rem;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 640px) {
+    header {
+        padding: 1.6rem 0.9rem;
+    }
+
+    .nav-btn {
+        padding: 0.65rem 1.1rem;
+        font-size: 0.85rem;
+    }
+
+    #workspace {
+        padding: 1rem;
+        border-radius: 12px;
+        min-height: 320px;
+    }
+
+    .site-footer {
+        flex-direction: column;
+        text-align: center;
+    }
 }
