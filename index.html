@@ -1,245 +1,1109 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pi7 जैसा फंक्शनल इमेज टूल</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixelRang Studio — All-in-One Smart Browser Suite</title>
   <style>
     :root {
-      --primary: #007bff;
-      --primary-hover: #0056b3;
-      --bg: #f8f9fa;
-      --card-bg: #ffffff;
-      --text: #333333;
+      --bg-1: #0f172a;
+      --bg-2: #1e1b4b;
+      --surface: rgba(255, 255, 255, 0.96);
+      --surface-soft: #f8fafc;
+      --ink: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+      --g1: linear-gradient(135deg, #ff4d6d 0%, #ff8e53 50%, #ffb703 100%);
+      --g2: linear-gradient(135deg, #3a86ff 0%, #8338ec 50%, #ff006e 100%);
+      --g3: linear-gradient(135deg, #06d6a0 0%, #118ab2 100%);
+      --g4: linear-gradient(135deg, #f72585 0%, #7209b7 100%);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
     }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; box-sizing: border-box; }
-    .container { max-width: 900px; margin: auto; }
-    h1 { text-align: center; color: #111; }
-    .tool-section { display: none; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 20px; }
-    .tool-section.active { display: block; }
-    .nav-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 30px; }
-    .nav-btn { background: #6c757d; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
-    .nav-btn:hover, .nav-btn.active { background: var(--primary); }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; margin-bottom: 8px; font-weight: 600; }
-    input[type="file"], input[type="number"], select, input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-    .action-btn { background-color: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px; }
-    .action-btn:hover { background-color: var(--primary-hover); }
-    .output-area { margin-top: 25px; padding: 15px; background: #e9ecef; border-radius: 8px; word-break: break-all; display: none; text-align: center; }
-    .output-area img { max-width: 100%; height: auto; margin-top: 10px; border-radius: 4px; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 77, 109, 0.28), transparent 40%),
+        radial-gradient(circle at 88% 15%, rgba(58, 134, 255, 0.28), transparent 42%),
+        radial-gradient(circle at 50% 95%, rgba(6, 214, 160, 0.22), transparent 45%),
+        linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 55%, #111827 100%);
+      padding-bottom: 60px;
+    }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 18px; }
+
+    .hero {
+      background: var(--g2);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -60px;
+      top: -60px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      pointer-events: none;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      margin-bottom: 12px;
+    }
+    .hero h1 { font-size: clamp(26px, 4.5vw, 42px); font-weight: 800; line-height: 1.15; }
+    .hero p { margin-top: 10px; font-size: 15.5px; opacity: 0.95; max-width: 760px; }
+
+    .controls-bar {
+      margin-top: 18px;
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 14px;
+    }
+    .search-box { display: flex; gap: 10px; flex-wrap: wrap; }
+    .search-box input {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px 15px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      outline: none;
+    }
+    .search-box input:focus { border-color: #7209b7; }
+
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tab-btn {
+      border: none;
+      padding: 9px 15px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      background: #eef2ff;
+      color: #1e293b;
+      transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
+    }
+    .tab-btn:hover { transform: translateY(-1px); }
+    .tab-btn.active { background: var(--g1); color: #fff; box-shadow: 0 6px 16px rgba(255, 77, 109, 0.35); }
+
+    /* Inline workspace open directly inside active category or right above cards */
+    .inline-panel {
+      display: none;
+      margin-top: 18px;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border-top: 6px solid #ff4d6d;
+      animation: popIn 0.2s ease;
+    }
+    .inline-panel.open { display: block; }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .panel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid var(--border);
+    }
+    .panel-title { font-size: 20px; font-weight: 800; color: #1e1b4b; }
+    .close-btn {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: none;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .close-btn:hover { background: #fecaca; }
+
+    .cat-block { margin-top: 24px; }
+    .cat-heading {
+      color: #fff;
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cat-pill {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+    }
+    .tool-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-left: 6px solid #3a86ff;
+    }
+    .tool-card:nth-child(2n) { border-left-color: #ff4d6d; }
+    .tool-card:nth-child(3n) { border-left-color: #06d6a0; }
+    .tool-card:nth-child(4n) { border-left-color: #8338ec; }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24); }
+    .tool-card.selected { outline: 3px solid #ffb703; background: #fffbeb; }
+
+    .tool-icon { font-size: 26px; margin-bottom: 8px; }
+    .tool-name { font-size: 16.5px; font-weight: 800; color: var(--ink); }
+    .tool-desc { font-size: 13.5px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+    .open-tag {
+      margin-top: 14px;
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #4338ca;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 13.5px; font-weight: 700; color: #1e293b; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.8px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 14.5px;
+      background: #fff;
+      color: var(--ink);
+    }
+    .field textarea { min-height: 130px; resize: vertical; }
+
+    .btn-primary {
+      margin-top: 16px;
+      background: var(--g3);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn-primary:hover { filter: brightness(1.06); }
+
+    .result-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--surface-soft);
+      border: 2px dashed #94a3b8;
+      display: none;
+    }
+    .result-box.show { display: block; }
+    .result-box img, .result-box canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+      margin-top: 10px;
+    }
+    .dl-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      background: var(--g4);
+      color: #fff;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Pi7 जैसा फंक्शनल इमेज टूल</h1>
+  <div class="wrap">
+    <header class="hero">
+      <div class="badge">✨ 100% BROWSER CLIENT-SIDE • COLORFUL MULTI-TOOL SUITE</div>
+      <h1>PixelRang Studio</h1>
+      <p>Exact KB/MB image compression, custom size & passport photo maker, background & border studio, multi-image PDF, Base64/link helper, aur age, percentage, word counter, QR & unit calculators — sab ek hi jagah, inline workspace ke saath.</p>
+    </header>
 
-    <div class="nav-buttons">
-      <button class="nav-btn active" onclick="showTool('resizer')">Image Resizer</button>
-      <button class="nav-btn" onclick="showTool('converter')">Image Converter</button>
-      <button class="nav-btn" onclick="showTool('pdf')">Image to PDF</button>
-      <button class="nav-btn" onclick="showTool('border')">Add Border</button>
-    </div>
+    <section class="controls-bar">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Tool khojein (jaise: KB, MB, passport, background, PDF, age, percentage, word, QR, unit)..." oninput="renderCatalog()" />
+      </div>
+      <div class="tabs" id="categoryTabs">
+        <button class="tab-btn active" data-cat="all" onclick="setCategory('all', this)">All Tools</button>
+        <button class="tab-btn" data-cat="image" onclick="setCategory('image', this)">Image & Visual Studio</button>
+        <button class="tab-btn" data-cat="file" onclick="setCategory('file', this)">PDF & Link Tools</button>
+        <button class="tab-btn" data-cat="calc" onclick="setCategory('calc', this)">Calculators & Text</button>
+      </div>
+    </section>
 
-    <!-- 1. Resizer Section -->
-    <div id="resizer" class="tool-section active">
-      <h2>Image Resizer & Compressor</h2>
-      <div class="form-group">
-        <label>Select Image:</label>
-        <input type="file" id="rImg" accept="image/*">
+    <!-- Inline Tool Workspace: opens right here in place without jumping down -->
+    <section id="inlineWorkspace" class="inline-panel" aria-live="polite">
+      <div class="panel-top">
+        <div class="panel-title" id="panelTitle">Tool Workspace</div>
+        <button class="close-btn" onclick="closeWorkspace()">✕ Close</button>
       </div>
-      <div class="form-group">
-        <label>Target Width (px):</label>
-        <input type="number" id="rW" value="800">
-      </div>
-      <div class="form-group">
-        <label>Quality (0.1 - 1.0):</label>
-        <input type="number" id="rQ" value="0.8" step="0.1" min="0.1" max="1.0">
-      </div>
-      <button class="action-btn" onclick="runResizer()">Process & Compress</button>
-      <div id="rOut" class="output-area"></div>
-    </div>
+      <div id="panelBody"></div>
+      <div id="panelResult" class="result-box"></div>
+    </section>
 
-    <!-- 2. Converter Section -->
-    <div id="converter" class="tool-section">
-      <h2>Image Format Converter</h2>
-      <div class="form-group">
-        <label>Select Image:</label>
-        <input type="file" id="cImg" accept="image/*">
-      </div>
-      <div class="form-group">
-        <label>Target Format:</label>
-        <select id="cFmt">
-          <option value="image/jpeg">JPG</option>
-          <option value="image/png">PNG</option>
-          <option value="image/webp">WEBP</option>
-        </select>
-      </div>
-      <button class="action-btn" onclick="runConverter()">Convert Format</button>
-      <div id="cOut" class="output-area"></div>
-    </div>
-
-    <!-- 3. Image to PDF Section -->
-    <div id="pdf" class="tool-section">
-      <h2>Image to PDF Converter</h2>
-      <div class="form-group">
-        <label>Select Images:</label>
-        <input type="file" id="pImgs" accept="image/*" multiple>
-      </div>
-      <button class="action-btn" onclick="runPdfConverter()">Convert to PDF</button>
-      <div id="pOut" class="output-area"></div>
-    </div>
-
-    <!-- 4. Add Border Section -->
-    <div id="border" class="tool-section">
-      <h2>Add Border to Image</h2>
-      <div class="form-group">
-        <label>Select Image:</label>
-        <input type="file" id="bImg" accept="image/*">
-      </div>
-      <div class="form-group">
-        <label>Border Thickness (px):</label>
-        <input type="number" id="bThick" value="10">
-      </div>
-      <div class="form-group">
-        <label>Border Color:</label>
-        <input type="color" id="bColor" value="#000000">
-      </div>
-      <button class="action-btn" onclick="runBorderAdder()">Apply Border</button>
-      <div id="bOut" class="output-area"></div>
-    </div>
+    <div id="catalogMount"></div>
   </div>
-
     <script>
-    function showTool(toolId) {
-      document.querySelectorAll('.tool-section').forEach(sec => sec.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(toolId).classList.add('active');
-      event.currentTarget.classList.add('active');
+    const PR_STATE = {
+      activeToolId: null,
+      activeCategory: 'all'
+    };
+
+    function showResult(html) {
+      const box = document.getElementById('panelResult');
+      box.innerHTML = html;
+      box.classList.add('show');
     }
 
-    function displayOutput(outputId, contentHtml) {
-      const out = document.getElementById(outputId);
-      out.style.display = 'block';
-      out.innerHTML = contentHtml;
+    function clearResult() {
+      const box = document.getElementById('panelResult');
+      box.innerHTML = '';
+      box.classList.remove('show');
     }
 
-    // 1. Resizer Logic
-    function runResizer() {
-      const file = document.getElementById('rImg').files[0];
-      const width = document.getElementById('rW').value;
-      const quality = parseFloat(document.getElementById('rQ').value);
-      if (!file) return alert('कृपया इमेज चुनें');
-
+    function loadImageFile(file, callback) {
+      if (!file) {
+        alert('Kripya pehle ek image file select karein.');
+        return;
+      }
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const scale = width / img.width;
-          canvas.width = width;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext('2d');
+        img.onload = function () { callback(img, file); };
+        img.onerror = function () { alert('Image load nahi ho saki. Kripya valid image chunein.'); };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function bytesLabel(bytes) {
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    function renderImgResizerForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Image Chunein (JPG/PNG/WEBP)</label>
+            <input type="file" id="prResizeFile" accept="image/*" />
+          </div>
+          <div class="field">
+            <label>Target Size Value</label>
+            <input type="number" id="prTargetVal" value="100" min="1" step="0.1" />
+          </div>
+          <div class="field">
+            <label>Size Unit (KB / MB)</label>
+            <select id="prTargetUnit">
+              <option value="KB" selected>KB (Kilobytes)</option>
+              <option value="MB">MB (Megabytes)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Optional Max Width (px, 0 = Auto)</label>
+            <input type="number" id="prMaxWidth" value="0" min="0" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runExactSizeCompress()">Compress to Exact KB/MB</button>
+      `;
+    }
+
+    function runExactSizeCompress() {
+      const file = document.getElementById('prResizeFile').files[0];
+      const val = parseFloat(document.getElementById('prTargetVal').value);
+      const unit = document.getElementById('prTargetUnit').value;
+      const maxW = parseInt(document.getElementById('prMaxWidth').value || '0', 10);
+      if (!val || val <= 0) return alert('Sahi target size number dalein.');
+
+      const targetBytes = unit === 'MB' ? val * 1024 * 1024 : val * 1024;
+
+      loadImageFile(file, function (img, f) {
+        let w = img.width;
+        let h = img.height;
+        if (maxW > 0 && w > maxW) {
+          h = Math.round((h * maxW) / w);
+          w = maxW;
+        }
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function encodeAt(width, height, quality) {
+          canvas.width = Math.max(1, Math.round(width));
+          canvas.height = Math.max(1, Math.round(height));
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          
-          canvas.toBlob(function(blob) {
-            const url = URL.createObjectURL(blob);
-            const sizeKB = (blob.size / 1024).toFixed(2);
-            displayOutput('rOut', `<p>साइज: ${sizeKB} KB</p><a href="${url}" download="resized_${file.name}" class="action-btn" style="display:inline-block;">Download Image</a>`);
-          }, 'image/jpeg', quality);
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+          return new Promise(resolve => canvas.toBlob(b => resolve(b), 'image/jpeg', quality));
+        }
+
+        (async () => {
+          let low = 0.08, high = 0.95, bestBlob = null;
+          for (let i = 0; i < 8; i++) {
+            const mid = (low + high) / 2;
+            const blob = await encodeAt(w, h, mid);
+            if (!blob) break;
+            bestBlob = blob;
+            if (blob.size > targetBytes) high = mid;
+            else low = mid;
+          }
+
+          let scale = 0.85;
+          let tries = 0;
+          while (bestBlob && bestBlob.size > targetBytes && tries < 6) {
+            bestBlob = await encodeAt(w * scale, h * scale, 0.72);
+            scale *= 0.85;
+            tries++;
+          }
+
+          const url = URL.createObjectURL(bestBlob);
+          showResult(`
+            <div><strong>Original Size:</strong> ${bytesLabel(f.size)} (${img.width}×${img.height}px)</div>
+            <div><strong>Output Size:</strong> ${bytesLabel(bestBlob.size)} (${canvas.width}×${canvas.height}px)</div>
+            <img src="${url}" alt="Compressed Preview" /><br/>
+            <a class="dl-link" href="${url}" download="compressed_${f.name.split('.')[0]}.jpg">⬇ Download Compressed Image</a>
+          `);
+        })();
+      });
     }
 
-    // 2. Converter Logic
-    function runConverter() {
-      const file = document.getElementById('cImg').files[0];
-      const format = document.getElementById('cFmt').value;
-      if (!file) return alert('कृपया इमेज चुनें');
+    function renderPassportCustomForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Photo Chunein</label>
+            <input type="file" id="prPassFile" accept="image/*" />
+          </div>
+          <div class="field">
+            <label>Preset / Mode</label>
+            <select id="prPassPreset" onchange="applyPassportPreset()">
+              <option value="custom">Custom Width × Height (px)</option>
+              <option value="india_passport">India Passport (413 × 531 px)</option>
+              <option value="us_passport">US Passport (600 × 600 px)</option>
+              <option value="square_1080">Social Square (1080 × 1080 px)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Width (px)</label>
+            <input type="number" id="prPassW" value="413" min="20" />
+          </div>
+          <div class="field">
+            <label>Height (px)</label>
+            <input type="number" id="prPassH" value="531" min="20" />
+          </div>
+          <div class="field">
+            <label>Photo Frame Border (px)</label>
+            <input type="number" id="prPassBorder" value="6" min="0" max="60" />
+          </div>
+          <div class="field">
+            <label>Frame Color</label>
+            <input type="color" id="prPassBorderCol" value="#1e1b4b" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runPassportCustomResize()">Generate Sized Photo</button>
+      `;
+    }
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
+    function applyPassportPreset() {
+      const preset = document.getElementById('prPassPreset').value;
+      const wEl = document.getElementById('prPassW');
+      const hEl = document.getElementById('prPassH');
+      if (preset === 'india_passport') { wEl.value = 413; hEl.value = 531; }
+      else if (preset === 'us_passport') { wEl.value = 600; hEl.value = 600; }
+      else if (preset === 'square_1080') { wEl.value = 1080; hEl.value = 1080; }
+    }
+
+    function runPassportCustomResize() {
+      const file = document.getElementById('prPassFile').files[0];
+      const w = parseInt(document.getElementById('prPassW').value, 10);
+      const h = parseInt(document.getElementById('prPassH').value, 10);
+      const b = parseInt(document.getElementById('prPassBorder').value || '0', 10);
+      const bCol = document.getElementById('prPassBorderCol').value;
+
+      loadImageFile(file, function (img, f) {
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = b > 0 ? bCol : '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+
+        const innerW = Math.max(10, w - b * 2);
+        const innerH = Math.max(10, h - b * 2);
+        const scale = Math.max(innerW / img.width, innerH / img.height);
+        const drawW = img.width * scale;
+        const drawH = img.height * scale;
+        const dx = b + (innerW - drawW) / 2;
+        const dy = b + (innerH - drawH) / 2;
+
+        ctx.drawImage(img, dx, dy, drawW, drawH);
+        const url = canvas.toDataURL('image/jpeg', 0.95);
+        showResult(`
+          <div><strong>Output Size:</strong> ${w} × ${h} px</div>
+          <img src="${url}" alt="Resized Photo" /><br/>
+          <a class="dl-link" href="${url}" download="sized_${f.name.split('.')[0]}.jpg">⬇ Download Photo</a>
+        `);
+      });
+    }
+
+    function renderBgBorderForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Image Chunein</label>
+            <input type="file" id="prBgFile" accept="image/*" />
+          </div>
+          <div class="field">
+            <label>Background Style</label>
+            <select id="prBgMode">
+              <option value="solid">Solid Color Backdrop</option>
+              <option value="sunset">Vibrant Sunset Gradient</option>
+              <option value="ocean">Aqua & Blue Gradient</option>
+              <option value="royal">Royal Purple & Pink Gradient</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Solid Background Color</label>
+            <input type="color" id="prBgColor" value="#ffffff" />
+          </div>
+          <div class="field">
+            <label>Outer Border Width (px)</label>
+            <input type="number" id="prOuterBorder" value="18" min="0" max="150" />
+          </div>
+          <div class="field">
+            <label>Outer Border Color</label>
+            <input type="color" id="prOuterBorderCol" value="#ff4d6d" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runBgAndBorder()">Apply Background & Border</button>
+      `;
+    }
+
+    function runBgAndBorder() {
+      const file = document.getElementById('prBgFile').files[0];
+      const mode = document.getElementById('prBgMode').value;
+      const solidCol = document.getElementById('prBgColor').value;
+      const borderW = parseInt(document.getElementById('prOuterBorder').value || '0', 10);
+      const borderCol = document.getElementById('prOuterBorderCol').value;
+
+      loadImageFile(file, function (img, f) {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width + borderW * 2;
+        canvas.height = img.height + borderW * 2;
+        const ctx = canvas.getContext('2d');
+
+        if (borderW > 0) {
+          ctx.fillStyle = borderCol;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        if (mode === 'solid') {
+          ctx.fillStyle = solidCol;
+        } else {
+          const grad = ctx.createLinearGradient(0, borderW, canvas.width, canvas.height - borderW);
+          if (mode === 'sunset') {
+            grad.addColorStop(0, '#ff4d6d');
+            grad.addColorStop(0.5, '#ff8e53');
+            grad.addColorStop(1, '#ffb703');
+          } else if (mode === 'ocean') {
+            grad.addColorStop(0, '#06d6a0');
+            grad.addColorStop(1, '#3a86ff');
+          } else {
+            grad.addColorStop(0, '#7209b7');
+            grad.addColorStop(1, '#f72585');
+          }
+          ctx.fillStyle = grad;
+        }
+        ctx.fillRect(borderW, borderW, img.width, img.height);
+        ctx.drawImage(img, borderW, borderW, img.width, img.height);
+
+        const url = canvas.toDataURL('image/png');
+        showResult(`
+          <div><strong>Background & Border Applied:</strong> ${canvas.width} × ${canvas.height} px</div>
+          <img src="${url}" alt="Edited Background Preview" /><br/>
+          <a class="dl-link" href="${url}" download="styled_${f.name.split('.')[0]}.png">⬇ Download PNG</a>
+        `);
+      });
+    }
+
+    function renderConvertFilterForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Image Chunein</label>
+            <input type="file" id="prConvFile" accept="image/*" />
+          </div>
+          <div class="field">
+            <label>Target Format</label>
+            <select id="prConvFmt">
+              <option value="image/jpeg">JPG / JPEG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Filter Effect</label>
+            <select id="prFilterType">
+              <option value="none">Normal (No Filter)</option>
+              <option value="grayscale(100%)">Black & White (Grayscale)</option>
+              <option value="contrast(135%) saturate(120%)">Vivid Contrast Boost</option>
+              <option value="brightness(115%)">Brighten</option>
+              <option value="blur(3px)">Soft Blur</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Rotate / Flip</label>
+            <select id="prRotateOpt">
+              <option value="0">0° (Original)</option>
+              <option value="90">Rotate 90° Clockwise</option>
+              <option value="180">Rotate 180°</option>
+              <option value="270">Rotate 270° Clockwise</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runConvertAndFilter()">Convert & Apply Filter</button>
+      `;
+    }
+
+    function runConvertAndFilter() {
+      const file = document.getElementById('prConvFile').files[0];
+      const fmt = document.getElementById('prConvFmt').value;
+      const filter = document.getElementById('prFilterType').value;
+      const deg = parseInt(document.getElementById('prRotateOpt').value, 10);
+
+      loadImageFile(file, function (img, f) {
+        const swap = deg === 90 || deg === 270;
+        const canvas = document.createElement('canvas');
+        canvas.width = swap ? img.height : img.width;
+        canvas.height = swap ? img.width : img.height;
+        const ctx = canvas.getContext('2d');
+
+        if (fmt === 'image/jpeg') {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate((deg * Math.PI) / 180);
+        ctx.filter = filter;
+        ctx.drawImage(img, -img.width / 2, -img.height / 2);
+        ctx.restore();
+
+        const ext = fmt.split('/')[1] === 'jpeg' ? 'jpg' : fmt.split('/')[1];
+        const url = canvas.toDataURL(fmt, 0.92);
+        showResult(`
+          <div><strong>Format:</strong> ${ext.toUpperCase()} • <strong>Filter:</strong> ${filter}</div>
+          <img src="${url}" alt="Converted Preview" /><br/>
+          <a class="dl-link" href="${url}" download="pixelrang_${f.name.split('.')[0]}.${ext}">⬇ Download ${ext.toUpperCase()}</a>
+        `);
+      });
+    }
+    </script>
+    <script>
+    function renderPdfMakerForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Ek ya Zyada Images Chunein</label>
+            <input type="file" id="prPdfFiles" accept="image/*" multiple />
+          </div>
+          <div class="field">
+            <label>Page Width (px)</label>
+            <input type="number" id="prPdfWidth" value="1240" min="300" />
+          </div>
+          <div class="field">
+            <label>Gap Between Images (px)</label>
+            <input type="number" id="prPdfGap" value="24" min="0" max="200" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runMultiImagePdf()">Generate Printable PDF / Sheet</button>
+      `;
+    }
+
+    async function runMultiImagePdf() {
+      const files = document.getElementById('prPdfFiles').files;
+      const pageW = parseInt(document.getElementById('prPdfWidth').value || '1240', 10);
+      const gap = parseInt(document.getElementById('prPdfGap').value || '24', 10);
+      if (!files || files.length === 0) return alert('Kripya kam se kam ek image chunein.');
+
+      const loaded = [];
+      for (const file of files) {
+        const dataUrl = await new Promise((resolve, reject) => {
+          const r = new FileReader();
+          r.onload = () => resolve(r.result);
+          r.onerror = reject;
+          r.readAsDataURL(file);
+        });
         const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          
-          const url = canvas.toDataURL(format);
-          const ext = format.split('/')[1];
-          displayOutput('cOut', `<a href="${url}" download="converted_${file.name.split('.')[0]}.${ext}" class="action-btn" style="display:inline-block;">Download ${ext.toUpperCase()}</a>`);
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+        img.src = dataUrl;
+        await img.decode();
+        loaded.push(img);
+      }
 
-    // 3. PDF Converter Logic
-    async function runPdfConverter() {
-      const files = document.getElementById('pImgs').files;
-      if (files.length === 0) return alert('कृपया कम से कम एक इमेज चुनें');
-      displayOutput('pOut', 'PDF बनाई जा रही है...');
+      const scaledHeights = loaded.map(img => Math.round((img.height * (pageW - gap * 2)) / img.width));
+      const totalH = scaledHeights.reduce((a, b) => a + b, 0) + gap * (loaded.length + 1);
 
       const canvas = document.createElement('canvas');
+      canvas.width = pageW;
+      canvas.height = Math.max(200, totalH);
       const ctx = canvas.getContext('2d');
-      let images = [];
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      for (let file of files) {
-        let url = await new Promise(r => { let reader = new FileReader(); reader.onload = e => r(e.target.result); reader.readAsDataURL(file); });
-        let img = new Image(); img.src = url; await img.decode();
-        images.push(img);
+      let y = gap;
+      for (let i = 0; i < loaded.length; i++) {
+        const h = scaledHeights[i];
+        ctx.drawImage(loaded[i], gap, y, pageW - gap * 2, h);
+        y += h + gap;
       }
 
-      let maxW = Math.max(...images.map(i => i.width));
-      let totalH = images.reduce((acc, i) => acc + i.height, 0);
-      canvas.width = maxW;
-      canvas.height = totalH;
-
-      let curY = 0;
-      for (let img of images) {
-        ctx.drawImage(img, (maxW - img.width) / 2, curY);
-        curY += img.height;
-      }
-
-      const pdfUrl = canvas.toDataURL('image/jpeg', 1.0);
-      displayOutput('pOut', `<a href="${pdfUrl}" target="_blank" class="action-btn" style="display:inline-block;">ओपन / सेव PDF</a>`);
+      const sheetUrl = canvas.toDataURL('image/jpeg', 0.92);
+      showResult(`
+        <div><strong>Total Images Merged:</strong> ${loaded.length} (${pageW}×${canvas.height}px sheet)</div>
+        <p style="margin-top:6px;font-size:13.5px;color:#475569;">Tip: "Open & Save / Print PDF" par click karke browser se "Save as PDF" chunein ya image download karein.</p>
+        <img src="${sheetUrl}" alt="Multi Image Sheet" /><br/>
+        <a class="dl-link" href="${sheetUrl}" download="pixelrang_doc.jpg">⬇ Download Sheet</a>
+        <button class="btn-primary" style="margin-left:8px;" onclick="openPrintPdf('${sheetUrl}')">🖨 Open / Save PDF</button>
+      `);
     }
 
-    // 4. Border Adder Logic
-    function runBorderAdder() {
-      const file = document.getElementById('bImg').files[0];
-      const thick = parseInt(document.getElementById('bThick').value);
-      const color = document.getElementById('bColor').value;
-      if (!file) return alert('कृपया इमेज चुनें');
+    function openPrintPdf(imgUrl) {
+      const win = window.open('', '_blank');
+      if (!win) return alert('Pop-up block hai; browser mein pop-up allow karein.');
+      win.document.write(`
+        <html><head><title>PixelRang PDF</title></head>
+        <body style="margin:0;text-align:center;background:#fff;">
+          <img src="${imgUrl}" style="max-width:100%;height:auto;" onload="window.print();" />
+        </body></html>
+      `);
+      win.document.close();
+    }
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width + (thick * 2);
-          canvas.height = img.height + (thick * 2);
-          const ctx = canvas.getContext('2d');
-          
-          ctx.fillStyle = color;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, thick, thick);
-          
-          const url = canvas.toDataURL('image/jpeg', 0.95);
-          displayOutput('bOut', `<img src="${url}"><br><br><a href="${url}" download="bordered_${file.name}" class="action-btn" style="display:inline-block;">Download Image</a>`);
+    function renderBase64LinkForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Image File (Optional)</label>
+            <input type="file" id="prLinkFile" accept="image/*" />
+          </div>
+          <div class="field">
+            <label>Ya Text / URL Likhein</label>
+            <input type="text" id="prLinkText" placeholder="https://example.com ya koi text..." />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runBase64Link()">Generate Data URL / Base64</button>
+      `;
+    }
+
+    function runBase64Link() {
+      const file = document.getElementById('prLinkFile').files[0];
+      const txt = document.getElementById('prLinkText').value.trim();
+
+      if (file) {
+        const r = new FileReader();
+        r.onload = function () {
+          const dataUrl = r.result;
+          showResult(`
+            <div><strong>File Data URL / Base64 Ready:</strong> (${bytesLabel(file.size)})</div>
+            <div class="field" style="margin-top:10px;">
+              <textarea readonly>${dataUrl}</textarea>
+            </div>
+            <img src="${dataUrl}" alt="Base64 Preview" />
+          `);
         };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+        r.readAsDataURL(file);
+        return;
+      }
+
+      if (!txt) return alert('Kripya image ya text/link dalein.');
+      const encoded = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+      showResult(`
+        <div><strong>Data URL Generated:</strong></div>
+        <div class="field" style="margin-top:10px;">
+          <textarea readonly>${encoded}</textarea>
+        </div>
+        <a class="dl-link" href="${encoded}" target="_blank">↗ Open Data Link</a>
+      `);
     }
+
+    function renderAgeCalcForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Date of Birth (DOB)</label>
+            <input type="date" id="prDob" />
+          </div>
+          <div class="field">
+            <label>Target Date (Default: Aaj)</label>
+            <input type="date" id="prTargetDate" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runAgeCalc()">Calculate Exact Age</button>
+      `;
+    }
+
+    function runAgeCalc() {
+      const dobVal = document.getElementById('prDob').value;
+      if (!dobVal) return alert('Kripya Date of Birth chunein.');
+      const dob = new Date(dobVal + 'T00:00:00');
+      const tVal = document.getElementById('prTargetDate').value;
+      const now = tVal ? new Date(tVal + 'T00:00:00') : new Date();
+      if (dob > now) return alert('DOB target date se baad ki nahi ho sakti.');
+
+      let years = now.getFullYear() - dob.getFullYear();
+      let months = now.getMonth() - dob.getMonth();
+      let days = now.getDate() - dob.getDate();
+
+      if (days < 0) {
+        months -= 1;
+        const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        days += prevMonthDays;
+      }
+      if (months < 0) {
+        years -= 1;
+        months += 12;
+      }
+
+      let nextBday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBday < now) nextBday = new Date(now.getFullYear() + 1, dob.getMonth(), dob.getDate());
+      const diffDaysBday = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
+
+      showResult(`
+        <div style="font-size:18px;font-weight:800;color:#4338ca;">Age: ${years} Saal, ${months} Mahine, ${days} Din</div>
+        <div style="margin-top:8px;"><strong>Next Birthday:</strong> ${diffDaysBday} din baad</div>
+      `);
+    }
+
+    function renderPercentCalcForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>Obtained Marks / Value</label>
+            <input type="number" id="prObtained" placeholder="425" step="any" />
+          </div>
+          <div class="field">
+            <label>Total Marks / Max Value</label>
+            <input type="number" id="prTotal" placeholder="500" step="any" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runPercentCalc()">Calculate Percentage</button>
+      `;
+    }
+
+    function runPercentCalc() {
+      const obt = parseFloat(document.getElementById('prObtained').value);
+      const tot = parseFloat(document.getElementById('prTotal').value);
+      if (isNaN(obt) || isNaN(tot) || tot === 0) return alert('Sahi numbers dalein (Total 0 nahi hona chahiye).');
+      const pct = ((obt / tot) * 100).toFixed(2);
+      showResult(`
+        <div style="font-size:20px;font-weight:800;color:#0f766e;">Percentage: ${pct}%</div>
+        <div style="margin-top:6px;">Score: ${obt} / ${tot}</div>
+      `);
+    }
+
+    function renderWordCounterForm() {
+      return `
+        <div class="field">
+          <label>Apna Text Yahan Likhein ya Paste Karein</label>
+          <textarea id="prTextInput" oninput="runWordCounter()" placeholder="Yahan likhna shuru karein..."></textarea>
+        </div>
+        <button class="btn-primary" onclick="runWordCounter()">Count Words & Characters</button>
+      `;
+    }
+
+    function runWordCounter() {
+      const txt = document.getElementById('prTextInput').value || '';
+      const charsWithSpace = txt.length;
+      const charsNoSpace = txt.replace(/\s+/g, '').length;
+      const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+      const lines = txt ? txt.split(/\r\n|\r|\n/).length : 0;
+      const readMin = Math.max(1, Math.ceil(words / 200));
+
+      showResult(`
+        <div><strong>Words:</strong> ${words} • <strong>Characters (with space):</strong> ${charsWithSpace}</div>
+        <div style="margin-top:6px;"><strong>Characters (no space):</strong> ${charsNoSpace} • <strong>Lines:</strong> ${lines} • <strong>Est. Read:</strong> ~${readMin} min</div>
+      `);
+    }
+
+    function renderQrUnitForm() {
+      return `
+        <div class="form-grid">
+          <div class="field">
+            <label>QR Code Text / Link</label>
+            <input type="text" id="prQrInput" value="https://pixelrang.studio" />
+          </div>
+          <div class="field">
+            <label>QR Size (px)</label>
+            <input type="number" id="prQrSize" value="220" min="120" max="600" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runQrGenerator()">Generate QR Code</button>
+        <hr style="margin:20px 0;border:none;border-top:1px solid #cbd5e1;" />
+        <div class="form-grid">
+          <div class="field">
+            <label>Unit Value</label>
+            <input type="number" id="prUnitVal" value="100" step="any" />
+          </div>
+          <div class="field">
+            <label>Conversion Type</label>
+            <select id="prUnitType">
+              <option value="cm_to_inch">Centimeters (cm) → Inches (in)</option>
+              <option value="inch_to_cm">Inches (in) → Centimeters (cm)</option>
+              <option value="kg_to_lb">Kilograms (kg) → Pounds (lb)</option>
+              <option value="c_to_f">Celsius (°C) → Fahrenheit (°F)</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="runUnitConverter()">Convert Unit</button>
+      `;
+    }
+
+    function runQrGenerator() {
+      const data = document.getElementById('prQrInput').value.trim();
+      const size = parseInt(document.getElementById('prQrSize').value || '220', 10);
+      if (!data) return alert('QR ke liye text ya URL dalein.');
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}`;
+      showResult(`
+        <div><strong>QR Code for:</strong> ${data}</div>
+        <img src="${qrApiUrl}" alt="Generated QR Code" /><br/>
+        <a class="dl-link" href="${qrApiUrl}" download="qrcode.png" target="_blank">⬇ Open / Download QR</a>
+      `);
+    }
+
+    function runUnitConverter() {
+      const val = parseFloat(document.getElementById('prUnitVal').value);
+      const type = document.getElementById('prUnitType').value;
+      if (isNaN(val)) return alert('Sahi number dalein.');
+      let resText = '';
+      if (type === 'cm_to_inch') resText = `${val} cm = ${(val / 2.54).toFixed(4)} inches`;
+      else if (type === 'inch_to_cm') resText = `${val} in = ${(val * 2.54).toFixed(4)} cm`;
+      else if (type === 'kg_to_lb') resText = `${val} kg = ${(val * 2.20462).toFixed(4)} lb`;
+      else if (type === 'c_to_f') resText = `${val} °C = ${((val * 9) / 5 + 32).toFixed(2)} °F`;
+
+      showResult(`<div style="font-size:18px;font-weight:800;color:#1e1b4b;">${resText}</div>`);
+    }
+    </script>
+    <script>
+    const PR_TOOLS = [
+      {
+        id: 'exact-kb-mb',
+        cat: 'image',
+        icon: '🗜️',
+        name: 'Exact KB / MB Compressor',
+        desc: 'Apni marzi ke KB ya MB size aur max width mein image compress karein.',
+        render: renderImgResizerForm
+      },
+      {
+        id: 'passport-custom',
+        cat: 'image',
+        icon: '🪪',
+        name: 'Passport & Custom Resizer',
+        desc: 'Custom px size ya India/US passport presets aur frame border ke saath photo banayein.',
+        render: renderPassportCustomForm
+      },
+      {
+        id: 'bg-border',
+        cat: 'image',
+        icon: '🎨',
+        name: 'Background & Border Studio',
+        desc: 'Solid color ya rang-birange gradients aur custom border ke saath photo decorate karein.',
+        render: renderBgBorderForm
+      },
+      {
+        id: 'convert-filter',
+        cat: 'image',
+        icon: '✨',
+        name: 'Format Converter & Filters',
+        desc: 'JPG, PNG, WEBP conversion ke saath grayscale, contrast, blur aur rotate lagayein.',
+        render: renderConvertFilterForm
+      },
+      {
+        id: 'multi-pdf',
+        cat: 'file',
+        icon: '📄',
+        name: 'Multi-Image to PDF / Sheet',
+        desc: 'Ek ya ek se zyada photos ko ek print/PDF sheet mein jodein aur save karein.',
+        render: renderPdfMakerForm
+      },
+      {
+        id: 'base64-link',
+        cat: 'file',
+        icon: '🔗',
+        name: 'Base64 & Data Link Maker',
+        desc: 'Image ya text/link ka instant Data URL / Base64 preview aur link banayein.',
+        render: renderBase64LinkForm
+      },
+      {
+        id: 'age-calc',
+        cat: 'calc',
+        icon: '🎂',
+        name: 'Age & Birthday Calculator',
+        desc: 'Saal, mahine, din mein exact umar aur agle birthday ke din nikalein.',
+        render: renderAgeCalcForm
+      },
+      {
+        id: 'percent-calc',
+        cat: 'calc',
+        icon: '📊',
+        name: 'Percentage Calculator',
+        desc: 'Marks ya kisi bhi value ka percentage turant calculate karein.',
+        render: renderPercentCalcForm
+      },
+      {
+        id: 'word-counter',
+        cat: 'calc',
+        icon: '✍️',
+        name: 'Word & Character Counter',
+        desc: 'Words, characters (with/without space), lines aur reading time gimein.',
+        render: renderWordCounterForm
+      },
+      {
+        id: 'qr-unit',
+        cat: 'calc',
+        icon: '📱',
+        name: 'QR Generator & Unit Converter',
+        desc: 'Link/text ka QR code banayein aur cm/inch, kg/lb, °C/°F units convert karein.',
+        render: renderQrUnitForm
+      }
+    ];
+
+    const CAT_META = {
+      image: { title: 'Image & Visual Studio', tag: 'KB/MB • Passport • BG/Border • Filters' },
+      file: { title: 'PDF & Link Tools', tag: 'Multi-Image PDF • Base64 / Data URL' },
+      calc: { title: 'Calculators, Text & Utility', tag: 'Age • Percentage • Words • QR • Units' }
+    };
+
+    function setCategory(cat, btnEl) {
+      PR_STATE.activeCategory = cat;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderCatalog();
+    }
+
+    function openToolInline(toolId) {
+      const tool = PR_TOOLS.find(t => t.id === toolId);
+      if (!tool) return;
+
+      PR_STATE.activeToolId = toolId;
+      clearResult();
+
+      const panel = document.getElementById('inlineWorkspace');
+      document.getElementById('panelTitle').textContent = `${tool.icon} ${tool.name}`;
+      document.getElementById('panelBody').innerHTML = tool.render();
+      panel.classList.add('open');
+
+      document.querySelectorAll('.tool-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.toolId === toolId);
+      });
+    }
+
+    function closeWorkspace() {
+      PR_STATE.activeToolId = null;
+      clearResult();
+      document.getElementById('inlineWorkspace').classList.remove('open');
+      document.querySelectorAll('.tool-card').forEach(card => card.classList.remove('selected'));
+    }
+
+    function renderCatalog() {
+      const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+      const mount = document.getElementById('catalogMount');
+
+      const filtered = PR_TOOLS.filter(t => {
+        const matchCat = PR_STATE.activeCategory === 'all' || t.cat === PR_STATE.activeCategory;
+        const matchQuery = !q ||
+          t.name.toLowerCase().includes(q) ||
+          t.desc.toLowerCase().includes(q) ||
+          t.cat.toLowerCase().includes(q);
+        return matchCat && matchQuery;
+      });
+
+      const catsToShow = PR_STATE.activeCategory === 'all'
+        ? ['image', 'file', 'calc']
+        : [PR_STATE.activeCategory];
+
+      let html = '';
+      for (const catKey of catsToShow) {
+        const items = filtered.filter(t => t.cat === catKey);
+        if (items.length === 0) continue;
+        const meta = CAT_META[catKey];
+        html += `
+          <div class="cat-block">
+            <div class="cat-heading">
+              <span>${meta.title}</span>
+              <span class="cat-pill">${meta.tag}</span>
+            </div>
+            <div class="grid">
+              ${items.map(t => `
+                <div class="tool-card ${PR_STATE.activeToolId === t.id ? 'selected' : ''}" data-tool-id="${t.id}" onclick="openToolInline('${t.id}')">
+                  <div>
+                    <div class="tool-icon">${t.icon}</div>
+                    <div class="tool-name">${t.name}</div>
+                    <div class="tool-desc">${t.desc}</div>
+                  </div>
+                  <span class="open-tag">▶ Yahan Kholein</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (!html) {
+        html = `<div class="cat-block"><div class="tool-card" style="cursor:default;"><div class="tool-name">Koi tool nahi mila</div><div class="tool-desc">Search ya category badal kar dekhein.</div></div></div>`;
+      }
+
+      mount.innerHTML = html;
+    }
+
+    renderCatalog();
   </script>
 </body>
 </html>
-    
-
-
   
