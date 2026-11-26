@@ -1,5 +1,6 @@
 export function init(container) {
     container.innerHTML = `
+        <h3>फोटो पर बॉर्डर लगाएँ</h3>
         <input type="file" id="borderInput" accept="image/*"><br><br>
         <label>बॉर्डर का रंग:</label>
         <input type="color" id="borderColor" value="#000000"><br><br>
@@ -37,11 +38,25 @@ export function init(container) {
 
                 ctx.drawImage(img, width, width);
 
-                output.innerHTML = '<p>प्रोसेसिंग पूरी हुई! नीचे आपकी इमेज है:</p>';
+                output.innerHTML = '<p>प्रोसेसिंग पूरी हुई!</p>';
                 const resultImg = document.createElement('img');
                 resultImg.src = canvas.toDataURL();
                 resultImg.style.maxWidth = '100%';
                 output.appendChild(resultImg);
+                
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = canvas.toDataURL();
+                downloadBtn.download = 'bordered-image.png';
+                downloadBtn.innerText = 'इमेज डाउनलोड करें';
+                downloadBtn.style.display = 'block';
+                downloadBtn.style.marginTop = '10px';
+                downloadBtn.style.padding = '10px';
+                downloadBtn.style.background = '#4CAF50';
+                downloadBtn.style.color = 'white';
+                downloadBtn.style.textAlign = 'center';
+                downloadBtn.style.textDecoration = 'none';
+                downloadBtn.style.borderRadius = '5px';
+                output.appendChild(downloadBtn);
             };
             img.src = e.target.result;
         };
