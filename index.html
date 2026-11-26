@@ -3,430 +3,562 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart India Hub - One Website, Hundreds of Useful Tools</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8771215756914557"
-     crossorigin="anonymous"></script>
- <meta name="google-site-verification" content="G4QkJDDggECQLsdqIRQ7hDwwu8uFtro8EwzE3wLZId8" />
-  <meta name="description" content="Smart India Hub: Photo Resizer, Signature & Passport Maker, PDF Tools, Calculators, Text Tools, Password & QR Generator and more in Hindi & English." />
-  <meta property="og:title" content="Smart India Hub - One Website, Hundreds of Useful Tools" />
-  <meta property="og:description" content="Fast, mobile-friendly online tools for image resizing, calculations, text utilities, and more." />
-  <meta property="og:type" content="website" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <title>Smart India Hub - Free Online Tools</title>
+  <meta name="description" content="Smart India Hub - फोटो रिसाइज़र, बल्क इमेज लिंक जनरेटर, टेक्स्ट कन्वर्टर, कैलकुलेटर और उपयोगी ऑनलाइन टूल्स।" />
+  <meta name="google-site-verification" content="G4QkJDDggECQLsdqIRQ7hDwwu8uFtro8EwzE3wLZId8" />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8771215756914557" crossorigin="anonymous"></script>
+
   <style>
     :root {
-      --primary: #0b5ed7;
-      --primary-dark: #084298;
-      --primary-light: #e7f1ff;
-      --bg: #f5f8fc;
+      --primary: #1459c7;
+      --navy: #10284b;
+      --purple: #7554d8;
+      --pink: #e94f9b;
+      --bg: #f4f7fc;
       --card: #ffffff;
-      --text: #14213d;
-      --muted: #5c6b8a;
-      --border: #dce5f2;
-      --success: #198754;
+      --ink: #18243a;
+      --muted: #63718a;
+      --line: #dfe7f2;
+      --green: #13845b;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
-    body { background: var(--bg); color: var(--text); line-height: 1.5; }
-    a { color: var(--primary); text-: none; }
 
-    /* Header */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: var(--navy); text-decoration: none; }
+
     header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      z-index: 50;
-      box-shadow: 0 2px 10px rgba(11, 94, 215, 0.06);
+      z-index: 20;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
     }
+
     .nav-wrap {
-      max-width: 1160px;
-      margin: auto;
-      padding: 12px 16px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 10px;
     }
+
     .brand { display: flex; align-items: center; gap: 10px; }
-    .brand-badge {
-      width: 38px; height: 38px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), #2b8cff);
-      color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 18px;
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--purple), var(--primary));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 20px;
     }
-    .brand-name { font-size: 18px; font-weight: 800; color: var(--primary-dark); }
+    .brand-name { font-size: 19px; font-weight: 800; color: var(--navy); display: block; }
     .brand-tag { font-size: 11px; color: var(--muted); display: block; }
 
-    nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
-    nav a { color: var(--text); padding: 6px 8px; border-radius: 6px; }
-    nav a:hover { background: var(--primary-light); color: var(--primary); }
-    .lang-btn {
-      background: var(--primary); color: #fff; border: none;
-      padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;
+    nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    nav a, nav button {
+      padding: 8px 14px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
     }
+    nav a:hover { background: #edf3ff; color: var(--purple); }
+    nav button.lang-btn { border-color: var(--line); color: var(--navy); }
 
-    /* Hero & Search */
     .hero {
-      background: linear-gradient(135deg, #0b5ed7 0%, #1677ff 100%);
+      background: linear-gradient(120deg, #10284b, #287ce5 52%, #8054d8);
       color: #fff;
-      padding: 36px 16px 44px;
+      padding: 40px 16px;
       text-align: center;
     }
-    .hero h1 { font-size: clamp(24px, 4vw, 38px); font-weight: 800; margin-bottom: 8px; }
-    .hero p { font-size: 15px; opacity: 0.92; margin-bottom: 20px; }
-    .search-box {
-      max-width: 640px;
-      margin: auto;
-      background: #fff;
-      border-radius: 12px;
-      padding: 6px;
-      display: flex;
-      gap: 8px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    }
+    .hero h1 { font-size: clamp(24px, 5vw, 38px); margin-bottom: 10px; }
+    .hero p { max-width: 660px; margin: 0 auto 20px; opacity: 0.92; font-size: 15px; }
+
+    .search-box { max-width: 560px; margin: 0 auto; display: flex; gap: 8px; }
     .search-box input {
-      flex: 1; border: none; outline: none; padding: 12px 14px; font-size: 15px; color: var(--text);
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 99px;
+      border: none;
+      outline: none;
+      font-size: 14px;
     }
     .search-box button {
-      background: var(--primary); color: #fff; border: none; border-radius: 8px;
-      padding: 0 18px; font-weight: 700; cursor: pointer;
+      padding: 12px 22px;
+      border-radius: 99px;
+      border: none;
+      background: var(--pink);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    /* Main Container */
-    .container { max-width: 1160px; margin: auto; padding: 24px 16px; }
-
-    /* Ad Placeholder Slot (AdSense Ready) */
-    .ad-slot {
-      background: #eef3fa;
-      border: 1px dashed #b7c9e6;
-      color: var(--muted);
+    .ad-banner {
+      max-width: 1120px;
+      margin: 18px auto;
+      padding: 14px;
+      background: #eef3fb;
+      border: 1px dashed var(--muted);
+      border-radius: 12px;
       text-align: center;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      margin: 18px 0;
+      color: var(--muted);
+      font-size: 13px;
     }
 
-    /* Categories & Tool Cards */
-    .cat-section { margin-bottom: 30px; }
-    .cat-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px; border-bottom: 2px solid var(--border); padding-bottom: 8px;
+    main { max-width: 1120px; margin: 0 auto; padding: 16px; }
+    .cat-section { margin-bottom: 32px; }
+    .cat-title {
+      font-size: 20px;
+      color: var(--navy);
+      margin-bottom: 14px;
+      border-left: 4px solid var(--purple);
+      padding-left: 10px;
     }
-    .cat-title { font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 15px;
     }
+
     .tool-card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
       padding: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 10px;
-      transition: transform 0.15s, box-shadow 0.15s;
-      cursor: pointer;
     }
     .tool-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(11, 94, 215, 0.08);
-      border-color: #9ec5fe;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(16, 40, 75, 0.08);
     }
-    .tool-top { display: flex; align-items: center; gap: 10px; }
-    .tool-icon {
-      width: 36px; height: 36px; border-radius: 9px;
-      background: var(--primary-light); color: var(--primary);
-      display: grid; place-items: center; font-weight: 800; font-size: 15px; flex-shrink: 0;
-    }
-    .tool-name { font-size: 15px; font-weight: 700; color: var(--text); }
-    .tool-desc { font-size: 12.5px; color: var(--muted); }
+    .tool-top { display: flex; gap: 12px; margin-bottom: 12px; }
+    .tool-icon { font-size: 26px; }
+    .tool-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .tool-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
     .tool-tag {
-      align-self: flex-start;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       padding: 3px 8px;
-      border-radius: 999px;
-      background: var(--primary-light);
-      color: var(--primary-dark);
+      border-radius: 6px;
+      background: #e6f7f0;
+      color: var(--green);
+      align-self: flex-start;
     }
-    .tool-tag.config { background: #fff3cd; color: #664d03; }
 
-    /* Active Tool Workspace */
-    #workspace {
+    .workspace {
       display: none;
-      background: var(--card);
-      border: 2px solid var(--primary);
-      border-radius: 14px;
+      background: #fff;
+      border: 2px solid var(--purple);
+      border-radius: 16px;
       padding: 20px;
       margin-bottom: 28px;
-      box-shadow: 0 10px 28px rgba(11, 94, 215, 0.12);
+      box-shadow: 0 10px 30px rgba(117, 84, 216, 0.12);
     }
-    .ws-top {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    .ws-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
     }
-    .close-btn {
-      background: #eef2f7; color: var(--text); border: none;
-      padding: 7px 14px; border-radius: 8px; font-weight: 700; cursor: pointer;
-    }
+    .ws-head h2 { font-size: 19px; color: var(--navy); }
+
     .field { margin-bottom: 14px; }
-    .field label { display: block; font-weight: 700; font-size: 13.5px; margin-bottom: 6px; }
+    .field label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; }
     .field input, .field select, .field textarea {
-      width: 100%; padding: 10px 12px; border: 1px solid var(--border);
-      border-radius: 8px; font-size: 14px; background: #fff;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 14px;
     }
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
     .btn-primary {
-      background: var(--primary); color: #fff; border: none;
-      padding: 11px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;
+      background: linear-gradient(135deg, var(--purple), var(--primary));
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
     }
-    .btn-primary:hover { background: var(--primary-dark); }
     .btn-secondary {
-      background: var(--primary-light); color: var(--primary-dark); border: 1px solid #b6d4fe;
-      padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12.5px; margin-right: 6px; margin-bottom: 6px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
     }
+
     .result-box {
-      margin-top: 14px; padding: 14px; border-radius: 10px;
-      background: #f8fbff; border: 1px solid var(--border);
+      margin-top: 14px;
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      font-size: 14px;
     }
     .notice-box {
-      padding: 14px; border-radius: 10px; background: #fff8e6; border: 1px solid #ffe08a; color: #5c4400; font-size: 14px;
+      padding: 12px;
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    .link-item {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      margin-top: 8px;
     }
 
-    /* Info Sections (About, Contact, Privacy, Terms, Disclaimer, Blog) */
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 12px; }
-    .info-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
-    .info-card h3 { font-size: 15px; color: var(--primary-dark); margin-bottom: 6px; }
-    .info-card p { font-size: 13px; color: var(--muted); }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 15px;
+      margin-top: 16px;
+    }
+    .info-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    .info-card h3 { font-size: 15px; color: var(--navy); margin-bottom: 8px; }
+    .info-card p { font-size: 12px; color: var(--muted); }
 
-    /* Footer */
     footer {
-      background: #0d2240; color: #d8e3f5; padding: 28px 16px; margin-top: 36px; font-size: 13.5px;
+      background: var(--navy);
+      color: #fff;
+      padding: 28px 16px;
+      margin-top: 36px;
     }
     .footer-wrap {
-      max-width: 1160px; margin: auto;
-      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
     }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 14px; }
-    .footer-links a { color: #b6d4fe; }
-
-    @media (max-width: 600px) {
-      .row-2 { grid-template-columns: 1fr; }
-    }
+    .footer-links a { color: #cbd5e1; margin-right: 12px; font-size: 13px; }
+    .footer-links a:hover { color: #fff; }
   </style>
 </head>
 <body>
+  <header>
+    <div class="nav-wrap">
+      <div class="brand">
+        <div class="brand-icon">S</div>
+        <div>
+          <span class="brand-name" id="heroTitle">Smart India Hub</span>
+          <span class="brand-tag" id="tagline">एक वेबसाइट, सैकड़ों उपयोगी टूल्स।</span>
+        </div>
+      </div>
+      <nav>
+        <a href="#tools-area" id="navAllTools">सभी टूल्स</a>
+        <a href="#info-pages" id="navAbout">हमारे बारे में</a>
+        <a href="#info-pages" id="navPrivacy">प्राइवेसी</a>
+        <button class="lang-btn" id="langToggle" onclick="toggleLang()">English</button>
+      </nav>
+    </div>
+  </header>
 
-<header>
-  <div class="nav-wrap">
-    <a class="brand" href="#top" onclick="resetSearch()">
-      <div class="brand-badge">SI</div>
+  <section class="hero">
+    <h1 id="heroSub">एक वेबसाइट, सैकड़ों उपयोगी टूल्स।</h1>
+    <p>फ़ोटो से डायरेक्ट लिंक, इमेज रिसाइज़र, टेक्स्ट कन्वर्टर, कैलकुलेटर और उपयोगी टूल्स</p>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="आज आप क्या करना चाहते हैं?" oninput="filterTools()" />
+      <button type="button" id="searchBtn" onclick="filterTools()">खोजें</button>
+    </div>
+  </section>
+
+  <div class="ad-banner" id="adSlotTop">Google AdSense Advertisement Space</div>
+
+  <main>
+    <div id="workspace" class="workspace">
+      <div class="ws-head">
+        <h2 id="wsTitle">Tool Title</h2>
+        <button type="button" class="btn-secondary" onclick="closeWorkspace()" id="closeWsBtn">बंद करें ✕</button>
+      </div>
+      <div id="wsBody"></div>
+    </div>
+
+    <div id="tools-area"></div>
+
+    <div class="ad-banner" id="adSlotMid">Google AdSense Advertisement Space</div>
+
+    <section id="info-pages" style="margin-top: 32px;">
+      <h2 class="cat-title" id="infoHeading">पेज, ब्लॉग और नीतियां</h2>
+      <div class="info-grid" id="infoGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-wrap">
       <div>
-        <span class="brand-name">Smart India Hub</span>
-        <span class="brand-tag" id="tagline">One Website, Hundreds of Useful Tools.</span>
+        <h3>Smart India Hub</h3>
+        <p id="footerTag" style="color: #cbd5e1; font-size: 13px; margin-top: 5px;">एक वेबसाइट, सैकड़ों उपयोगी टूल्स।</p>
       </div>
-    </a>
-    <nav>
-      <a href="#tools-area" id="navAllTools">All Tools</a>
-      <a href="#info-pages" id="navBlog">Blog</a>
-      <a href="#info-pages" id="navAbout">About</a>
-      <a href="#info-pages" id="navPrivacy">Privacy</a>
-      <button class="lang-btn" onclick="toggleLang()" id="langToggle">हिन्दी</button>
-    </nav>
-  </div>
-</header>
-
-<section class="hero" id="top">
-  <h1 id="heroTitle">Smart India Hub</h1>
-  <p id="heroSub">One Website, Hundreds of Useful Tools. — Fast, free & mobile-friendly utilities.</p>
-  <div class="search-box">
-    <input type="search" id="searchInput" placeholder="What do you want to do today?" oninput="filterTools()" />
-    <button onclick="filterTools()" id="searchBtn">Search</button>
-  </div>
-</section>
-
-<main class="container">
-  <!-- AdSense Banner Placement (Replace with approved AdSense script after approval) -->
-  <div class="ad-slot" id="adSlotTop">Advertisement Space (Google AdSense Ready)</div>
-
-  <!-- Interactive Working Tool Area -->
-  <section id="workspace">
-    <div class="ws-top">
-      <h2 id="wsTitle" style="font-size:18px; color:var(--primary-dark);">Tool</h2>
-      <button class="close-btn" onclick="closeWorkspace()" id="closeWsBtn">Close ✕</button>
+      <div class="footer-links" id="footerLinks"></div>
     </div>
-    <div id="wsBody"></div>
-  </section>
+  </footer>
 
-  <!-- Tools Directory -->
-  <div id="tools-area"></div>
+  <script>
+    let lang = 'hi';
 
-  <div class="ad-slot" id="adSlotMid">Advertisement Space (Google AdSense Ready)</div>
+    const i18n = {
+      en: {
+        tagline: 'One Website, Hundreds of Useful Tools.',
+        heroTitle: 'Smart India Hub',
+        heroSub: 'One Website, Hundreds of Useful Tools.',
+        searchPh: 'What do you want to do today?',
+        searchBtn: 'Search',
+        langBtn: 'हिन्दी',
+        allTools: 'All Tools',
+        about: 'About',
+        privacy: 'Privacy',
+        close: 'Close ✕',
+        readyTag: 'Ready Tool',
+        infoHeading: 'Pages, Blog & Policies',
+        footerTag: 'One Website, Hundreds of Useful Tools.',
+        noResults: 'No matching tools found.',
+        infoCards: [
+          { title: 'About Us', body: 'Smart India Hub helps creators, sellers, students, and everyday users host bulk photo links, resize images, calculate values, and format text.' },
+          { title: 'Blog & Guides', body: 'Guides on generating direct image URLs via Cloudinary for listings, resizing photos, and calculating EMI or age.' },
+          { title: 'Privacy Policy', body: 'Local browser tools process data on your device. Cloudinary uploads send selected photos directly to your configured Cloudinary account.' },
+          { title: 'Contact & Terms', body: 'Always verify official notices before submitting applications. Contact us for tool support.' }
+        ],
+        footerLinks: ['Home', 'All Tools', 'About Us', 'Privacy Policy', 'Terms']
+      },
+      hi: {
+        tagline: 'एक वेबसाइट, सैकड़ों उपयोगी टूल्स।',
+        heroTitle: 'Smart India Hub',
+        heroSub: 'एक वेबसाइट, सैकड़ों उपयोगी टूल्स।',
+        searchPh: 'आज आप क्या करना चाहते हैं?',
+        searchBtn: 'खोजें',
+        langBtn: 'English',
+        allTools: 'सभी टूल्स',
+        about: 'हमारे बारे में',
+        privacy: 'प्राइवेसी',
+        close: 'बंद करें ✕',
+        readyTag: 'तैयार टूल',
+        infoHeading: 'पेज, ब्लॉग और नीतियां',
+        footerTag: 'एक वेबसाइट, सैकड़ों उपयोगी टूल्स।',
+        noResults: 'कोई टूल नहीं मिला।',
+        infoCards: [
+          { title: 'हमारे बारे में', body: 'स्मार्ट इंडिया हब बल्क फ़ोटो लिंक बनाने, फ़ोटो रिसाइज़ करने, टेक्स्ट बदलने और कैलकुलेशन में मदद करता है।' },
+          { title: 'ब्लॉग और गाइड', body: 'Cloudinary से डायरेक्ट इमेज लिंक निकालने, फ़ोटो साइज सेट करने और EMI व प्रतिशत निकालने की गाइड।' },
+          { title: 'प्राइवेसी नीति', body: 'लोकल टूल्स आपके डिवाइस पर चलते हैं और Cloudinary अपलोड आपके चुने हुए अकाउंट पर जाते हैं।' },
+          { title: 'संपर्क और नियम', body: 'आधिकारिक सूचनाओं की पुष्टि हमेशा आधिकारिक स्रोत से करें।' }
+        ],
+        footerLinks: ['होम', 'सभी टूल्स', 'हमारे बारे में', 'प्राइवेसी नीति', 'नियम']
+      }
+    };
 
-  <!-- Essential Pages & Blog -->
-  <section id="info-pages" class="cat-section">
-    <div class="cat-header">
-      <h2 class="cat-title" id="infoHeading">Pages, Blog & Policies</h2>
-    </div>
-    <div class="info-grid">
-      <div class="info-card">
-        <h3>About Us</h3>
-        <p>Smart India Hub helps students, job applicants, and everyday users resize documents, calculate numbers, and format text quickly in the browser.</p>
-      </div>
-      <div class="info-card">
-        <h3>Blog & Guides</h3>
-        <p>Guides on setting photo dimensions & KB sizes for forms, understanding EMI & percentage calculations, and writing strong passwords.</p>
-      </div>
-      <div class="info-card">
-        <h3>Privacy Policy & Disclaimer</h3>
-        <p>Images processed in local browser tools are not uploaded to external servers without your action. Government exam details and rankings are never guaranteed—always verify official notices.</p>
-      </div>
-      <div class="info-card">
-        <h3>Contact & Terms</h3>
-        <p>Add your official support email and terms before publishing publicly. Tools requiring external APIs or live feeds clearly show configuration status.</p>
-      </div>
-    </div>
-  </section>
-</main>
+    const categories = [
+      {
+        id: 'popular',
+        title: { en: 'Most Popular Tools', hi: 'सबसे लोकप्रिय टूल्स' },
+        tools: [
+          { id: 'img-host', icon: '☁️', name: { en: 'Bulk Image Link Generator (Cloudinary)', hi: 'बल्क इमेज लिंक जनरेटर (Cloudinary)' }, desc: { en: 'Upload one or multiple photos & copy direct links', hi: 'एक या कई फ़ोटो डालें और डायरेक्ट लिंक कॉपी करें' } },
+          { id: 'img-resizer', icon: '🖼️', name: { en: 'Image Resizer & Compressor', hi: 'इमेज रिसाइज़र और कंप्रेसर' }, desc: { en: 'Change width, height & download JPG', hi: 'चौड़ाई, ऊंचाई बदलें और फ़ोटो डाउनलोड करें' } },
+          { id: 'text-case', icon: '🔤', name: { en: 'Text Case Converter', hi: 'टेक्स्ट केस कन्वर्टर' }, desc: { en: 'UPPERCASE, lowercase & clean extra spaces', hi: 'बड़े/छोटे अक्षर और अतिरिक्त स्पेस साफ करें' } },
+          { id: 'age-calc', icon: '🎂', name: { en: 'Age Calculator', hi: 'आयु कैलकुलेटर' }, desc: { en: 'Exact age in years, months & days', hi: 'साल, महीने और दिन में सटीक उम्र निकालें' } },
+          { id: 'pct-calc', icon: '📊', name: { en: 'Percentage Calculator', hi: 'प्रतिशत कैलकुलेटर' }, desc: { en: 'Calculate marks or value percentage', hi: 'अंकों या किसी भी संख्या का प्रतिशत निकालें' } }
+        ]
+      },
+      {
+        id: 'calc',
+        title: { en: 'Calculators & Generators', hi: 'कैलकुलेटर और जनरेटर' },
+        tools: [
+          { id: 'emi-calc', icon: '🏦', name: { en: 'EMI Calculator', hi: 'EMI कैलकुलेटर' }, desc: { en: 'Monthly EMI & total payable amount', hi: 'मासिक EMI और कुल भुगतान निकालें' } },
+          { id: 'pass-gen', icon: '🔐', name: { en: 'Password Generator', hi: 'पासवर्ड जनरेटर' }, desc: { en: 'Create strong passwords', hi: 'सुरक्षित पासवर्ड बनाएं' } },
+          { id: 'qr-gen', icon: '📱', name: { en: 'QR Code Generator', hi: 'QR कोड जनरेटर' }, desc: { en: 'Generate QR code from link or text', hi: 'लिंक या टेक्स्ट से QR कोड बनाएं' } }
+        ]
+      }
+    ];
 
-<footer>
-  <div class="footer-wrap">
-    <div>
-      <strong>Smart India Hub</strong> — One Website, Hundreds of Useful Tools.
-    </div>
-    <div class="footer-links">
-      <a href="#top">Home</a>
-      <a href="#tools-area">All Tools</a>
-      <a href="#info-pages">About Us</a>
-      <a href="#info-pages">Contact Us</a>
-      <a href="#info-pages">Privacy Policy</a>
-      <a href="#info-pages">Terms</a>
-      <a href="#info-pages">Disclaimer</a>
-      <a href="#info-pages">Sitemap</a>
-    </div>
-  </div>
-</footer>
+    const toolsById = {};
+    categories.forEach(cat => cat.tools.forEach(t => toolsById[t.id] = t));
 
-<script>
-  let lang = 'en';
+    function renderTools(query = '') {
+      const q = query.trim().toLowerCase();
+      const wrap = document.getElementById('tools-area');
+      if (!wrap) return;
+      wrap.innerHTML = '';
 
-  const i18n = {
-    en: {
-      tagline: 'One Website, Hundreds of Useful Tools.',
-      heroTitle: 'Smart India Hub',
-      heroSub: 'One Website, Hundreds of Useful Tools. — Fast, mobile-friendly utilities.',
-      searchPh: 'What do you want to do today?',
-      searchBtn: 'Search',
-      langBtn: 'हिन्दी',
-      allTools: 'All Tools',
-      blog: 'Blog',
-      about: 'About',
-      privacy: 'Privacy',
-      close: 'Close ✕',
-      readyTag: 'Working Tool',
-      configTag: 'API / Feed Setup Needed',
-      infoHeading: 'Pages, Blog & Policies',
-      adTop: 'Advertisement Space (Google AdSense Ready)',
-      adMid: 'Advertisement Space (Google AdSense Ready)'
-    },
-    hi: {
-      tagline: 'एक वेबसाइट, सैकड़ों उपयोगी टूल्स।',
-      heroTitle: 'स्मार्ट इंडिया हब (Smart India Hub)',
-      heroSub: 'एक वेबसाइट, सैकड़ों उपयोगी टूल्स। — तेज़, मोबाइल-फ्रेंडली ऑनलाइन टूल्स।',
-      searchPh: 'आज आप क्या करना चाहते हैं? (What do you want to do today?)',
-      searchBtn: 'खोजें',
-      langBtn: 'English',
-      allTools: 'सभी टूल्स',
-      blog: 'ब्लॉग',
-      about: 'हमारे बारे में',
-      privacy: 'प्राइवेसी',
-      close: 'बंद करें ✕',
-      readyTag: 'तैयार टूल',
-      configTag: 'API / डेटा सेटअप ज़रूरी',
-      infoHeading: 'पेज, ब्लॉग और नीतियां',
-      adTop: 'विज्ञापन स्थान (Google AdSense के लिए तैयार)',
-      adMid: 'विज्ञापन स्थान (Google AdSense के लिए तैयार)'
+      categories.forEach(cat => {
+        const matched = cat.tools.filter(t =>
+          !q ||
+          t.name.en.toLowerCase().includes(q) ||
+          t.name.hi.toLowerCase().includes(q) ||
+          t.desc.en.toLowerCase().includes(q) ||
+          t.desc.hi.toLowerCase().includes(q)
+        );
+        if (!matched.length) return;
+
+        const sec = document.createElement('section');
+        sec.className = 'cat-section';
+
+        const h2 = document.createElement('h2');
+        h2.className = 'cat-title';
+        h2.textContent = cat.title[lang];
+        sec.appendChild(h2);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        matched.forEach(t => {
+          const card = document.createElement('div');
+          card.className = 'tool-card';
+          card.onclick = () => openTool(t.id);
+          card.innerHTML = `
+            <div class="tool-top">
+              <div class="tool-icon">${t.icon}</div>
+              <div>
+                <div class="tool-name">${t.name[lang]}</div>
+                <div class="tool-desc">${t.desc[lang]}</div>
+              </div>
+            </div>
+            <span class="tool-tag">${i18n[lang].readyTag}</span>
+          `;
+          grid.appendChild(card);
+        });
+
+        sec.appendChild(grid);
+        wrap.appendChild(sec);
+      });
+
+      if (!wrap.children.length) {
+        wrap.innerHTML = `<div class="notice-box"><p>${i18n[lang].noResults}</p></div>`;
+      }
     }
-  };
 
-  const categories = [
-    {
-      id: 'popular',
-      title: { en: 'Most Popular Tools', hi: 'सबसे लोकप्रिय टूल्स' },
-      tools: [
-        { id: 'img-resizer', icon: '🖼️', name: { en: 'Image Resizer & KB Compressor', hi: 'इमेज रिसाइज़र और KB कंप्रेसर' }, desc: { en: 'Resize width, height, format & KB quality locally', hi: 'चौड़ाई, ऊंचाई, फॉर्मेट और KB क्वालिटी बदलें' }, ready: true },
-        { id: 'passport-sig', icon: '🪪', name: { en: 'Passport & Signature Maker', hi: 'पासपोर्ट और सिग्नेचर मेकर' }, desc: { en: 'One-click presets for photo & signature', hi: 'फोटो और सिग्नेचर के लिए तैयार प्रेसेट्स' }, ready: true },
-        { id: 'img-to-pdf', icon: '📄', name: { en: 'Image to PDF', hi: 'इमेज से PDF' }, desc: { en: 'Convert image to a downloadable PDF', hi: 'फोटो को PDF में बदलें' }, ready: true },
-        { id: 'age-calc', icon: '🎂', name: { en: 'Age Calculator', hi: 'आयु कैलकुलेटर' }, desc: { en: 'Exact age in years, months & days', hi: 'साल, महीने और दिनों में सही उम्र निकालें' }, ready: true },
-        { id: 'pct-calc', icon: '📊', name: { en: 'Percentage & Marks Calculator', hi: 'प्रतिशत और अंक कैलकुलेटर' }, desc: { en: 'Calculate percentage from marks easily', hi: 'अंकों से प्रतिशत आसानी से निकालें' }, ready: true }
-      ]
-    },
-    {
-      id: 'photo',
-      title: { en: 'Photo & Image Tools', hi: 'फोटो और इमेज टूल्स' },
-      tools: [
-        { id: 'img-resizer', icon: '📐', name: { en: 'Image Resizer & Format Converter', hi: 'इमेज रिसाइज़र और फॉर्मेट कन्वर्टर' }, desc: { en: 'JPG, PNG, WEBP resize & quality control', hi: 'JPG, PNG, WEBP साइज व क्वालिटी बदलें' }, ready: true },
-        { id: 'passport-sig', icon: '✍️', name: { en: 'Signature & Passport Presets', hi: 'सिग्नेचर और पासपोर्ट प्रेसेट्स' }, desc: { en: 'Standard form dimension presets', hi: 'फॉर्म के लिए स्टैंडर्ड साइज प्रेसेट्स' }, ready: true },
-        { id: 'img-to-pdf', icon: '📑', name: { en: 'Image to PDF Converter', hi: 'इमेज से PDF कन्वर्टर' }, desc: { en: 'Export image as PDF document', hi: 'इमेज को PDF फाइल में सेव करें' }, ready: true },
-        { id: 'bg-changer', icon: '🎨', name: { en: 'Background Color Changer', hi: 'बैकग्राउंड कलर चेंजर' }, desc: { en: 'Full AI background removal requires API', hi: 'पूरे बैकग्राउंड रिमूवल के लिए API ज़रूरी' }, ready: false }
-      ]
-    },
-    {
-      id: 'pdf',
-      title: { en: 'PDF Tools', hi: 'PDF टूल्स' },
-      tools: [
-        { id: 'img-to-pdf', icon: '📄', name: { en: 'JPG / Image to PDF', hi: 'JPG / इमेज से PDF' }, desc: { en: 'Convert image to PDF in browser', hi: 'ब्राउज़र में इमेज से PDF बनाएं' }, ready: true },
-        { id: 'pdf-suite', icon: '📚', name: { en: 'Merge, Split & Compress PDF', hi: 'मर्ज, स्प्लिट और कंप्रेस PDF' }, desc: { en: 'Add pdf-lib / PDF.js worker for multi-page PDF ops', hi: 'मल्टी-पेज PDF के लिए pdf-lib / PDF.js जोड़ें' }, ready: false }
-      ]
-    },
-    {
-      id: 'govt',
-      title: { en: 'Government Job & Exam Tools', hi: 'सरकारी नौकरी और परीक्षा टूल्स' },
-      tools: [
-        { id: 'age-calc', icon: '🗓️', name: { en: 'Exam Age Calculator', hi: 'परीक्षा आयु कैलकुलेटर' }, desc: { en: 'Check age as of any cutoff date', hi: 'किसी भी तारीख के अनुसार आयु जानें' }, ready: true },
-        { id: 'pct-calc', icon: '🧮', name: { en: 'Percentage & Merit Helper', hi: 'प्रतिशत और मेरिट हेल्पर' }, desc: { en: 'Compute marks percentage quickly', hi: 'अंकों का प्रतिशत निकालें' }, ready: true },
-        { id: 'govt-feed', icon: '🏛️', name: { en: 'Jobs, Admit Card & Results', hi: 'भर्ती, एडमिट कार्ड और रिजल्ट' }, desc: { en: 'Connect verified official RSS/API source—never fake listings', hi: 'केवल सत्यापित स्रोत जोड़ें—फ़र्ज़ी अपडेट न दिखाएं' }, ready: false }
-      ]
-    },
-    {
-      id: 'calc',
-      title: { en: 'Online Calculators', hi: 'ऑनलाइन कैलकुलेटर' },
-      tools: [
-        { id: 'emi-calc', icon: '🏦', name: { en: 'EMI Calculator', hi: 'EMI कैलकुलेटर' }, desc: { en: 'Monthly EMI, total interest & payable', hi: 'मासिक EMI, कुल ब्याज और कुल राशि' }, ready: true },
-        { id: 'pct-calc', icon: { en: 'Percentage Calculator', hi: 'प्रतिशत कैलकुलेटर' }, desc: { en: 'Percentage calculation tool', hi: 'प्रतिशत गणना टूल' }, ready: true },
-        { id: 'age-calc', icon: '⏳', name: { en: 'Age Calculator', hi: 'आयु कैलकुलेटर' }, desc: { en: 'Age breakdown in Y/M/D', hi: 'साल, महीने और दिन में उम्र' }, ready: true },
-        { id: 'curr-calc', icon: '💱', name: { en: 'Live Currency Converter', hi: 'लाइव करेंसी कन्वर्टर' }, desc: { en: 'Requires live exchange rate API key', hi: 'लाइव एक्सचेंज रेट API की आवश्यकता' }, ready: false }
-      ]
-    },
-    {
-      id: 'text',
-      title: { en: 'Text Tools', hi: 'टेक्स्ट टूल्स' },
-      tools: [
-        { id: 'word-count', icon: '✍️', name: { en: 'Word, Char & Case Tool', hi: 'वर्ड, कैरेक्टर और केस टूल' }, desc: { en: 'Count words/chars, UPPER/lower & clean spaces', hi: 'शब्द/अक्षर गिनें, केस बदलें और एक्स्ट्रा स्पेस हटाएं' }, ready: true },
-        { id: 'translator-tool', icon: '🌐', name: { en: 'Hindi ↔ English Translator', hi: 'हिन्दी ↔ English ट्रांसलेटर' }, desc: { en: 'Requires translation API configuration', hi: 'ट्रांसलेशन API कॉन्फ़िगरेशन ज़रूरी' }, ready: false }
-      ]
-    },
-    {
-      id: 'student',
-      title: { en: 'Student Tools', hi: 'स्टूडेंट टूल्स' },
-      tools: [
-        { id: 'pct-calc', icon: '🎓', name: { en: 'Marks Percentage Calculator', hi: 'अंक प्रतिशत कैलकुलेटर' }, desc: { en: 'Quick exam percentage helper', hi: 'परीक्षा प्रतिशत कैलकुलेटर' }, ready: true },
-        { id: 'word-count', icon: '📝', name: { en: 'Notes & Draft Counter', hi: 'नोट्स और ड्राफ्ट काउंटर' }, desc: { en: 'Word counter & space cleaner for notes', hi: 'नोट्स के लिए वर्ड काउंटर और स्पेस क्लीनर' }, ready: true }
-      ]
-    },
-    {
-      id: 'ai',
-      title: { en: 'AI Tools', hi: 'AI टूल्स' },
-      tools: [
-        { id: 'ai-suite', icon: '✨', name: { en: 'AI Writer, Prompts & Image Tools', hi: 'AI राइटर, प्रॉम्प्ट और इमेज टूल्स' }, desc: { en: 'Connect your real AI API endpoint before enabling output', hi: 'रियल AI API जोड़ने के बाद ही आउटपुट दिखाएं' }, ready: false }
-      ]
-    },
-    {
-      id: 'utility',
-      title: { en: 'Internet & Utility Tools', hi: 'इंटरनेट और यूटिलिटी टूल्स' },
-      tools: [
-        { id: 'pass-gen', icon: '🔐', name: { en: 'Strong Password Generator', hi: 'मजबूत पासवर्ड जनरेटर' }, desc: { en: 'Generate secure random passwords locally', hi: 'सुरक्षित रैंडम पासवर्ड बनाएं' }, ready: true },
-        { id: 'qr-gen', icon: '📱', name: { en: 'QR C
+    function renderInfoAndFooter() {
+      const t = i18n[lang];
+      document.getElementById('infoHeading').textContent = t.infoHeading;
+      document.getElementById('footerTag').textContent = t.footerTag;
+
+      document.getElementById('infoGrid').innerHTML = t.infoCards.map(item => `
+        <div class="info-card">
+          <h3>${item.title}</h3>
+          <p>${item.body}</p>
+        </div>
+      `).join('');
+
+      document.getElementById('footerLinks').innerHTML = t.footerLinks.map(label => `<a href="#info-pages">${label}</a>`).join('');
+    }
+
+    function applyStaticLang() {
+      const t = i18n[lang];
+      document.documentElement.lang = lang;
+
+      const setTxt = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = txt;
+      };
+      const setPh = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.placeholder = txt;
+      };
+
+      setTxt('tagline', t.tagline);
+      setTxt('heroTitle', t.heroTitle);
+      setTxt('heroSub', t.heroSub);
+      setPh('searchInput', t.searchPh);
+      setTxt('searchBtn', t.searchBtn);
+      setTxt('langToggle', t.langBtn);
+      setTxt('navAllTools', t.allTools);
+      setTxt('navAbout', t.about);
+      setTxt('navPrivacy', t.privacy);
+      setTxt('closeWsBtn', t.close);
+
+      renderInfoAndFooter();
+    }
+
+    function filterTools() {
+      const input = document.getElementById('searchInput');
+      renderTools(input ? input.value : '');
+    }
+
+    function toggleLang() {
+      lang = lang === 'hi' ? 'en' : 'hi';
+      applyStaticLang();
+      filterTools();
+    }
+
+    function closeWorkspace() {
+      const ws = document.getElementById('workspace');
+      const body = document.getElementById('wsBody');
+      if (ws) ws.style.display = 'none';
+      if (body) body.innerHTML = '';
+    }
+
+    function openTool(id) {
+      const tool = toolsById[id];
+      if (!tool) return;
+
+      const ws = document.getElementById('workspace');
+      const body = document.getElementById('wsBody');
+      const wsTitle = document.getElementById('wsTitle');
+      if (!ws || !body || !wsTitle) return;
+
+      wsTitle.textContent = tool.name[lang];
+      ws.style.display = 'block';
+      ws.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      if (id === 'img-host') {
+        body.innerHTML = `
+          <div class="notice-box">अपना Cloudinary Cloud Name और Unsigned Upload Preset डालें, फिर एक या कई फ़ोटो चुनकर डायरेक्ट लिंक बनाएं।</div>
+          <div class="row-2">
+            <div class="field"><label>Cloud Name:</label><input type="text" id="cCloudName" value="demo" /></div>
+            <div class="field"><label>Upload Preset:</label><input type="text" id="cPreset" value="docs_upload_example_preset" /></div>
+          </div>
+          <div class="field"><label>Select Photos (Multiple allowed):</label><input type="file" id="cImgFiles" accept="image/*" multiple /></div>
+          <button class="btn-primary" type="button" onclick="runCloudinaryBulkUpload()">Upload & Generate Direct Links</button>
+          <div class="result-box" id="cOut" style="display:none;"></div>
+        `;
+      } else if (id === 'img-resizer') {
+        body.innerHTML = `
+          <div class="field"><label>Select Image:</label><input type="file" id="tImgFile" accept="image/*" /></div>
+          <div class="row-2">
+            <div class="field"><label>Width (px):</label><input type="number" id="tImgW" value="350" /></div>
+            <div class="field"><label>Height (px):</label><input type="number" id="tImgH" value="450" /></div>
+          </div>
+          <button class="btn-primary" type="button" onclick="runImageTool()">Resize & Download</button>
+          <div class="result-box" id="tImgOut" style="display:none;"></div>
+        `;
+      } else if (id === 'text-case') {
+        body.innerHTML = `
+          <div class="field"><textarea id="caseTxt" rows="5" placeholder="यहाँ टेक्स्ट लिखें या पेस्ट करें..."></textarea></div>
+          <button
