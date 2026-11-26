@@ -332,8 +332,7 @@
       <div class="footer-links" id="footerLinks"></div>
     </div>
   </footer>
-
-  <script>
+    <script>
     let lang = 'hi';
 
     const i18n = {
@@ -561,4 +560,195 @@
       } else if (id === 'text-case') {
         body.innerHTML = `
           <div class="field"><textarea id="caseTxt" rows="5" placeholder="यहाँ टेक्स्ट लिखें या पेस्ट करें..."></textarea></div>
-          <button
+          <button type="button" class="btn-secondary" onclick="transformCase('upper')">UPPERCASE</button>
+          <button type="button" class="btn-secondary" onclick="transformCase('lower')">lowercase</button>
+          <button type="button" class="btn-secondary" onclick="transformCase('clean')">Clean Spaces</button>
+        `;
+      } else if (id === 'age-calc') {
+        body.innerHTML = `
+          <div class="row-2">
+            <div class="field"><label>जन्म तिथि (DOB):</label><input type="date" id="dobInput" /></div>
+            <div class="field"><label>किस तारीख तक:</label><input type="date" id="asOnInput" value="${new Date().toISOString().slice(0,10)}" /></div>
+          </div>
+          <button class="btn-primary" type="button" onclick="runAgeCalc()">उम्र निकालें</button>
+          <div class="result-box" id="ageOut" style="display:none;"></div>
+        `;
+      } else if (id === 'pct-calc') {
+        body.innerHTML = `
+          <div class="row-2">
+            <div class="field"><label>प्राप्तांक / मान:</label><input type="number" id="obtMarks" /></div>
+            <div class="field"><label>कुल अंक / कुल मान:</label><input type="number" id="totMarks" /></div>
+          </div>
+          <button class="btn-primary" type="button" onclick="runPctCalc()">प्रतिशत निकालें</button>
+          <div class="result-box" id="pctOut" style="display:none;"></div>
+        `;
+      } else if (id === 'emi-calc') {
+        body.innerHTML = `
+          <div class="row-2">
+            <div class="field"><label>लोन राशि (₹):</label><input type="number" id="emiP" value="100000" /></div>
+            <div class="field"><label>ब्याज दर (% वार्षिक):</label><input type="number" id="emiR" value="8.5" step="0.1" /></div>
+          </div>
+          <div class="field"><label>अवधि (महीने):</label><input type="number" id="emiN" value="12" /></div>
+          <button class="btn-primary" type="button" onclick="runEmiCalc()">EMI निकालें</button>
+          <div class="result-box" id="emiOut" style="display:none;"></div>
+        `;
+      } else if (id === 'pass-gen') {
+        body.innerHTML = `
+          <div class="field"><label>लंबाई (6-32):</label><input type="number" id="passLen" value="12" min="6" max="32" /></div>
+          <button class="btn-primary" type="button" onclick="runPassGen()">पासवर्ड बनाएं</button>
+          <div class="result-box" id="passOut" style="display:none;"></div>
+        `;
+      } else if (id === 'qr-gen') {
+        body.innerHTML = `
+          <div class="field"><label>लिंक या टेक्स्ट डालें:</label><input type="text" id="qrText" placeholder="https://example.com" /></div>
+          <button class="btn-primary" type="button" onclick="runQrGen()">QR कोड बनाएं</button>
+          <div class="result-box" id="qrOut" style="display:none;"></div>
+        `;
+      }
+    }
+
+    function copyTextValue(val) {
+      navigator.clipboard?.writeText(val);
+    }
+
+    async function runCloudinaryBulkUpload() {
+      const cloudName = document.getElementById('cCloudName').value.trim();
+      const preset = document.getElementById('cPreset').value.trim();
+      const files = Array.from(document.getElementById('cImgFiles').files || []);
+      const out = document.getElementById('cOut');
+
+      if (!cloudName || !preset || !files.length) {
+        out.style.display = 'block';
+        out.innerHTML = '<span style="color:#b91c1c;">कृपया Cloud Name, Upload Preset भरें और कम से कम एक फ़ोटो चुनें।</span>';
+        return;
+      }
+
+      out.style.display = 'block';
+      out.innerHTML = `${files.length} फ़ोटो अपलोड हो रही हैं...`;
+
+      const results = [];
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', preset);
+
+        try {
+          const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          if (data.secure_url) {
+            results.push(`<div class="link-item"><strong>${file.name}</strong><br/><input type="text" readonly value="${data.secure_url}" style="width:100%;margin-top:4px;padding:6px;" /><button type="button" class="btn-secondary" style="margin-top:6px;" onclick="copyTextValue('${data.secure_url}')">Copy Link</button></div>`);
+          } else {
+            results.push(`<div class="link-item" style="color:#b91c1c;"><strong>${file.name}:</strong> ${data.error?.message || 'Upload failed'}</div>`);
+          }
+        } catch {
+          results.push(`<div class="link-item" style="color:#b91c1c;"><strong>${file.name}:</strong> Network error</div>`);
+        }
+      }
+
+      out.innerHTML = results.join('');
+    }
+
+    function runImageTool() {
+      const file = document.getElementById('tImgFile').files[0];
+      const w = parseInt(document.getElementById('tImgW').value, 10);
+      const h = parseInt(document.getElementById('tImgH').value, 10);
+      const out = document.getElementById('tImgOut');
+      if (!file || !w || !h) return;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const url = canvas.toDataURL('image/jpeg', 0.88);
+          out.style.display = 'block';
+          out.innerHTML = `<a href="${url}" download="smart-india-hub.jpg" class="btn-primary" style="display:inline-block;">Download Resized Image</a>`;
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function transformCase(mode) {
+      const el = document.getElementById('caseTxt');
+      if (!el) return;
+      if (mode === 'upper') el.value = el.value.toUpperCase();
+      if (mode === 'lower') el.value = el.value.toLowerCase();
+      if (mode === 'clean') el.value = el.value.replace(/\s+/g, ' ').trim();
+    }
+
+    function runAgeCalc() {
+      const dob = new Date(document.getElementById('dobInput').value);
+      const ref = new Date(document.getElementById('asOnInput').value);
+      const out = document.getElementById('ageOut');
+      if (isNaN(dob) || isNaN(ref)) return;
+
+      let yrs = ref.getFullYear() - dob.getFullYear();
+      let m = ref.getMonth() - dob.getMonth();
+      let d = ref.getDate() - dob.getDate();
+      if (d < 0) { m--; d += 30; }
+      if (m < 0) { yrs--; m += 12; }
+
+      out.style.display = 'block';
+      out.innerHTML = `<strong>उम्र:</strong> ${yrs} साल, ${m} महीने, ${d} दिन`;
+    }
+
+    function runPctCalc() {
+      const obt = parseFloat(document.getElementById('obtMarks').value);
+      const tot = parseFloat(document.getElementById('totMarks').value);
+      const out = document.getElementById('pctOut');
+      if (isNaN(obt) || isNaN(tot) || tot <= 0) return;
+
+      out.style.display = 'block';
+      out.innerHTML = `<strong>प्रतिशत:</strong> ${((obt / tot) * 100).toFixed(2)}%`;
+    }
+
+    function runEmiCalc() {
+      const P = parseFloat(document.getElementById('emiP').value);
+      const r = parseFloat(document.getElementById('emiR').value) / 12 / 100;
+      const n = parseInt(document.getElementById('emiN').value, 10);
+      const out = document.getElementById('emiOut');
+      if (!P || !n) return;
+
+      const emi = r === 0 ? P / n : (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      out.style.display = 'block';
+      out.innerHTML = `<strong>मासिक EMI:</strong> ₹${Math.round(emi).toLocaleString('en-IN')}`;
+    }
+
+    function runPassGen() {
+      const len = Math.min(32, Math.max(6, parseInt(document.getElementById('passLen').value, 10) || 12));
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
+      let pass = '';
+            for (let i = 0; i < len; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
+
+      const out = document.getElementById('passOut');
+      out.style.display = 'block';
+      out.innerHTML = `<strong>पासवर्ड:</strong> <code>${pass}</code>`;
+    }
+
+    function runQrGen() {
+      const txt = document.getElementById('qrText').value.trim();
+      const out = document.getElementById('qrOut');
+      if (!txt) return;
+
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(txt)}`;
+      out.style.display = 'block';
+      out.innerHTML = `<img src="${qrUrl}" alt="QR Code" />`;
+    }
+
+    applyStaticLang();
+    renderTools();
+  </script>
+</body>
+</html>
+
+                      
+
+  
